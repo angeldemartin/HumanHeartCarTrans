@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="ADM" />
+
+<meta name="date" content="2024-02-21" />
+
+<title>HumanHeartCarTrans</title>
+
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">HumanHeartCarTrans</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">HumanHeartCarTrans</h1>
+<h4 class="author">ADM</h4>
+<h4 class="date">2024-02-21</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2024-02-23
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 5
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 2
+</p>
+<p>
+<strong>Knit directory:</strong> <code>HumanHeartCarTrans/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.1). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20240221code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20240221)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20240221code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20240221)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongabsolute">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>File paths:</strong> absolute </a>
+</p>
+</div>
+<div id="strongFilepathsstrongabsolute" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Using absolute paths to the files within your workflowr project makes it
+difficult for you and others to run your code on a different machine.
+Change the absolute path(s) below to the suggested relative path(s) to
+make your code more reproducible.
+</p>
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th style="text-align:left;">
+absolute
+</th>
+<th style="text-align:left;">
+relative
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/data/seurat
+files/
+</td>
+<td style="text-align:left;">
+data/seurat files
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/data/Human_heart_allmerged_seurat.rds
+</td>
+<td style="text-align:left;">
+data/Human_heart_allmerged_seurat.rds
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/analysis/
+</td>
+<td style="text-align:left;">
+analysis
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrong51cefe4">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong> 51cefe4
+</a>
+</p>
+</div>
+<div id="strongRepositoryversionstrong51cefe4"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version 51cefe4.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    data/.DS_Store
+
+Untracked files:
+    Untracked:  analysis/HumanHeartCarTrans.Rmd
+    Untracked:  data/Human_heart_allmerged_seurat.rds
+    Untracked:  data/seurat files/
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<div id="load-packages" class="section level2">
+<h2>load packages</h2>
+<pre class="r"><code>library(ExploreSCdataSeurat3)
+library(runSeurat3)
+library(Seurat)
+library(ggpubr)
+library(pheatmap)
+library(SingleCellExperiment)
+library(dplyr)
+library(tidyverse)
+library(viridis)
+library(muscat)
+library(circlize)
+library(destiny)
+library(scater)
+library(metap)
+library(multtest)
+library(clusterProfiler)
+library(org.Hs.eg.db)
+library(msigdbr)
+library(enrichplot)
+library(DOSE)
+library(grid)
+library(gridExtra)
+library(ggupset)
+library(VennDiagram)</code></pre>
+<p>##############################start
+pre-processing##############################</p>
+</div>
+<div id="load-files-and-merge" class="section level2">
+<h2>load files and merge</h2>
+<pre class="r"><code>### load and merge all 
+basedir &lt;- &quot;/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/data/seurat files/&quot;
+fileNamList &lt;- list.files(path = basedir)
+
+for(i in 1:length(fileNamList)){
+  seuratS &lt;- readRDS(paste0(basedir, fileNamList[i]))
+  if(exists(&quot;seuratM&quot;)){
+    seuratM &lt;- merge(x = seuratM, y = seuratS)
+  }else{
+    seuratM &lt;- seuratS
+  }
+}
+
+remove(seuratS)
+table(seuratM$dataset)
+table(seuratM$orig.ident)
+
+##filter &quot;o28576_1_09-9_20220525_Hu_nucseq_Graz_9_HH_GEM&quot; (separate CM cluster)
+seuratMfilt &lt;- subset(seuratM, dataset ==  &quot;o28576_1_09-9_20220525_Hu_nucseq_Graz_9_HH_GEM&quot;, invert = T)
+unique(seuratMfilt$dataset)
+table(seuratMfilt$dataset)
+table(seuratMfilt$orig.ident)
+
+seuratM &lt;- seuratMfilt
+remove(seuratMfilt)
+table(seuratM$orig.ident)
+
+#rerun seurat
+seuratM &lt;- NormalizeData (object = seuratM)
+seuratM &lt;- FindVariableFeatures(object = seuratM)
+seuratM &lt;- ScaleData(object = seuratM, verbose = TRUE)
+seuratM &lt;- RunPCA(object=seuratM, npcs = 30, verbose = FALSE)
+seuratM &lt;- RunTSNE(object=seuratM, reduction=&quot;pca&quot;, dims = 1:20)
+seuratM &lt;- RunUMAP(object=seuratM, reduction=&quot;pca&quot;, dims = 1:20)
+seuratM &lt;- FindNeighbors(object = seuratM, reduction = &quot;pca&quot;, dims= 1:20)
+
+res &lt;- c(0.25, 0.6, 0.8, 0.4)
+for (i in 1:length(res)) {
+  seuratM &lt;- FindClusters(object = seuratM, resolution = res[i], random.seed = 1234)
+}</code></pre>
+<pre class="r"><code>### save seurat object
+saveRDS(seuratM, file=&quot;/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/data/Human_heart_allmerged_seurat.rds&quot;)</code></pre>
+<p>##############################end
+pre-processing##############################</p>
+</div>
+<div id="load-file" class="section level2">
+<h2>load file</h2>
+<pre class="r"><code>##load merged file 
+fileNam &lt;- &quot;/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/data/Human_heart_allmerged_seurat.rds&quot;
+seuratM &lt;- readRDS(fileNam)
+table(seuratM$dataset)</code></pre>
+<pre><code>
+        331571_3-5_20231012_Hu_nucseq_USZ_HTx001         331571_4-6_20231012_Hu_nucseq_USZ_HTx002 
+                                            2934                                             2059 
+    334131_01-1_20231103_Hu_nucseq_USZ_HTx002_RV     334131_02-2_20231103_Hu_nucseq_USZ_HTx003_LV 
+                                            3718                                             3905 
+    334131_03-3_20231103_Hu_nucseq_USZ_HTx004_RV     334131_04-4_20231106_Hu_nucseq_USZ_HTx003_RV 
+                                            3377                                             3377 
+    334131_05-5_20231106_Hu_nucseq_USZ_HTx004_LV     334131_06-6_20231106_Hu_nucseq_USZ_HTx005_RV 
+                                            4861                                             2694 
+    334131_07-7_20231107_Hu_nucseq_USZ_HTx005_LV     334131_08-8_20231107_Hu_nucseq_USZ_HTx006_RV 
+                                            1739                                             1672 
+    334131_09-9_20231108_Hu_nucseq_USZ_HTx006_LV    334131_10-10_20231108_Hu_nucseq_USZ_HTx001_RV 
+                                            3101                                             1901 
+    336431_07-7_20231129_Hu_nucseq_USZ_HTx008_RV     336431_08-8_20231129_Hu_nucseq_USZ_EMB001_V1 
+                                            3679                                              483 
+    336431_09-9_20231129_Hu_nucseq_USZ_HTx008_LV    336431_10-10_20231129_Hu_nucseq_USZ_EMB005_V1 
+                                            3082                                              606 
+   336431_11-11_20231129_Hu_nucseq_USZ_EMB006_V1    336431_12-12_20231129_Hu_nucseq_USZ_EMB007_V1 
+                                             420                                             1326 
+   336431_13-13_20231129_Hu_nucseq_USZ_EMB002_V1    336431_14-14_20231129_Hu_nucseq_USZ_EMB003_V1 
+                                            1338                                             1362 
+   336431_15-15_20231129_Hu_nucseq_USZ_EMB004_V1     340821_01-7_20240118_Hu_nucseq_USZ_EMB007_V2 
+                                             986                                             1600 
+    340821_02-8_20240118_Hu_nucseq_USZ_EMB008_V2     340821_03-9_20240123_Hu_nucseq_USZ_EMB001_V3 
+                                             567                                               68 
+   340821_04-10_20240123_Hu_nucseq_USZ_EMB002_V3    340821_05-11_20240123_Hu_nucseq_USZ_EMB003_V3 
+                                             349                                              196 
+   340821_06-12_20240123_Hu_nucseq_USZ_EMB004_V3    340821_07-13_20240123_Hu_nucseq_USZ_EMB005_V3 
+                                             745                                             1896 
+   340821_08-14_20240123_Hu_nucseq_USZ_EMB006_V3    340821_09-15_20240123_Hu_nucseq_USZ_EMB007_V3 
+                                             230                                              361 
+   340821_10-16_20240123_Hu_nucseq_USZ_EMB008_V3    340821_11-17_20240123_Hu_nucseq_USZ_EMB008_V1 
+                                             194                                               56 
+   340821_12-18_20240123_Hu_nucseq_USZ_HTx007_RV    340821_13-19_20240123_Hu_nucseq_USZ_HTx007_LV 
+                                            2352                                             2148 
+     340831_1-1_20240118_Hu_nucseq_USZ_EMB001_V2      340831_2-2_20240118_Hu_nucseq_USZ_EMB002_V2 
+                                             804                                             2575 
+     340831_3-3_20240118_Hu_nucseq_USZ_EMB003_V2      340831_4-4_20240118_Hu_nucseq_USZ_EMB004_V2 
+                                             323                                              521 
+     340831_5-5_20240118_Hu_nucseq_USZ_EMB005_V2      340831_6-6_20240118_Hu_nucseq_USZ_EMB006_V2 
+                                             654                                              770 
+  o28576_1_08-8_20220525_Hu_nucseq_Graz_8_HH_GEM o28576_1_10-10_20220525_Hu_nucseq_Graz_10_HH_GEM 
+                                            3921                                             3731 
+o28576_1_11-11_20220525_Hu_nucseq_Graz_11_HH_GEM o28576_1_12-12_20220525_Hu_nucseq_Graz_12_HH_GEM 
+                                            3991                                             3818 
+    o292731_1-1_20220818_Hu_nucseq_Graz_9_HH_GEM    o292731_2-2_20220818_Hu_nucseq_Graz_13_HH_GEM 
+                                            4908                                             9882 
+  o294781_01-1_20220912_Hu_nucseq_Graz_21_HH_GEM   o294781_02-2_20220912_Hu_nucseq_Graz_22_HH_GEM 
+                                            1442                                             1998 
+  o294781_03-3_20220912_Hu_nucseq_Graz_23_HH_GEM   o294781_04-4_20220912_Hu_nucseq_Graz_24_HH_GEM 
+                                             841                                             1480 </code></pre>
+<pre class="r"><code>table(seuratM$RNA_snn_res.0.25)</code></pre>
+<pre><code>
+    0     1     2     3     4     5     6     7     8     9    10    11    12 
+20082 17198 17116 13093 12002  9030  5151  1905  1720  1333  1307   691   413 </code></pre>
+<pre class="r"><code>table(seuratM$orig.ident)</code></pre>
+<pre><code>
+       
+101041 </code></pre>
+<p>##set color vectors</p>
+<pre class="r"><code>colclusterName &lt;- c(&quot;#67001f&quot;, &quot;#b2182b&quot;, &quot;#d6604d&quot;, &quot;#f4a582&quot;, &quot;#dfc27d&quot;,&quot;#003c30&quot;,&quot;#01665e&quot;,&quot;#35978f&quot;,&quot;#c7eae5&quot;,&quot;#4d4d4d&quot;,&quot;#1a1a1a&quot;,&quot;#8c510a&quot;, &quot;#355C7D&quot;) 
+names(colclusterName) &lt;- c(&quot;CM&quot; ,&quot;Fb1&quot;, &quot;Tcell&quot;, &quot;PerivFb/VSMC&quot;, &quot;Fb2&quot;, &quot;NC&quot;, &quot;BEC3&quot;, &quot;AdipoC&quot;, &quot;LEC&quot;, &quot;BEC1&quot;, &quot;Mph2&quot;,&quot;BEC2&quot;, &quot;Mph1&quot;)
+
+coldiseaseCond &lt;- c(&quot;#202547&quot;,&quot;#BE3144&quot;,&quot;#727077&quot;,&quot;#355C7D&quot;,&quot;#779d8d&quot;)
+names(coldiseaseCond) &lt;- unique(seuratM$diseaseCond)</code></pre>
+<pre class="r"><code>### add any type of metadata
+### patient
+pat_1 &lt;- c(&quot;331571_3-5_20231012_Hu_nucseq_USZ_HTx001&quot;,&quot;334131_10-10_20231108_Hu_nucseq_USZ_HTx001_RV&quot;,&quot;336431_08-8_20231129_Hu_nucseq_USZ_EMB001_V1&quot;, &quot;340831_1-1_20240118_Hu_nucseq_USZ_EMB001_V2&quot;, &quot;340821_03-9_20240123_Hu_nucseq_USZ_EMB001_V3&quot;)
+pat_2 &lt;- c(&quot;331571_4-6_20231012_Hu_nucseq_USZ_HTx002&quot;,&quot;334131_01-1_20231103_Hu_nucseq_USZ_HTx002_RV&quot;,&quot;336431_13-13_20231129_Hu_nucseq_USZ_EMB002_V1&quot;, &quot;340831_2-2_20240118_Hu_nucseq_USZ_EMB002_V2&quot;, &quot;340821_04-10_20240123_Hu_nucseq_USZ_EMB002_V3&quot;)
+pat_3 &lt;- c(&quot;334131_02-2_20231103_Hu_nucseq_USZ_HTx003_LV&quot;,&quot;334131_04-4_20231106_Hu_nucseq_USZ_HTx003_RV&quot;,&quot;336431_14-14_20231129_Hu_nucseq_USZ_EMB003_V1&quot;,&quot;340831_3-3_20240118_Hu_nucseq_USZ_EMB003_V2&quot;,&quot;340821_05-11_20240123_Hu_nucseq_USZ_EMB003_V3&quot;)
+pat_4 &lt;- c(&quot;334131_05-5_20231106_Hu_nucseq_USZ_HTx004_LV&quot;,&quot;334131_03-3_20231103_Hu_nucseq_USZ_HTx004_RV&quot;,&quot;336431_15-15_20231129_Hu_nucseq_USZ_EMB004_V1&quot;, &quot;340831_4-4_20240118_Hu_nucseq_USZ_EMB004_V2&quot; ,&quot;340821_06-12_20240123_Hu_nucseq_USZ_EMB004_V3&quot;)
+pat_5 &lt;- c(&quot;334131_07-7_20231107_Hu_nucseq_USZ_HTx005_LV&quot;,&quot;334131_06-6_20231106_Hu_nucseq_USZ_HTx005_RV&quot;,&quot;336431_10-10_20231129_Hu_nucseq_USZ_EMB005_V1&quot;,&quot;340831_5-5_20240118_Hu_nucseq_USZ_EMB005_V2&quot; ,&quot;340821_07-13_20240123_Hu_nucseq_USZ_EMB005_V3&quot;)
+pat_6 &lt;- c(&quot;334131_09-9_20231108_Hu_nucseq_USZ_HTx006_LV&quot;,&quot;334131_08-8_20231107_Hu_nucseq_USZ_HTx006_RV&quot;,&quot;336431_11-11_20231129_Hu_nucseq_USZ_EMB006_V1&quot;, &quot;340831_6-6_20240118_Hu_nucseq_USZ_EMB006_V2&quot;, &quot;340821_08-14_20240123_Hu_nucseq_USZ_EMB006_V3&quot;)
+pat_7 &lt;- c(&quot;340821_13-19_20240123_Hu_nucseq_USZ_HTx007_LV&quot;,&quot;340821_12-18_20240123_Hu_nucseq_USZ_HTx007_RV&quot;,&quot;336431_12-12_20231129_Hu_nucseq_USZ_EMB007_V1&quot;,&quot;340821_01-7_20240118_Hu_nucseq_USZ_EMB007_V2&quot;,&quot;340821_09-15_20240123_Hu_nucseq_USZ_EMB007_V3&quot;)
+pat_8 &lt;- c(&quot;336431_07-7_20231129_Hu_nucseq_USZ_HTx008_RV&quot;,&quot;336431_09-9_20231129_Hu_nucseq_USZ_HTx008_LV&quot;,&quot;340821_11-17_20240123_Hu_nucseq_USZ_EMB008_V1&quot;, &quot;340821_02-8_20240118_Hu_nucseq_USZ_EMB008_V2&quot;, &quot;340821_10-16_20240123_Hu_nucseq_USZ_EMB008_V3&quot;)
+
+HH_1 &lt;- c(&quot;o28576_1_08-8_20220525_Hu_nucseq_Graz_8_HH_GEM&quot;)
+### excluded - CM cluster separately### HH_2 &lt;- c(&quot;o28576_1_09-9_20220525_Hu_nucseq_Graz_9_HH_GEM&quot;)
+HH_3 &lt;- c(&quot;o28576_1_10-10_20220525_Hu_nucseq_Graz_10_HH_GEM&quot;)
+HH_4 &lt;- c(&quot;o28576_1_11-11_20220525_Hu_nucseq_Graz_11_HH_GEM&quot;)
+HH_5 &lt;- c(&quot;o28576_1_12-12_20220525_Hu_nucseq_Graz_12_HH_GEM&quot;)
+HH_6 &lt;- c(&quot;o292731_1-1_20220818_Hu_nucseq_Graz_9_HH_GEM&quot;)
+HH_7 &lt;- c(&quot;o292731_2-2_20220818_Hu_nucseq_Graz_13_HH_GEM&quot;)
+HH_8 &lt;- c(&quot;o294781_01-1_20220912_Hu_nucseq_Graz_21_HH_GEM&quot;)
+HH_9 &lt;- c(&quot;o294781_02-2_20220912_Hu_nucseq_Graz_22_HH_GEM&quot;)
+HH_10 &lt;- c(&quot;o294781_03-3_20220912_Hu_nucseq_Graz_23_HH_GEM&quot;)
+HH_11 &lt;- c(&quot;o294781_04-4_20220912_Hu_nucseq_Graz_24_HH_GEM&quot;)
+
+seuratM$patient &lt;- &quot;pat_nr&quot;
+seuratM$patient[which(seuratM$dataset %in% pat_1)] &lt;- &quot;CarTransPat1&quot;
+seuratM$patient[which(seuratM$dataset %in% pat_2)] &lt;- &quot;CarTransPat2&quot;
+seuratM$patient[which(seuratM$dataset %in% pat_3)] &lt;- &quot;CarTransPat3&quot;
+seuratM$patient[which(seuratM$dataset %in% pat_4)] &lt;- &quot;CarTransPat4&quot;
+seuratM$patient[which(seuratM$dataset %in% pat_5)] &lt;- &quot;CarTransPat5&quot;
+seuratM$patient[which(seuratM$dataset %in% pat_6)] &lt;- &quot;CarTransPat6&quot;
+seuratM$patient[which(seuratM$dataset %in% pat_7)] &lt;- &quot;CarTransPat7&quot;
+seuratM$patient[which(seuratM$dataset %in% pat_8)] &lt;- &quot;CarTransPat8&quot;
+seuratM$patient[which(seuratM$dataset %in% HH_1)] &lt;- &quot;HH1&quot;
+seuratM$patient[which(seuratM$dataset %in% HH_3)] &lt;- &quot;HH3&quot;
+seuratM$patient[which(seuratM$dataset %in% HH_4)] &lt;- &quot;HH4&quot;
+seuratM$patient[which(seuratM$dataset %in% HH_5)] &lt;- &quot;HH5&quot;
+seuratM$patient[which(seuratM$dataset %in% HH_6)] &lt;- &quot;HH6&quot;
+seuratM$patient[which(seuratM$dataset %in% HH_7)] &lt;- &quot;HH7&quot;
+seuratM$patient[which(seuratM$dataset %in% HH_8)] &lt;- &quot;HH8&quot;
+seuratM$patient[which(seuratM$dataset %in% HH_9)] &lt;- &quot;HH9&quot;
+seuratM$patient[which(seuratM$dataset %in% HH_10)] &lt;- &quot;HH10&quot;
+seuratM$patient[which(seuratM$dataset %in% HH_11)] &lt;- &quot;HH2&quot;
+
+table(seuratM$patient)</code></pre>
+<pre><code>
+CarTransPat1 CarTransPat2 CarTransPat3 CarTransPat4 CarTransPat5 CarTransPat6 CarTransPat7 
+        6190        10039         9163        10490         7589         6193         7787 
+CarTransPat8          HH1         HH10          HH2          HH3          HH4          HH5 
+        7578         3921          841         1480         3731         3991         3818 
+         HH6          HH7          HH8          HH9 
+        4908         9882         1442         1998 </code></pre>
+<pre class="r"><code>orddatasets &lt;- c(&quot;o28576_1_08-8_20220525_Hu_nucseq_Graz_8_HH_GEM&quot;,&quot;o28576_1_10-10_20220525_Hu_nucseq_Graz_10_HH_GEM&quot;,&quot;o28576_1_11-11_20220525_Hu_nucseq_Graz_11_HH_GEM&quot;,&quot;o28576_1_12-12_20220525_Hu_nucseq_Graz_12_HH_GEM&quot;,&quot;o292731_1-1_20220818_Hu_nucseq_Graz_9_HH_GEM&quot;,&quot;o292731_2-2_20220818_Hu_nucseq_Graz_13_HH_GEM&quot;,&quot;o294781_01-1_20220912_Hu_nucseq_Graz_21_HH_GEM&quot;,&quot;o294781_02-2_20220912_Hu_nucseq_Graz_22_HH_GEM&quot;,&quot;o294781_03-3_20220912_Hu_nucseq_Graz_23_HH_GEM&quot;,&quot;o294781_04-4_20220912_Hu_nucseq_Graz_24_HH_GEM&quot;,&quot;331571_3-5_20231012_Hu_nucseq_USZ_HTx001&quot;,&quot;334131_10-10_20231108_Hu_nucseq_USZ_HTx001_RV&quot;,&quot;331571_4-6_20231012_Hu_nucseq_USZ_HTx002&quot;,&quot;334131_01-1_20231103_Hu_nucseq_USZ_HTx002_RV&quot;,&quot;334131_02-2_20231103_Hu_nucseq_USZ_HTx003_LV&quot;,&quot;334131_04-4_20231106_Hu_nucseq_USZ_HTx003_RV&quot;,  &quot;334131_05-5_20231106_Hu_nucseq_USZ_HTx004_LV&quot;,&quot;334131_03-3_20231103_Hu_nucseq_USZ_HTx004_RV&quot;,&quot;334131_07-7_20231107_Hu_nucseq_USZ_HTx005_LV&quot;,&quot;334131_06-6_20231106_Hu_nucseq_USZ_HTx005_RV&quot;,&quot;334131_09-9_20231108_Hu_nucseq_USZ_HTx006_LV&quot;,&quot;334131_08-8_20231107_Hu_nucseq_USZ_HTx006_RV&quot;,&quot;340821_13-19_20240123_Hu_nucseq_USZ_HTx007_LV&quot;,&quot;340821_12-18_20240123_Hu_nucseq_USZ_HTx007_RV&quot;,&quot;336431_07-7_20231129_Hu_nucseq_USZ_HTx008_RV&quot;,&quot;336431_09-9_20231129_Hu_nucseq_USZ_HTx008_LV&quot;,&quot;336431_08-8_20231129_Hu_nucseq_USZ_EMB001_V1&quot;, &quot;340831_1-1_20240118_Hu_nucseq_USZ_EMB001_V2&quot;,&quot;340821_03-9_20240123_Hu_nucseq_USZ_EMB001_V3&quot;,&quot;336431_13-13_20231129_Hu_nucseq_USZ_EMB002_V1&quot;,&quot;340831_2-2_20240118_Hu_nucseq_USZ_EMB002_V2&quot;,&quot;340821_04-10_20240123_Hu_nucseq_USZ_EMB002_V3&quot;,&quot;336431_14-14_20231129_Hu_nucseq_USZ_EMB003_V1&quot;,&quot;340831_3-3_20240118_Hu_nucseq_USZ_EMB003_V2&quot;,&quot;340821_05-11_20240123_Hu_nucseq_USZ_EMB003_V3&quot;,&quot;336431_15-15_20231129_Hu_nucseq_USZ_EMB004_V1&quot;, &quot;340831_4-4_20240118_Hu_nucseq_USZ_EMB004_V2&quot;,&quot;340821_06-12_20240123_Hu_nucseq_USZ_EMB004_V3&quot;,&quot;336431_10-10_20231129_Hu_nucseq_USZ_EMB005_V1&quot;,&quot;340831_5-5_20240118_Hu_nucseq_USZ_EMB005_V2&quot;,&quot;340821_07-13_20240123_Hu_nucseq_USZ_EMB005_V3&quot;,&quot;336431_11-11_20231129_Hu_nucseq_USZ_EMB006_V1&quot;,&quot;340831_6-6_20240118_Hu_nucseq_USZ_EMB006_V2&quot;,&quot;340821_08-14_20240123_Hu_nucseq_USZ_EMB006_V3&quot;,&quot;336431_12-12_20231129_Hu_nucseq_USZ_EMB007_V1&quot;,&quot;340821_01-7_20240118_Hu_nucseq_USZ_EMB007_V2&quot;,&quot;340821_09-15_20240123_Hu_nucseq_USZ_EMB007_V3&quot;,&quot;340821_11-17_20240123_Hu_nucseq_USZ_EMB008_V1&quot;,&quot;340821_02-8_20240118_Hu_nucseq_USZ_EMB008_V2&quot;,&quot;340821_10-16_20240123_Hu_nucseq_USZ_EMB008_V3&quot;)                 
+                 
+#### diseaseCondSp and diseaseCond
+#healthy
+healthy &lt;- c(&quot;o28576_1_08-8_20220525_Hu_nucseq_Graz_8_HH_GEM&quot;,&quot;o28576_1_10-10_20220525_Hu_nucseq_Graz_10_HH_GEM&quot;,&quot;o28576_1_11-11_20220525_Hu_nucseq_Graz_11_HH_GEM&quot;, &quot;o28576_1_12-12_20220525_Hu_nucseq_Graz_12_HH_GEM&quot;,&quot;o292731_1-1_20220818_Hu_nucseq_Graz_9_HH_GEM&quot;,&quot;o292731_2-2_20220818_Hu_nucseq_Graz_13_HH_GEM&quot;, &quot;o294781_01-1_20220912_Hu_nucseq_Graz_21_HH_GEM&quot;, &quot;o294781_02-2_20220912_Hu_nucseq_Graz_22_HH_GEM&quot;, &quot;o294781_03-3_20220912_Hu_nucseq_Graz_23_HH_GEM&quot;, &quot;o294781_04-4_20220912_Hu_nucseq_Graz_24_HH_GEM&quot;)
+#Giant cell myocarditis
+GCM &lt;- c(&quot;331571_3-5_20231012_Hu_nucseq_USZ_HTx001&quot;,&quot;334131_10-10_20231108_Hu_nucseq_USZ_HTx001_RV&quot;)
+#Dilated Cardiomyopathy
+DCM &lt;- c(&quot;334131_02-2_20231103_Hu_nucseq_USZ_HTx003_LV&quot;,&quot;334131_04-4_20231106_Hu_nucseq_USZ_HTx003_RV&quot;, &quot;334131_05-5_20231106_Hu_nucseq_USZ_HTx004_LV&quot;,&quot;334131_03-3_20231103_Hu_nucseq_USZ_HTx004_RV&quot;, &quot;334131_07-7_20231107_Hu_nucseq_USZ_HTx005_LV&quot;,&quot;334131_06-6_20231106_Hu_nucseq_USZ_HTx005_RV&quot;, &quot;334131_09-9_20231108_Hu_nucseq_USZ_HTx006_LV&quot;,&quot;334131_08-8_20231107_Hu_nucseq_USZ_HTx006_RV&quot;,&quot;340821_13-19_20240123_Hu_nucseq_USZ_HTx007_LV&quot;,&quot;340821_12-18_20240123_Hu_nucseq_USZ_HTx007_RV&quot;)
+#LoefflerEndocarditis
+LoeEndoc &lt;- c(&quot;331571_4-6_20231012_Hu_nucseq_USZ_HTx002&quot;,&quot;334131_01-1_20231103_Hu_nucseq_USZ_HTx002_RV&quot;)
+#hypertrophic cardiomyopathy (non-obstructive)
+HCM &lt;- c(&quot;336431_07-7_20231129_Hu_nucseq_USZ_HTx008_RV&quot;,&quot;336431_09-9_20231129_Hu_nucseq_USZ_HTx008_LV&quot;)
+#EMBs of transplanted hearts
+visit1 &lt;- c(&quot;336431_08-8_20231129_Hu_nucseq_USZ_EMB001_V1&quot;,&quot;336431_13-13_20231129_Hu_nucseq_USZ_EMB002_V1&quot;,&quot;336431_14-14_20231129_Hu_nucseq_USZ_EMB003_V1&quot;,&quot;336431_15-15_20231129_Hu_nucseq_USZ_EMB004_V1&quot;,&quot;336431_10-10_20231129_Hu_nucseq_USZ_EMB005_V1&quot;,&quot;336431_11-11_20231129_Hu_nucseq_USZ_EMB006_V1&quot;, &quot;336431_12-12_20231129_Hu_nucseq_USZ_EMB007_V1&quot;,&quot;340821_11-17_20240123_Hu_nucseq_USZ_EMB008_V1&quot;)
+visit2 &lt;- c(&quot;340831_1-1_20240118_Hu_nucseq_USZ_EMB001_V2&quot;,&quot;340831_2-2_20240118_Hu_nucseq_USZ_EMB002_V2&quot;,&quot;340831_3-3_20240118_Hu_nucseq_USZ_EMB003_V2&quot;,&quot;340831_4-4_20240118_Hu_nucseq_USZ_EMB004_V2&quot;,&quot;340831_5-5_20240118_Hu_nucseq_USZ_EMB005_V2&quot;,&quot;340831_6-6_20240118_Hu_nucseq_USZ_EMB006_V2&quot;,&quot;340821_01-7_20240118_Hu_nucseq_USZ_EMB007_V2&quot;,&quot;340821_02-8_20240118_Hu_nucseq_USZ_EMB008_V2&quot;)
+visit3 &lt;- c(&quot;340821_03-9_20240123_Hu_nucseq_USZ_EMB001_V3&quot;,&quot;340821_04-10_20240123_Hu_nucseq_USZ_EMB002_V3&quot;,&quot;340821_05-11_20240123_Hu_nucseq_USZ_EMB003_V3&quot;,&quot;340821_06-12_20240123_Hu_nucseq_USZ_EMB004_V3&quot;,&quot;340821_07-13_20240123_Hu_nucseq_USZ_EMB005_V3&quot;,&quot;340821_08-14_20240123_Hu_nucseq_USZ_EMB006_V3&quot;,&quot;340821_09-15_20240123_Hu_nucseq_USZ_EMB007_V3&quot;,&quot;340821_10-16_20240123_Hu_nucseq_USZ_EMB008_V3&quot;)
+
+seuratM$diseaseCondSp &lt;- &quot;diseaseCondSp&quot;
+seuratM$diseaseCondSp[which(seuratM$dataset %in% GCM )] &lt;- &quot;GCM&quot;
+seuratM$diseaseCondSp[which(seuratM$dataset %in% DCM)] &lt;- &quot;DCM&quot;
+seuratM$diseaseCondSp[which(seuratM$dataset %in% HCM)] &lt;- &quot;HCM&quot;
+seuratM$diseaseCondSp[which(seuratM$dataset %in% LoeEndoc)] &lt;- &quot;LoeEndoc&quot;
+seuratM$diseaseCondSp[which(seuratM$dataset %in% healthy)] &lt;- &quot;healthy&quot;
+seuratM$diseaseCondSp[which(seuratM$dataset %in% visit1)] &lt;- &quot;visit1&quot;
+seuratM$diseaseCondSp[which(seuratM$dataset %in% visit2)] &lt;- &quot;visit2&quot;
+seuratM$diseaseCondSp[which(seuratM$dataset %in% visit3)] &lt;- &quot;visit3&quot;
+table(seuratM$diseaseCondSp)</code></pre>
+<pre><code>
+     DCM      GCM      HCM  healthy LoeEndoc   visit1   visit2   visit3 
+   29226     4835     6761    36012     5777     6577     7814     4039 </code></pre>
+<pre class="r"><code>seuratM$diseaseCond &lt;- &quot;diseaseCond&quot;
+seuratM$diseaseCond[which(seuratM$dataset %in% c(GCM, DCM, HCM, LoeEndoc))] &lt;- &quot;explant&quot;
+seuratM$diseaseCond[which(seuratM$dataset %in% visit1)] &lt;- &quot;visit1&quot;
+seuratM$diseaseCond[which(seuratM$dataset %in% visit2)] &lt;- &quot;visit2&quot;
+seuratM$diseaseCond[which(seuratM$dataset %in% visit3)] &lt;- &quot;visit3&quot;
+seuratM$diseaseCond[which(seuratM$dataset %in% healthy)] &lt;- &quot;healthy&quot;
+table(seuratM$diseaseCond)</code></pre>
+<pre><code>
+explant healthy  visit1  visit2  visit3 
+  46599   36012    6577    7814    4039 </code></pre>
+<pre class="r"><code>orddiseaseCond &lt;- c(&quot;healthy&quot;, &quot;explant&quot;, &quot;visit1&quot;, &quot;visit2&quot; ,&quot;visit3&quot;)
+
+#### cluster_name
+seuratM$clusterName &lt;- &quot;clusterName&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;0&quot; )] &lt;- &quot;Fb1&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;1&quot; )] &lt;- &quot;BEC1&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;2&quot; )] &lt;- &quot;PerivFb/VSMC&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;3&quot; )] &lt;- &quot;Fb2&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;4&quot; )] &lt;- &quot;Mph1&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;5&quot; )] &lt;- &quot;CM&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;6&quot; )] &lt;- &quot;Tcell&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;7&quot; )] &lt;- &quot;BEC2&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;8&quot; )] &lt;- &quot;BEC3&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;9&quot; )] &lt;- &quot;Mph2&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;10&quot; )] &lt;- &quot;NC&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;11&quot; )] &lt;- &quot;LEC&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;12&quot; )] &lt;- &quot;AdipoC&quot;
+table(seuratM$clusterName)</code></pre>
+<pre><code>
+      AdipoC         BEC1         BEC2         BEC3           CM          Fb1          Fb2 
+         413        17198         1905         1720         9030        20082        13093 
+         LEC         Mph1         Mph2           NC PerivFb/VSMC        Tcell 
+         691        12002         1333         1307        17116         5151 </code></pre>
+<pre class="r"><code>table(seuratM$RNA_snn_res.0.25)</code></pre>
+<pre><code>
+    0     1     2     3     4     5     6     7     8     9    10    11    12 
+20082 17198 17116 13093 12002  9030  5151  1905  1720  1333  1307   691   413 </code></pre>
+<pre class="r"><code>###order
+Idents(seuratM) &lt;- seuratM$clusterName
+seuratM$clusterName &lt;- factor(seuratM$clusterName, levels=c(&quot;CM&quot;,&quot;Fb1&quot;,&quot;Fb2&quot;,&quot;PerivFb/VSMC&quot;,&quot;BEC1&quot;, &quot;BEC2&quot;,&quot;BEC3&quot;,&quot;LEC&quot;,&quot;NC&quot;,&quot;AdipoC&quot;,&quot;Mph1&quot;,&quot;Mph2&quot;,&quot;Tcell&quot;))
+Idents(seuratM) &lt;- seuratM$clusterName
+table(seuratM$clusterName)</code></pre>
+<pre><code>
+          CM          Fb1          Fb2 PerivFb/VSMC         BEC1         BEC2         BEC3 
+        9030        20082        13093        17116        17198         1905         1720 
+         LEC           NC       AdipoC         Mph1         Mph2        Tcell 
+         691         1307          413        12002         1333         5151 </code></pre>
+<pre class="r"><code>#### ventricle
+LV &lt;- c(&quot;331571_3-5_20231012_Hu_nucseq_USZ_HTx001&quot;,&quot;331571_4-6_20231012_Hu_nucseq_USZ_HTx002&quot;,&quot;334131_02-2_20231103_Hu_nucseq_USZ_HTx003_LV&quot;,&quot;334131_05-5_20231106_Hu_nucseq_USZ_HTx004_LV&quot;,&quot;334131_07-7_20231107_Hu_nucseq_USZ_HTx005_LV&quot;,&quot;334131_09-9_20231108_Hu_nucseq_USZ_HTx006_LV&quot;,&quot;340821_13-19_20240123_Hu_nucseq_USZ_HTx007_LV&quot;,&quot;336431_09-9_20231129_Hu_nucseq_USZ_HTx008_LV&quot;)
+RV &lt;- c(&quot;334131_10-10_20231108_Hu_nucseq_USZ_HTx001_RV&quot;,&quot;334131_01-1_20231103_Hu_nucseq_USZ_HTx002_RV&quot;,&quot;334131_04-4_20231106_Hu_nucseq_USZ_HTx003_RV&quot;,&quot;334131_03-3_20231103_Hu_nucseq_USZ_HTx004_RV&quot;,&quot;334131_06-6_20231106_Hu_nucseq_USZ_HTx005_RV&quot;,&quot;334131_08-8_20231107_Hu_nucseq_USZ_HTx006_RV&quot;,&quot;340821_12-18_20240123_Hu_nucseq_USZ_HTx007_RV&quot;,&quot;336431_07-7_20231129_Hu_nucseq_USZ_HTx008_RV&quot;)
+
+seuratM$ventricle &lt;- &quot;ventricle-NA&quot;
+seuratM$ventricle[which(seuratM$dataset %in% LV)] &lt;- &quot;LV&quot;
+seuratM$ventricle[which(seuratM$dataset %in% RV)] &lt;- &quot;RV&quot;
+table(seuratM$ventricle)</code></pre>
+<pre><code>
+          LV           RV ventricle-NA 
+       23829        22770        54442 </code></pre>
+<pre class="r"><code>###combined slots
+seuratM$patient_diseaseCond &lt;- paste0(seuratM$patient, &#39;_&#39;, seuratM$diseaseCond)
+table(seuratM$patient_diseaseCond)</code></pre>
+<pre><code>
+CarTransPat1_explant  CarTransPat1_visit1  CarTransPat1_visit2  CarTransPat1_visit3 
+                4835                  483                  804                   68 
+CarTransPat2_explant  CarTransPat2_visit1  CarTransPat2_visit2  CarTransPat2_visit3 
+                5777                 1338                 2575                  349 
+CarTransPat3_explant  CarTransPat3_visit1  CarTransPat3_visit2  CarTransPat3_visit3 
+                7282                 1362                  323                  196 
+CarTransPat4_explant  CarTransPat4_visit1  CarTransPat4_visit2  CarTransPat4_visit3 
+                8238                  986                  521                  745 
+CarTransPat5_explant  CarTransPat5_visit1  CarTransPat5_visit2  CarTransPat5_visit3 
+                4433                  606                  654                 1896 
+CarTransPat6_explant  CarTransPat6_visit1  CarTransPat6_visit2  CarTransPat6_visit3 
+                4773                  420                  770                  230 
+CarTransPat7_explant  CarTransPat7_visit1  CarTransPat7_visit2  CarTransPat7_visit3 
+                4500                 1326                 1600                  361 
+CarTransPat8_explant  CarTransPat8_visit1  CarTransPat8_visit2  CarTransPat8_visit3 
+                6761                   56                  567                  194 
+         HH1_healthy         HH10_healthy          HH2_healthy          HH3_healthy 
+                3921                  841                 1480                 3731 
+         HH4_healthy          HH5_healthy          HH6_healthy          HH7_healthy 
+                3991                 3818                 4908                 9882 
+         HH8_healthy          HH9_healthy 
+                1442                 1998 </code></pre>
+<pre class="r"><code>ordpatient_diseasecond &lt;- c(&quot;HH1_healthy&quot;,&quot;HH10_healthy&quot;,&quot;HH2_healthy&quot;,&quot;HH3_healthy&quot;,&quot;HH4_healthy&quot;,&quot;HH5_healthy&quot;,&quot;HH6_healthy&quot;,&quot;HH7_healthy&quot;,&quot;HH8_healthy&quot;,&quot;HH9_healthy&quot;,&quot;CarTransPat1_explant&quot;,&quot;CarTransPat2_explant&quot;,&quot;CarTransPat3_explant&quot;,&quot;CarTransPat4_explant&quot;,&quot;CarTransPat5_explant&quot;,&quot;CarTransPat6_explant&quot;,&quot;CarTransPat7_explant&quot;,&quot;CarTransPat8_explant&quot;,&quot;CarTransPat1_visit1&quot;,&quot;CarTransPat1_visit2&quot;,&quot;CarTransPat1_visit3&quot;,&quot;CarTransPat2_visit1&quot;,&quot;CarTransPat2_visit2&quot;,&quot;CarTransPat2_visit3&quot;,&quot;CarTransPat3_visit1&quot;,&quot;CarTransPat3_visit2&quot;,&quot;CarTransPat3_visit3&quot;,&quot;CarTransPat4_visit1&quot;,&quot;CarTransPat4_visit2&quot;,&quot;CarTransPat4_visit3&quot;,&quot;CarTransPat5_visit1&quot;,&quot;CarTransPat5_visit2&quot;,&quot;CarTransPat5_visit3&quot;,&quot;CarTransPat6_visit1&quot;,&quot;CarTransPat6_visit2&quot;,&quot;CarTransPat6_visit3&quot;,&quot;CarTransPat7_visit1&quot;,&quot;CarTransPat7_visit2&quot;,&quot;CarTransPat7_visit3&quot;,&quot;CarTransPat8_visit1&quot;,&quot;CarTransPat8_visit2&quot;,&quot;CarTransPat8_visit3&quot;)
+
+seuratM$patient_ventricle &lt;- paste0(seuratM$patient, &#39;_&#39;, seuratM$ventricle)
+table(seuratM$patient_ventricle)</code></pre>
+<pre><code>
+          CarTransPat1_LV           CarTransPat1_RV CarTransPat1_ventricle-NA 
+                     2934                      1901                      1355 
+          CarTransPat2_LV           CarTransPat2_RV CarTransPat2_ventricle-NA 
+                     2059                      3718                      4262 
+          CarTransPat3_LV           CarTransPat3_RV CarTransPat3_ventricle-NA 
+                     3905                      3377                      1881 
+          CarTransPat4_LV           CarTransPat4_RV CarTransPat4_ventricle-NA 
+                     4861                      3377                      2252 
+          CarTransPat5_LV           CarTransPat5_RV CarTransPat5_ventricle-NA 
+                     1739                      2694                      3156 
+          CarTransPat6_LV           CarTransPat6_RV CarTransPat6_ventricle-NA 
+                     3101                      1672                      1420 
+          CarTransPat7_LV           CarTransPat7_RV CarTransPat7_ventricle-NA 
+                     2148                      2352                      3287 
+          CarTransPat8_LV           CarTransPat8_RV CarTransPat8_ventricle-NA 
+                     3082                      3679                       817 
+         HH1_ventricle-NA         HH10_ventricle-NA          HH2_ventricle-NA 
+                     3921                       841                      1480 
+         HH3_ventricle-NA          HH4_ventricle-NA          HH5_ventricle-NA 
+                     3731                      3991                      3818 
+         HH6_ventricle-NA          HH7_ventricle-NA          HH8_ventricle-NA 
+                     4908                      9882                      1442 
+         HH9_ventricle-NA 
+                     1998 </code></pre>
+</div>
+<div id="plot-umaps" class="section level2">
+<h2>plot umaps</h2>
+<pre class="r"><code>Idents(seuratM) &lt;- seuratM$clusterName
+DimPlot(seuratM, reduction = &quot;umap&quot;, pt.size = 0.1, cols = colclusterName, raster = FALSE) </code></pre>
+<p><img src="figure/HumanHeartCarTrans.Rmd/umap-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seuratM, reduction = &quot;umap&quot;, pt.size = 0.1, cols = colclusterName, raster = FALSE) + theme(legend.position = &quot;null&quot;)</code></pre>
+<p><img src="figure/HumanHeartCarTrans.Rmd/umap-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>Idents(seuratM) &lt;- seuratM$diseaseCond
+order1 &lt;- c(&quot;visit3&quot;,&quot;visit2&quot;,&quot;visit1&quot;,&quot;explant&quot;,&quot;healthy&quot;)
+DimPlot(seuratM, reduction = &quot;umap&quot;, pt.size = 0.1, cols = coldiseaseCond, order = order1, raster=FALSE)</code></pre>
+<p><img src="figure/HumanHeartCarTrans.Rmd/umap-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seuratM, reduction = &quot;umap&quot;, pt.size = 0.1, cols = coldiseaseCond, order = order1, raster = FALSE) + theme(legend.position = &quot;null&quot;)</code></pre>
+<p><img src="figure/HumanHeartCarTrans.Rmd/umap-4.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="calculate-marker-genes" class="section level2">
+<h2>calculate marker genes</h2>
+<pre class="r"><code>#marker genes
+Idents(seuratM) &lt;- seuratM$clusterName
+levels(seuratM)
+markerGenes &lt;- FindAllMarkers(seuratM, only.pos=T,logfc.threshold = 0.2) %&gt;% 
+  dplyr::filter(p_val_adj &lt; 0.1) 
+
+#save 
+write.table(markerGenes, 
+            file= &quot;/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/analysis/&quot;,
+            sep=&quot;\t&quot;,
+            quote=F,
+            row.names=F,
+            col.names=T)</code></pre>
+</div>
+<div id="dotplot-marker-genes" class="section level2">
+<h2>dotplot marker genes</h2>
+<pre class="r"><code>Idents(seuratM) &lt;-seuratM$clusterName
+seuratM$clusterName &lt;- factor(seuratM$clusterName, levels=c(&quot;CM&quot;,&quot;Fb1&quot;,&quot;Fb2&quot;,&quot;PerivFb/VSMC&quot;,&quot;BEC1&quot;,&quot;BEC2&quot;,&quot;BEC3&quot;,&quot;LEC&quot;,&quot;NC&quot;,&quot;AdipoC&quot;,&quot;Mph1&quot;,&quot;Mph2&quot;,&quot;Tcell&quot;))
+
+genes &lt;- data.frame(gene=rownames(seuratM)) %&gt;% 
+  mutate(geneID=gsub(&quot;^.*\\.&quot;, &quot;&quot;, gene))
+
+selGenes &lt;- data.frame(geneID=rev(c(&quot;TTN&quot;, &quot;MYBPC3&quot;, &quot;RYR2&quot;, &quot;NEBL&quot;, &quot;TNNT2&quot;, &quot;CMYA5&quot;, &quot;COL6A3&quot;, &quot;DCN&quot;,  &quot;FBN1&quot;, &quot;C7&quot;, &quot;PDGFRA&quot;, &quot;CDH19&quot;, &quot;PDGFRB&quot;,&quot;ITGA7&quot;,&quot;RGS5&quot;, &quot;NOTCH3&quot;, &quot;MYH11&quot;, &quot;ACTA2&quot;,&quot;PECAM1&quot;, &quot;VWF&quot;, &quot;EGFL7&quot;, &quot;POSTN&quot;, &quot;ITGA10&quot;, &quot;CDH11&quot;,&quot;CCL21&quot;, &quot;PROX1&quot;, &quot;FLT4&quot;, &quot;NRXN1&quot;, &quot;ANK3&quot;, &quot;PTPRZ1&quot;, &quot;ACACB&quot;, &quot;PLIN1&quot;, &quot;GPAM&quot;, &quot;CD163&quot;, &quot;MRC1&quot;, &quot;SIGLEC1&quot;, &quot;STAB1&quot;, &quot;CSF1R&quot;, &quot;MERTK&quot;, &quot;IL7R&quot;, &quot;PTPRC&quot;, &quot;CD2&quot;))) %&gt;% left_join(., genes, by=&quot;geneID&quot;) %&gt;% filter(gene != &quot;ENSG00000232995.RGS5&quot;) 
+
+DotPlot(seuratM, features = selGenes, group.by= &quot;clusterName&quot;) + RotatedAxis() + scale_color_viridis(option=&quot;F&quot;) + coord_flip()</code></pre>
+<p><img src="figure/HumanHeartCarTrans.Rmd/dotplot%20marker%20genes-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+<div id="average-heatmap---cluster-marker-genes" class="section level2">
+<h2>average Heatmap - cluster marker genes</h2>
+<pre class="r"><code>Idents(seuratM) &lt;- seuratM$clusterName
+levels(seuratM)</code></pre>
+<pre><code> [1] &quot;CM&quot;           &quot;Fb1&quot;          &quot;Fb2&quot;          &quot;PerivFb/VSMC&quot; &quot;BEC1&quot;         &quot;BEC2&quot;        
+ [7] &quot;BEC3&quot;         &quot;LEC&quot;          &quot;NC&quot;           &quot;AdipoC&quot;       &quot;Mph1&quot;         &quot;Mph2&quot;        
+[13] &quot;Tcell&quot;       </code></pre>
+<pre class="r"><code>seurat &lt;- seuratM
+
+avgHeatmap &lt;- function(seurat, selGenes, colVecIdent, colVecCond=NULL,
+                       ordVec=NULL, gapVecR=NULL, gapVecC=NULL,cc=FALSE,
+                       cr=FALSE, condCol=FALSE){
+  selGenes &lt;- selGenes$gene
+  ## assay data
+  clusterAssigned &lt;- as.data.frame(Idents(seurat)) %&gt;%
+  dplyr::mutate(cell=rownames(.))
+  colnames(clusterAssigned)[1] &lt;- &quot;ident&quot;
+  seuratDat &lt;- GetAssayData(seurat)
+  
+  ## genes of interest
+  genes &lt;- data.frame(gene=rownames(seurat)) %&gt;% 
+    mutate(geneID=gsub(&quot;^.*\\.&quot;, &quot;&quot;, gene)) %&gt;% filter(geneID %in% selGenes)
+
+  ## matrix with averaged cnts per ident
+  logNormExpres &lt;- as.data.frame(t(as.matrix(
+    seuratDat[which(rownames(seuratDat) %in% genes$gene),])))
+  logNormExpres &lt;- logNormExpres %&gt;% dplyr::mutate(cell=rownames(.)) %&gt;%
+    dplyr::left_join(.,clusterAssigned, by=c(&quot;cell&quot;)) %&gt;%
+    dplyr::select(-cell) %&gt;% dplyr::group_by(ident) %&gt;%
+    dplyr::summarise_all(mean)
+  logNormExpresMa &lt;- logNormExpres %&gt;% dplyr::select(-ident) %&gt;% as.matrix()
+  rownames(logNormExpresMa) &lt;- logNormExpres$ident
+  logNormExpresMa &lt;- t(logNormExpresMa)
+  rownames(logNormExpresMa) &lt;- gsub(&quot;^.*?\\.&quot;,&quot;&quot;,rownames(logNormExpresMa))
+  
+  ## remove genes if they are all the same in all groups
+  ind &lt;- apply(logNormExpresMa, 1, sd) == 0
+  logNormExpresMa &lt;- logNormExpresMa[!ind,]
+  genes &lt;- genes[!ind,]
+
+  ## color columns according to cluster
+  annotation_col &lt;- as.data.frame(gsub(&quot;(^.*?_)&quot;,&quot;&quot;,
+                                       colnames(logNormExpresMa)))%&gt;%
+    dplyr::mutate(celltype=gsub(&quot;(_.*$)&quot;,&quot;&quot;,colnames(logNormExpresMa)))
+  colnames(annotation_col)[1] &lt;- &quot;col1&quot;
+  annotation_col &lt;- annotation_col %&gt;%
+    dplyr::mutate(cond = gsub(&quot;(^[0-9]_?)&quot;,&quot;&quot;,col1)) %&gt;%
+    dplyr::select(cond, celltype)
+  rownames(annotation_col) &lt;- colnames(logNormExpresMa) 
+
+  ann_colors = list(
+      celltype=colVec)
+  if(is.null(ann_colors$cond)){
+    annotation_col$cond &lt;- NULL
+  }
+  
+  ## adjust order
+  logNormExpresMa &lt;- logNormExpresMa[selGenes,]
+  if(is.null(ordVec)){
+  ordVec &lt;- levels(seurat)
+  ordVec &lt;-c(&quot;CM&quot;,&quot;Fb1&quot;,&quot;Fb2&quot;,&quot;PerivFb/VSMC&quot;,&quot;BEC1&quot;, &quot;BEC2&quot;,&quot;BEC3&quot;,&quot;LEC&quot;,&quot;NC&quot;,&quot;AdipoC&quot;,&quot;Mph1&quot;,&quot;Mph2&quot;,&quot;Tcell&quot;)
+  }
+  logNormExpresMa &lt;- logNormExpresMa[,ordVec]
+
+  ## scaled row-wise
+  pheatmap(logNormExpresMa, scale=&quot;row&quot; ,treeheight_row = 0,cluster_rows = cr, 
+         cluster_cols = cc, color = colorRampPalette(c(&quot;#2166AC&quot;, &quot;#F7F7F7&quot;, &quot;#B2182B&quot;))(50),
+         annotation_col = annotation_col, cellwidth=15, cellheight=10,
+         annotation_colors = ann_colors, gaps_row = gapVecR, gaps_col = gapVecC)
+}
+
+genesPlot &lt;- data.frame(gene=c(&quot;TTN&quot;, &quot;MYBPC3&quot;, &quot;RYR2&quot;, &quot;NEBL&quot;, &quot;TNNT2&quot;, &quot;CMYA5&quot;, &quot;COL6A3&quot;, &quot;DCN&quot;,  &quot;FBN1&quot;, &quot;C7&quot;, &quot;PDGFRA&quot;, &quot;CDH19&quot;, &quot;PDGFRB&quot;,&quot;ITGA7&quot;,&quot;RGS5&quot;, &quot;NOTCH3&quot;, &quot;MYH11&quot;, &quot;ACTA2&quot;,&quot;PECAM1&quot;, &quot;VWF&quot;, &quot;EGFL7&quot;, &quot;POSTN&quot;, &quot;ITGA10&quot;, &quot;CDH11&quot;,&quot;CCL21&quot;, &quot;PROX1&quot;, &quot;FLT4&quot;, &quot;NRXN1&quot;, &quot;ANK3&quot;, &quot;PTPRZ1&quot;, &quot;ACACB&quot;, &quot;PLIN1&quot;, &quot;GPAM&quot;, &quot;CD163&quot;, &quot;MRC1&quot;, &quot;SIGLEC1&quot;, &quot;STAB1&quot;, &quot;CSF1R&quot;, &quot;MERTK&quot;, &quot;IL7R&quot;, &quot;PTPRC&quot;, &quot;CD2&quot;))
+
+levels(seurat)</code></pre>
+<pre><code> [1] &quot;CM&quot;           &quot;Fb1&quot;          &quot;Fb2&quot;          &quot;PerivFb/VSMC&quot; &quot;BEC1&quot;         &quot;BEC2&quot;        
+ [7] &quot;BEC3&quot;         &quot;LEC&quot;          &quot;NC&quot;           &quot;AdipoC&quot;       &quot;Mph1&quot;         &quot;Mph2&quot;        
+[13] &quot;Tcell&quot;       </code></pre>
+<pre class="r"><code>colVec &lt;- colclusterName
+
+# colVec &lt;- c(colPal, colPal, colPal)
+# colVec &lt;- c(&quot;blue&quot;, &quot;red&quot;)
+
+avgHeatmap(seurat, selGenes = genesPlot, colVecIdent = colVec)</code></pre>
+<p><img src="figure/HumanHeartCarTrans.Rmd/avg%20heatmap-1.png" width="768" style="display: block; margin: auto;" />
+## Abundance plots</p>
+<pre class="r"><code>###dataset
+datList &lt;- NULL
+for(con in unique(seuratM$dataset)){
+  seuratSub &lt;- subset(seuratM, dataset==con)
+  print(dim(seuratSub))
+  dat_con &lt;- as.data.frame(table(seuratSub$clusterName)) %&gt;%
+  mutate(percent=Freq/ncol(seuratSub)) %&gt;% mutate(dataset=con)
+  datList[[con]] &lt;- dat_con
+}</code></pre>
+<pre><code>[1] 38581  2934
+[1] 38581  2059
+[1] 38581  3718
+[1] 38581  3905
+[1] 38581  3377
+[1] 38581  3377
+[1] 38581  4861
+[1] 38581  2694
+[1] 38581  1739
+[1] 38581  1672
+[1] 38581  3101
+[1] 38581  1901
+[1] 38581  3679
+[1] 38581   483
+[1] 38581  3082
+[1] 38581   606
+[1] 38581   420
+[1] 38581  1326
+[1] 38581  1338
+[1] 38581  1362
+[1] 38581   986
+[1] 38581  1600
+[1] 38581   567
+[1] 38581    68
+[1] 38581   349
+[1] 38581   196
+[1] 38581   745
+[1] 38581  1896
+[1] 38581   230
+[1] 38581   361
+[1] 38581   194
+[1] 38581    56
+[1] 38581  2352
+[1] 38581  2148
+[1] 38581   804
+[1] 38581  2575
+[1] 38581   323
+[1] 38581   521
+[1] 38581   654
+[1] 38581   770
+[1] 38581  3921
+[1] 38581  3731
+[1] 38581  3991
+[1] 38581  3818
+[1] 38581  4908
+[1] 38581  9882
+[1] 38581  1442
+[1] 38581  1998
+[1] 38581   841
+[1] 38581  1480</code></pre>
+<pre class="r"><code>dat_all &lt;- do.call(&quot;rbind&quot;, datList)
+
+## plot abundance
+ggbarplot(dat_all, x= &quot;dataset&quot;, y= &quot;percent&quot;, fill = &quot;Var1&quot;, palette = colclusterName, legend = &quot;right&quot;, legend.titel = &quot;cluster&quot;, ylab = &quot;frequency&quot;)  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + scale_x_discrete(limits=orddatasets)</code></pre>
+<p><img src="figure/HumanHeartCarTrans.Rmd/abundance%20plot-1.png" width="960" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>###patient_diseaseCond
+datList &lt;- NULL
+for(con in unique(seuratM$patient_diseaseCond)){
+  seuratSub &lt;- subset(seuratM, patient_diseaseCond==con)
+  print(dim(seuratSub))
+  dat_con &lt;- as.data.frame(table(seuratSub$clusterName)) %&gt;%
+  mutate(percent=Freq/ncol(seuratSub)) %&gt;% mutate(patient_diseaseCond=con)
+  datList[[con]] &lt;- dat_con
+}</code></pre>
+<pre><code>[1] 38581  4835
+[1] 38581  5777
+[1] 38581  7282
+[1] 38581  8238
+[1] 38581  4433
+[1] 38581  4773
+[1] 38581  6761
+[1] 38581   483
+[1] 38581   606
+[1] 38581   420
+[1] 38581  1326
+[1] 38581  1338
+[1] 38581  1362
+[1] 38581   986
+[1] 38581  1600
+[1] 38581   567
+[1] 38581    68
+[1] 38581   349
+[1] 38581   196
+[1] 38581   745
+[1] 38581  1896
+[1] 38581   230
+[1] 38581   361
+[1] 38581   194
+[1] 38581    56
+[1] 38581  4500
+[1] 38581   804
+[1] 38581  2575
+[1] 38581   323
+[1] 38581   521
+[1] 38581   654
+[1] 38581   770
+[1] 38581  3921
+[1] 38581  3731
+[1] 38581  3991
+[1] 38581  3818
+[1] 38581  4908
+[1] 38581  9882
+[1] 38581  1442
+[1] 38581  1998
+[1] 38581   841
+[1] 38581  1480</code></pre>
+<pre class="r"><code>dat_all &lt;- do.call(&quot;rbind&quot;, datList)
+
+## plot abundance
+ggbarplot(dat_all, x= &quot;patient_diseaseCond&quot;, y= &quot;percent&quot;, fill = &quot;Var1&quot;, palette = colclusterName, legend = &quot;right&quot;, legend.titel = &quot;cluster&quot;, ylab = &quot;frequency&quot;)  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + scale_x_discrete(limits=ordpatient_diseasecond)</code></pre>
+<p><img src="figure/HumanHeartCarTrans.Rmd/abundance%20plot-2.png" width="960" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>###diseaseCond
+datList &lt;- NULL
+for(con in unique(seuratM$diseaseCond)){
+  seuratSub &lt;- subset(seuratM, diseaseCond==con)
+  print(dim(seuratSub))
+  dat_con &lt;- as.data.frame(table(seuratSub$clusterName)) %&gt;%
+  mutate(percent=Freq/ncol(seuratSub)) %&gt;% mutate(diseaseCond=con)
+  datList[[con]] &lt;- dat_con
+}</code></pre>
+<pre><code>[1] 38581 46599
+[1] 38581  6577
+[1] 38581  7814
+[1] 38581  4039
+[1] 38581 36012</code></pre>
+<pre class="r"><code>dat_all &lt;- do.call(&quot;rbind&quot;, datList)
+
+## plot abundance
+ggbarplot(dat_all, x= &quot;diseaseCond&quot;, y= &quot;percent&quot;, fill = &quot;Var1&quot;, palette = colclusterName, legend = &quot;right&quot;, legend.titel = &quot;cluster&quot;, ylab = &quot;frequency&quot;)  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + scale_x_discrete(limits=orddiseaseCond)</code></pre>
+<p><img src="figure/HumanHeartCarTrans.Rmd/abundance%20plot-3.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+<div id="session-info" class="section level2">
+<h2>session info</h2>
+<pre class="r"><code>date()</code></pre>
+<pre><code>[1] &quot;Fri Feb 23 10:07:16 2024&quot;</code></pre>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.2.3 (2023-03-15)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Big Sur ... 10.16
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] grid      stats4    stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] VennDiagram_1.7.3           futile.logger_1.4.3         ggupset_0.3.0              
+ [4] gridExtra_2.3               DOSE_3.24.2                 enrichplot_1.18.4          
+ [7] msigdbr_7.5.1               org.Hs.eg.db_3.16.0         AnnotationDbi_1.60.2       
+[10] clusterProfiler_4.6.2       multtest_2.54.0             metap_1.9                  
+[13] scater_1.26.1               scuttle_1.8.4               destiny_3.12.0             
+[16] circlize_0.4.16             muscat_1.12.1               viridis_0.6.5              
+[19] viridisLite_0.4.2           lubridate_1.9.3             forcats_1.0.0              
+[22] stringr_1.5.1               purrr_1.0.2                 readr_2.1.5                
+[25] tidyr_1.3.1                 tibble_3.2.1                tidyverse_2.0.0            
+[28] dplyr_1.1.4                 SingleCellExperiment_1.20.1 SummarizedExperiment_1.28.0
+[31] Biobase_2.58.0              GenomicRanges_1.50.2        GenomeInfoDb_1.34.9        
+[34] IRanges_2.32.0              S4Vectors_0.36.2            BiocGenerics_0.44.0        
+[37] MatrixGenerics_1.10.0       matrixStats_1.2.0           pheatmap_1.0.12            
+[40] ggpubr_0.6.0                ggplot2_3.4.4               Seurat_5.0.1               
+[43] SeuratObject_5.0.1          sp_2.1-3                    runSeurat3_0.1.0           
+[46] ExploreSCdataSeurat3_0.1.0 
+
+loaded via a namespace (and not attached):
+  [1] TMB_1.9.10                graphlayouts_1.1.0        pbapply_1.7-2            
+  [4] lattice_0.22-5            vctrs_0.6.5               mgcv_1.9-1               
+  [7] blob_1.2.4                survival_3.5-8            spatstat.data_3.0-4      
+ [10] later_1.3.2               nloptr_2.0.3              DBI_1.2.2                
+ [13] uwot_0.1.16               zlibbioc_1.44.0           pcaMethods_1.90.0        
+ [16] htmlwidgets_1.6.4         mvtnorm_1.2-4             GlobalOptions_0.1.2      
+ [19] future_1.33.1             laeken_0.5.3              leiden_0.4.3.1           
+ [22] parallel_4.2.3            pbkrtest_0.5.2            irlba_2.3.5.1            
+ [25] DEoptimR_1.1-3            tidygraph_1.3.0           Rcpp_1.0.12              
+ [28] KernSmooth_2.23-22        promises_1.2.1            DelayedArray_0.24.0      
+ [31] limma_3.54.2              RSpectra_0.16-1           fs_1.6.3                 
+ [34] fastmatch_1.1-4           mnormt_2.1.1              RhpcBLASctl_0.23-42      
+ [37] ranger_0.16.0             digest_0.6.34             png_0.1-8                
+ [40] sctransform_0.4.1         scatterpie_0.2.1          cowplot_1.1.3            
+ [43] ggraph_2.1.0              pkgconfig_2.0.3           GO.db_3.16.0             
+ [46] spatstat.random_3.2-2     DelayedMatrixStats_1.20.0 ggbeeswarm_0.7.2         
+ [49] iterators_1.0.14          minqa_1.2.6               reticulate_1.35.0        
+ [52] spam_2.10-0               beeswarm_0.4.0            GetoptLong_1.0.5         
+ [55] xfun_0.42                 bslib_0.6.1               zoo_1.8-12               
+ [58] tidyselect_1.2.0          reshape2_1.4.4            ica_1.0-3                
+ [61] gson_0.1.0                rlang_1.1.3               hexbin_1.28.3            
+ [64] jquerylib_0.1.4           glue_1.7.0                RColorBrewer_1.1-3       
+ [67] variancePartition_1.28.9  lambda.r_1.2.4            ggsignif_0.6.4           
+ [70] workflowr_1.7.1           DESeq2_1.38.3             labeling_0.4.3           
+ [73] mutoss_0.1-13             httpuv_1.6.14             class_7.3-22             
+ [76] BiocNeighbors_1.16.0      TH.data_1.1-2             annotate_1.76.0          
+ [79] jsonlite_1.8.8            XVector_0.38.0            bit_4.0.5                
+ [82] mime_0.12                 gplots_3.1.3.1            stringi_1.8.3            
+ [85] spatstat.sparse_3.0-3     scattermore_1.2           spatstat.explore_3.2-6   
+ [88] rbibutils_2.2.16          yulab.utils_0.1.4         bitops_1.0-7             
+ [91] cli_3.6.2                 Rdpack_2.6                RSQLite_2.3.5            
+ [94] data.table_1.15.0         timechange_0.3.0          rstudioapi_0.15.0        
+ [97] git2r_0.33.0              nlme_3.1-164              qvalue_2.30.0            
+[100] locfit_1.5-9.8            listenv_0.9.1             ggthemes_5.1.0           
+[103] miniUI_0.1.1.1            gridGraphics_0.5-1        TTR_0.24.4               
+[106] lifecycle_1.0.4           munsell_0.5.0             caTools_1.18.2           
+[109] codetools_0.2-19          vipor_0.4.7               lmtest_0.9-40            
+[112] xtable_1.8-4              ROCR_1.0-11               formatR_1.14             
+[115] scatterplot3d_0.3-44      abind_1.4-5               farver_2.1.1             
+[118] parallelly_1.37.0         RANN_2.6.1                aplot_0.2.2              
+[121] ggtree_3.6.2              RcppAnnoy_0.0.22          goftest_1.2-3            
+[124] patchwork_1.2.0           futile.options_1.0.1      cluster_2.1.6            
+[127] future.apply_1.11.1       Matrix_1.6-5              tidytree_0.4.6           
+[130] ellipsis_0.3.2            prettyunits_1.2.0         ggridges_0.5.6           
+[133] shinydashboard_0.7.2      igraph_1.6.0              RcppEigen_0.3.3.9.4      
+[136] fgsea_1.24.0              TFisher_0.2.0             lmerTest_3.1-3           
+[139] VIM_6.2.2                 glmmTMB_1.1.8             spatstat.utils_3.0-4     
+[142] htmltools_0.5.7           yaml_2.3.8                utf8_1.2.4               
+[145] plotly_4.10.4             XML_3.99-0.16.1           e1071_1.7-14             
+[148] withr_3.0.0               fitdistrplus_1.1-11       BiocParallel_1.32.6      
+[151] bit64_4.0.5               multcomp_1.4-25           foreach_1.5.2            
+[154] robustbase_0.99-2         Biostrings_2.66.0         progressr_0.14.0         
+[157] GOSemSim_2.24.0           rsvd_1.0.5                ScaledMatrix_1.6.0       
+[160] memoise_2.0.1             evaluate_0.23             geneplotter_1.76.0       
+[163] tzdb_0.4.0                curl_5.2.0                qqconf_1.3.2             
+[166] fansi_1.0.6               fastDummies_1.7.3         highr_0.10               
+[169] xts_0.13.2                tensor_1.5                edgeR_3.40.2             
+[172] aod_1.3.3                 cachem_1.0.8              remaCor_0.0.18           
+[175] deldir_2.0-2              HDO.db_0.99.1             babelgene_22.9           
+[178] rjson_0.2.21              rstatix_0.7.2             ggrepel_0.9.5            
+[181] clue_0.3-65               rprojroot_2.0.4           tools_4.2.3              
+[184] sass_0.4.8                sandwich_3.1-0            magrittr_2.0.3           
+[187] RCurl_1.98-1.14           proxy_0.4-27              car_3.1-2                
+[190] ape_5.7-1                 ggplotify_0.1.2           httr_1.4.7               
+[193] rmarkdown_2.25            boot_1.3-29               globals_0.16.2           
+[196] R6_2.5.1                  nnet_7.3-19               RcppHNSW_0.6.0           
+[199] progress_1.2.3            KEGGREST_1.38.0           treeio_1.22.0            
+[202] gtools_3.9.5              shape_1.4.6               beachmat_2.14.2          
+[205] BiocSingular_1.14.0       splines_4.2.3             carData_3.0-5            
+[208] ggfun_0.1.4               colorspace_2.1-0          generics_0.1.3           
+[211] smoother_1.1              pillar_1.9.0              sn_2.1.1                 
+[214] tweenr_2.0.2              ggplot.multistats_1.0.0   GenomeInfoDbData_1.2.9   
+[217] plyr_1.8.9                dotCall64_1.1-1           gtable_0.3.4             
+[220] colourpicker_1.3.0        knitr_1.45                ComplexHeatmap_2.14.0    
+[223] shadowtext_0.1.3          fastmap_1.1.1             EnvStats_2.8.1           
+[226] Cairo_1.6-2               doParallel_1.0.17         vcd_1.4-12               
+[229] broom_1.0.5               scales_1.3.0              backports_1.4.1          
+[232] plotrix_3.8-4             lme4_1.1-35.1             blme_1.0-5               
+[235] hms_1.1.3                 ggforce_0.4.2             Rtsne_0.17               
+[238] shiny_1.8.0               polyclip_1.10-6           numDeriv_2016.8-1.1      
+[241] mathjaxr_1.6-0            lazyeval_0.2.2            crayon_1.5.2             
+[244] MASS_7.3-60.0.1           downloader_0.4            sparseMatrixStats_1.10.0 
+[247] compiler_4.2.3            spatstat.geom_3.2-8      </code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.2.3 (2023-03-15)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Big Sur ... 10.16
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] grid      stats4    stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] VennDiagram_1.7.3           futile.logger_1.4.3         ggupset_0.3.0              
+ [4] gridExtra_2.3               DOSE_3.24.2                 enrichplot_1.18.4          
+ [7] msigdbr_7.5.1               org.Hs.eg.db_3.16.0         AnnotationDbi_1.60.2       
+[10] clusterProfiler_4.6.2       multtest_2.54.0             metap_1.9                  
+[13] scater_1.26.1               scuttle_1.8.4               destiny_3.12.0             
+[16] circlize_0.4.16             muscat_1.12.1               viridis_0.6.5              
+[19] viridisLite_0.4.2           lubridate_1.9.3             forcats_1.0.0              
+[22] stringr_1.5.1               purrr_1.0.2                 readr_2.1.5                
+[25] tidyr_1.3.1                 tibble_3.2.1                tidyverse_2.0.0            
+[28] dplyr_1.1.4                 SingleCellExperiment_1.20.1 SummarizedExperiment_1.28.0
+[31] Biobase_2.58.0              GenomicRanges_1.50.2        GenomeInfoDb_1.34.9        
+[34] IRanges_2.32.0              S4Vectors_0.36.2            BiocGenerics_0.44.0        
+[37] MatrixGenerics_1.10.0       matrixStats_1.2.0           pheatmap_1.0.12            
+[40] ggpubr_0.6.0                ggplot2_3.4.4               Seurat_5.0.1               
+[43] SeuratObject_5.0.1          sp_2.1-3                    runSeurat3_0.1.0           
+[46] ExploreSCdataSeurat3_0.1.0 
+
+loaded via a namespace (and not attached):
+  [1] TMB_1.9.10                graphlayouts_1.1.0        pbapply_1.7-2            
+  [4] lattice_0.22-5            vctrs_0.6.5               mgcv_1.9-1               
+  [7] blob_1.2.4                survival_3.5-8            spatstat.data_3.0-4      
+ [10] later_1.3.2               nloptr_2.0.3              DBI_1.2.2                
+ [13] uwot_0.1.16               zlibbioc_1.44.0           pcaMethods_1.90.0        
+ [16] htmlwidgets_1.6.4         mvtnorm_1.2-4             GlobalOptions_0.1.2      
+ [19] future_1.33.1             laeken_0.5.3              leiden_0.4.3.1           
+ [22] parallel_4.2.3            pbkrtest_0.5.2            irlba_2.3.5.1            
+ [25] DEoptimR_1.1-3            tidygraph_1.3.0           Rcpp_1.0.12              
+ [28] KernSmooth_2.23-22        promises_1.2.1            DelayedArray_0.24.0      
+ [31] limma_3.54.2              RSpectra_0.16-1           fs_1.6.3                 
+ [34] fastmatch_1.1-4           mnormt_2.1.1              RhpcBLASctl_0.23-42      
+ [37] ranger_0.16.0             digest_0.6.34             png_0.1-8                
+ [40] sctransform_0.4.1         scatterpie_0.2.1          cowplot_1.1.3            
+ [43] ggraph_2.1.0              pkgconfig_2.0.3           GO.db_3.16.0             
+ [46] spatstat.random_3.2-2     DelayedMatrixStats_1.20.0 ggbeeswarm_0.7.2         
+ [49] iterators_1.0.14          minqa_1.2.6               reticulate_1.35.0        
+ [52] spam_2.10-0               beeswarm_0.4.0            GetoptLong_1.0.5         
+ [55] xfun_0.42                 bslib_0.6.1               zoo_1.8-12               
+ [58] tidyselect_1.2.0          reshape2_1.4.4            ica_1.0-3                
+ [61] gson_0.1.0                rlang_1.1.3               hexbin_1.28.3            
+ [64] jquerylib_0.1.4           glue_1.7.0                RColorBrewer_1.1-3       
+ [67] variancePartition_1.28.9  lambda.r_1.2.4            ggsignif_0.6.4           
+ [70] workflowr_1.7.1           DESeq2_1.38.3             labeling_0.4.3           
+ [73] mutoss_0.1-13             httpuv_1.6.14             class_7.3-22             
+ [76] BiocNeighbors_1.16.0      TH.data_1.1-2             annotate_1.76.0          
+ [79] jsonlite_1.8.8            XVector_0.38.0            bit_4.0.5                
+ [82] mime_0.12                 gplots_3.1.3.1            stringi_1.8.3            
+ [85] spatstat.sparse_3.0-3     scattermore_1.2           spatstat.explore_3.2-6   
+ [88] rbibutils_2.2.16          yulab.utils_0.1.4         bitops_1.0-7             
+ [91] cli_3.6.2                 Rdpack_2.6                RSQLite_2.3.5            
+ [94] data.table_1.15.0         timechange_0.3.0          rstudioapi_0.15.0        
+ [97] git2r_0.33.0              nlme_3.1-164              qvalue_2.30.0            
+[100] locfit_1.5-9.8            listenv_0.9.1             ggthemes_5.1.0           
+[103] miniUI_0.1.1.1            gridGraphics_0.5-1        TTR_0.24.4               
+[106] lifecycle_1.0.4           munsell_0.5.0             caTools_1.18.2           
+[109] codetools_0.2-19          vipor_0.4.7               lmtest_0.9-40            
+[112] xtable_1.8-4              ROCR_1.0-11               formatR_1.14             
+[115] scatterplot3d_0.3-44      abind_1.4-5               farver_2.1.1             
+[118] parallelly_1.37.0         RANN_2.6.1                aplot_0.2.2              
+[121] ggtree_3.6.2              RcppAnnoy_0.0.22          goftest_1.2-3            
+[124] patchwork_1.2.0           futile.options_1.0.1      cluster_2.1.6            
+[127] future.apply_1.11.1       Matrix_1.6-5              tidytree_0.4.6           
+[130] ellipsis_0.3.2            prettyunits_1.2.0         ggridges_0.5.6           
+[133] shinydashboard_0.7.2      igraph_1.6.0              RcppEigen_0.3.3.9.4      
+[136] fgsea_1.24.0              TFisher_0.2.0             lmerTest_3.1-3           
+[139] VIM_6.2.2                 glmmTMB_1.1.8             spatstat.utils_3.0-4     
+[142] htmltools_0.5.7           yaml_2.3.8                utf8_1.2.4               
+[145] plotly_4.10.4             XML_3.99-0.16.1           e1071_1.7-14             
+[148] withr_3.0.0               fitdistrplus_1.1-11       BiocParallel_1.32.6      
+[151] bit64_4.0.5               multcomp_1.4-25           foreach_1.5.2            
+[154] robustbase_0.99-2         Biostrings_2.66.0         progressr_0.14.0         
+[157] GOSemSim_2.24.0           rsvd_1.0.5                ScaledMatrix_1.6.0       
+[160] memoise_2.0.1             evaluate_0.23             geneplotter_1.76.0       
+[163] tzdb_0.4.0                curl_5.2.0                qqconf_1.3.2             
+[166] fansi_1.0.6               fastDummies_1.7.3         highr_0.10               
+[169] xts_0.13.2                tensor_1.5                edgeR_3.40.2             
+[172] aod_1.3.3                 cachem_1.0.8              remaCor_0.0.18           
+[175] deldir_2.0-2              HDO.db_0.99.1             babelgene_22.9           
+[178] rjson_0.2.21              rstatix_0.7.2             ggrepel_0.9.5            
+[181] clue_0.3-65               rprojroot_2.0.4           tools_4.2.3              
+[184] sass_0.4.8                sandwich_3.1-0            magrittr_2.0.3           
+[187] RCurl_1.98-1.14           proxy_0.4-27              car_3.1-2                
+[190] ape_5.7-1                 ggplotify_0.1.2           httr_1.4.7               
+[193] rmarkdown_2.25            boot_1.3-29               globals_0.16.2           
+[196] R6_2.5.1                  nnet_7.3-19               RcppHNSW_0.6.0           
+[199] progress_1.2.3            KEGGREST_1.38.0           treeio_1.22.0            
+[202] gtools_3.9.5              shape_1.4.6               beachmat_2.14.2          
+[205] BiocSingular_1.14.0       splines_4.2.3             carData_3.0-5            
+[208] ggfun_0.1.4               colorspace_2.1-0          generics_0.1.3           
+[211] smoother_1.1              pillar_1.9.0              sn_2.1.1                 
+[214] tweenr_2.0.2              ggplot.multistats_1.0.0   GenomeInfoDbData_1.2.9   
+[217] plyr_1.8.9                dotCall64_1.1-1           gtable_0.3.4             
+[220] colourpicker_1.3.0        knitr_1.45                ComplexHeatmap_2.14.0    
+[223] shadowtext_0.1.3          fastmap_1.1.1             EnvStats_2.8.1           
+[226] Cairo_1.6-2               doParallel_1.0.17         vcd_1.4-12               
+[229] broom_1.0.5               scales_1.3.0              backports_1.4.1          
+[232] plotrix_3.8-4             lme4_1.1-35.1             blme_1.0-5               
+[235] hms_1.1.3                 ggforce_0.4.2             Rtsne_0.17               
+[238] shiny_1.8.0               polyclip_1.10-6           numDeriv_2016.8-1.1      
+[241] mathjaxr_1.6-0            lazyeval_0.2.2            crayon_1.5.2             
+[244] MASS_7.3-60.0.1           downloader_0.4            sparseMatrixStats_1.10.0 
+[247] compiler_4.2.3            spatstat.geom_3.2-8      </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

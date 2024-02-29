@@ -42,6 +42,7 @@ library(grid)
 library(gridExtra)
 library(ggupset)
 library(VennDiagram)
+library(NCmisc)
 ```
 
 ##############################start pre-processing##############################
@@ -409,9 +410,102 @@ dat_all <- do.call("rbind", datList)
 ## plot abundance
 ggbarplot(dat_all, x= "diseaseCond", y= "percent", fill = "Var1", palette = colclusterName, legend = "right", legend.titel = "cluster", ylab = "frequency")  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + scale_x_discrete(limits=orddiseaseCond)
 ```
+## fraction of subsets/patient
+```{r fraction for subsets, fig.height=8, fig.width=10}
+##set order
+seuratM$diseaseCond <- factor(seuratM$diseaseCond, levels=c("healthy", "explant", "visit1", "visit2", "visit3"))
+
+## 1. create data.frame with cluster counts per patient
+## change "RNA_snn_res.0.25" to subset/cluster you're interested in ...
+datFrac <- data.frame(table(seuratM$patient_diseaseCond, seuratM$clusterName))
+colnames(datFrac) <- c("patient_diseaseCond", "subset", "cnt")
+
+## 2. get total counts per patient to compute relative abundances from
+## I added cond here as grouping variable for the plotting later ...
+datSumPat <- data.frame(table(seuratM$patient_diseaseCond, seuratM$diseaseCond)) %>% 
+  filter(Freq >0)
+colnames(datSumPat) <- c("patient_diseaseCond", "diseaseCond", "cntPatTot")
+
+## 3. join data.frames to compute rel abundances per patient
+datFracSum <- datFrac %>% left_join(., datSumPat, by = "patient_diseaseCond") %>% 
+  mutate(relCnt = cnt/cntPatTot)
+
+## plot barplot with abundances for each subset grouped by cond
+ggbarplot(datFracSum, x = "subset", y = "relCnt",
+          fill = "diseaseCond", color = "diseaseCond",
+          palette = coldiseaseCond,
+          add = c("mean_se", "dotplot"),
+          add.params = list(color="black", fill="diseaseCond", size=0.2),
+          position = position_dodge(0.9),
+          xlab = "subset",
+          ylab = "relative abundance",
+          legend = "right",
+          legend.title = "") +
+  rotate_x_text(angle = 90) 
+
+
+## plot barplot with abundances for individual subsets
+clusterVec <- levels(seuratM)
+createClusterPlot <- function(cluster) {
+  datFracSumC <- datFracSum %>% filter(subset == cluster)
+
+  ggbarplot(datFracSumC, x = "diseaseCond", y = "relCnt",
+            fill = "diseaseCond", color = "diseaseCond",
+            palette = coldiseaseCond,
+            add = c("mean_se", "dotplot"),
+            size = 5,
+            add.params = list(color = "black", fill = "diseaseCond"),
+            position = position_dodge(0.9),
+            xlab = cluster,
+            ylab = "relative abundance",
+            legend = "right",
+            legend.title = "") +
+    stat_compare_means(method = "kruskal.test", label.y = 0.0)
+}
+lapply(clusterVec, createClusterPlot)
+```
+## DE genes
+```{r DE genes, eval=FALSE, include=TRUE, fig.height=10, fig.width=12}
+#DE genes
+Idents(seuratM) <- seuratM$clusterName
+seuratFb <- subset(seuratM, clusterName %in% c("Fb1", "Fb2"))
+levels(seuratFb)
+DEGenesFb <- FindAllMarkers(seuratFb, only.pos=T,logfc.threshold = 0.2) %>% 
+  dplyr::filter(p_val_adj < 0.1) 
+#save 
+write.table(DEGenesFb, 
+            file= "/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/analysis/DeGenesFb",
+            sep="\t",
+            quote=F,
+            row.names=F,
+            col.names=T)
+
+##adjust table
+DEGenesFbadj <- DEGenesFb %>% rownames_to_column(., var = "long") %>%
+  mutate(gene=gsub("^.*\\.", "", long))  %>%
+  mutate(EnsID=gsub("\\..*","", long))
+
+##GSEA
+Fbsubsets <- c("Fb1", "Fb2")
+GSEAFbsub <- function(Fbsubsets) {
+  DEGenesFbC <- DEGenesFbadj %>% filter (cluster == Fbsubsets)
+  ego <- enrichGO(gene = unique(DEGenesFbC$EnsID),
+                          OrgDb = org.Hs.eg.db,
+                          keyType = 'ENSEMBL',
+                          ont = "BP",
+                          pAdjustMethod = "BH",
+                          pvalueCutoff = 0.05,
+                          qvalueCutoff = 0.05)
+ego <- setReadable(ego, OrgDb = org.Hs.eg.db)
+dotplot(ego, showCategory=30, title = Fbsubsets, font.size = 10)
+}
+lapply(Fbsubsets, GSEAFbsub)
+```
 
 ## session info
 ```{r date and session info}
 date()
 sessionInfo()
 ```
+
+

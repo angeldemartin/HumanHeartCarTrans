@@ -443,7 +443,6 @@ ggbarplot(datFracSum, x = "subset", y = "relCnt",
           legend.title = "") +
   rotate_x_text(angle = 90) 
 
-
 ## plot barplot with abundances for individual subsets
 clusterVec <- levels(seuratM)
 createClusterPlot <- function(cluster) {
@@ -464,8 +463,9 @@ createClusterPlot <- function(cluster) {
 }
 lapply(clusterVec, createClusterPlot)
 ```
-## DE genes
-```{r DE genes, eval=FALSE, include=TRUE, fig.height=10, fig.width=12}
+
+## GSEA Fb1 vs Fb2
+```{r DE genes, fig.height=10, fig.width=12}
 #DE genes
 Idents(seuratM) <- seuratM$clusterName
 seuratFb <- subset(seuratM, clusterName %in% c("Fb1", "Fb2"))
@@ -479,7 +479,6 @@ write.table(DEGenesFb,
             quote=F,
             row.names=F,
             col.names=T)
-
 ##adjust table
 DEGenesFbadj <- DEGenesFb %>% rownames_to_column(., var = "long") %>%
   mutate(gene=gsub("^.*\\.", "", long))  %>%

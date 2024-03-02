@@ -386,9 +386,9 @@ aria-hidden="true"></span> </a>
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 5
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 2
+aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>HumanHeartCarTrans/</code> <span
@@ -411,21 +411,18 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
@@ -567,15 +564,15 @@ analysis/DeGenesFb
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree57d61d1fcc11a9b583f80064614551badcdb1f67targetblank57d61d1a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree703f7d9a69a37cf792ea9e44396e28f9539e8c2dtargetblank703f7d9a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/57d61d1fcc11a9b583f80064614551badcdb1f67" target="_blank">57d61d1</a>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/703f7d9a69a37cf792ea9e44396e28f9539e8c2d" target="_blank">703f7d9</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree57d61d1fcc11a9b583f80064614551badcdb1f67targetblank57d61d1a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree703f7d9a69a37cf792ea9e44396e28f9539e8c2dtargetblank703f7d9a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -585,7 +582,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/57d61d1fcc11a9b583f80064614551badcdb1f67" target="_blank">57d61d1</a>.
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/703f7d9a69a37cf792ea9e44396e28f9539e8c2d" target="_blank">703f7d9</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -605,9 +602,6 @@ Ignored files:
     Ignored:    .Rproj.user/
     Ignored:    analysis/.DS_Store
     Ignored:    data/seurat files/
-
-Unstaged changes:
-    Modified:   analysis/HumanHeartCarTrans.Rmd
 
 </code></pre>
 <p>
@@ -653,6 +647,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/703f7d9a69a37cf792ea9e44396e28f9539e8c2d/analysis/HumanHeartCarTrans.Rmd" target="_blank">703f7d9</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-03-02
+</td>
+<td>
+update march3
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/angeldemartin/HumanHeartCarTrans/703f7d9a69a37cf792ea9e44396e28f9539e8c2d/docs/HumanHeartCarTrans.html" target="_blank">703f7d9</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-03-02
+</td>
+<td>
+update march3
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1774,6 +1802,43 @@ ggbarplot(datFracSum, x = &quot;subset&quot;, y = &quot;relCnt&quot;,
           legend.title = &quot;&quot;) +
   rotate_x_text(angle = 90) </code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/fraction%20for%20subsets-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-fraction-for-subsets-1">
+Past versions of "fraction for subsets-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-fraction-for-subsets-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/703f7d9a69a37cf792ea9e44396e28f9539e8c2d/docs/figure/HumanHeartCarTrans.Rmd/fraction for subsets-1.png" target="_blank">703f7d9</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-03-02
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>## plot barplot with abundances for individual subsets
 clusterVec &lt;- levels(seuratM)
 createClusterPlot &lt;- function(cluster) {
@@ -1795,50 +1860,532 @@ createClusterPlot &lt;- function(cluster) {
 lapply(clusterVec, createClusterPlot)</code></pre>
 <pre><code>[[1]]</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/fraction%20for%20subsets-2.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-fraction-for-subsets-2">
+Past versions of "fraction for subsets-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-fraction-for-subsets-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/703f7d9a69a37cf792ea9e44396e28f9539e8c2d/docs/figure/HumanHeartCarTrans.Rmd/fraction for subsets-2.png" target="_blank">703f7d9</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-03-02
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[2]]</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/fraction%20for%20subsets-3.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-fraction-for-subsets-3">
+Past versions of "fraction for subsets-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-fraction-for-subsets-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/703f7d9a69a37cf792ea9e44396e28f9539e8c2d/docs/figure/HumanHeartCarTrans.Rmd/fraction for subsets-3.png" target="_blank">703f7d9</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-03-02
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[3]]</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/fraction%20for%20subsets-4.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-fraction-for-subsets-4">
+Past versions of "fraction for subsets-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-fraction-for-subsets-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/703f7d9a69a37cf792ea9e44396e28f9539e8c2d/docs/figure/HumanHeartCarTrans.Rmd/fraction for subsets-4.png" target="_blank">703f7d9</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-03-02
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[4]]</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/fraction%20for%20subsets-5.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-fraction-for-subsets-5">
+Past versions of "fraction for subsets-5.png"
+</button>
+</p>
+<div id="fig-no-spaces-fraction-for-subsets-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/703f7d9a69a37cf792ea9e44396e28f9539e8c2d/docs/figure/HumanHeartCarTrans.Rmd/fraction for subsets-5.png" target="_blank">703f7d9</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-03-02
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[5]]</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/fraction%20for%20subsets-6.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-fraction-for-subsets-6">
+Past versions of "fraction for subsets-6.png"
+</button>
+</p>
+<div id="fig-no-spaces-fraction-for-subsets-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/703f7d9a69a37cf792ea9e44396e28f9539e8c2d/docs/figure/HumanHeartCarTrans.Rmd/fraction for subsets-6.png" target="_blank">703f7d9</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-03-02
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[6]]</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/fraction%20for%20subsets-7.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-fraction-for-subsets-7">
+Past versions of "fraction for subsets-7.png"
+</button>
+</p>
+<div id="fig-no-spaces-fraction-for-subsets-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/703f7d9a69a37cf792ea9e44396e28f9539e8c2d/docs/figure/HumanHeartCarTrans.Rmd/fraction for subsets-7.png" target="_blank">703f7d9</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-03-02
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[7]]</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/fraction%20for%20subsets-8.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-fraction-for-subsets-8">
+Past versions of "fraction for subsets-8.png"
+</button>
+</p>
+<div id="fig-no-spaces-fraction-for-subsets-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/703f7d9a69a37cf792ea9e44396e28f9539e8c2d/docs/figure/HumanHeartCarTrans.Rmd/fraction for subsets-8.png" target="_blank">703f7d9</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-03-02
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[8]]</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/fraction%20for%20subsets-9.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-fraction-for-subsets-9">
+Past versions of "fraction for subsets-9.png"
+</button>
+</p>
+<div id="fig-no-spaces-fraction-for-subsets-9" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/703f7d9a69a37cf792ea9e44396e28f9539e8c2d/docs/figure/HumanHeartCarTrans.Rmd/fraction for subsets-9.png" target="_blank">703f7d9</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-03-02
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[9]]</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/fraction%20for%20subsets-10.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-fraction-for-subsets-10">
+Past versions of "fraction for subsets-10.png"
+</button>
+</p>
+<div id="fig-no-spaces-fraction-for-subsets-10" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/703f7d9a69a37cf792ea9e44396e28f9539e8c2d/docs/figure/HumanHeartCarTrans.Rmd/fraction for subsets-10.png" target="_blank">703f7d9</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-03-02
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[10]]</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/fraction%20for%20subsets-11.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-fraction-for-subsets-11">
+Past versions of "fraction for subsets-11.png"
+</button>
+</p>
+<div id="fig-no-spaces-fraction-for-subsets-11" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/703f7d9a69a37cf792ea9e44396e28f9539e8c2d/docs/figure/HumanHeartCarTrans.Rmd/fraction for subsets-11.png" target="_blank">703f7d9</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-03-02
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[11]]</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/fraction%20for%20subsets-12.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-fraction-for-subsets-12">
+Past versions of "fraction for subsets-12.png"
+</button>
+</p>
+<div id="fig-no-spaces-fraction-for-subsets-12" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/703f7d9a69a37cf792ea9e44396e28f9539e8c2d/docs/figure/HumanHeartCarTrans.Rmd/fraction for subsets-12.png" target="_blank">703f7d9</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-03-02
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[12]]</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/fraction%20for%20subsets-13.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-fraction-for-subsets-13">
+Past versions of "fraction for subsets-13.png"
+</button>
+</p>
+<div id="fig-no-spaces-fraction-for-subsets-13" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/703f7d9a69a37cf792ea9e44396e28f9539e8c2d/docs/figure/HumanHeartCarTrans.Rmd/fraction for subsets-13.png" target="_blank">703f7d9</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-03-02
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[13]]</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/fraction%20for%20subsets-14.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-fraction-for-subsets-14">
+Past versions of "fraction for subsets-14.png"
+</button>
+</p>
+<div id="fig-no-spaces-fraction-for-subsets-14" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/703f7d9a69a37cf792ea9e44396e28f9539e8c2d/docs/figure/HumanHeartCarTrans.Rmd/fraction for subsets-14.png" target="_blank">703f7d9</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-03-02
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="gsea-fb1-vs-fb2" class="section level2">
 <h2>GSEA Fb1 vs Fb2</h2>
 <pre class="r"><code>#DE genes
 Idents(seuratM) &lt;- seuratM$clusterName
 seuratFb &lt;- subset(seuratM, clusterName %in% c(&quot;Fb1&quot;, &quot;Fb2&quot;))
-levels(seuratFb)
-DEGenesFb &lt;- FindAllMarkers(seuratFb, only.pos=T,logfc.threshold = 0.2) %&gt;% 
+levels(seuratFb)</code></pre>
+<pre><code>[1] &quot;Fb1&quot; &quot;Fb2&quot;</code></pre>
+<pre class="r"><code>DEGenesFb &lt;- FindAllMarkers(seuratFb, only.pos=T,logfc.threshold = 0.2) %&gt;% 
   dplyr::filter(p_val_adj &lt; 0.1) 
 #save 
 write.table(DEGenesFb, 
@@ -1867,11 +2414,16 @@ ego &lt;- setReadable(ego, OrgDb = org.Hs.eg.db)
 dotplot(ego, showCategory=30, title = Fbsubsets, font.size = 10)
 }
 lapply(Fbsubsets, GSEAFbsub)</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/HumanHeartCarTrans.Rmd/DE%20genes-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/HumanHeartCarTrans.Rmd/DE%20genes-2.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
 <div id="session-info" class="section level2">
 <h2>session info</h2>
 <pre class="r"><code>date()</code></pre>
-<pre><code>[1] &quot;Sat Mar  2 14:09:30 2024&quot;</code></pre>
+<pre><code>[1] &quot;Sat Mar  2 14:35:06 2024&quot;</code></pre>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.2.3 (2023-03-15)
 Platform: x86_64-apple-darwin17.0 (64-bit)

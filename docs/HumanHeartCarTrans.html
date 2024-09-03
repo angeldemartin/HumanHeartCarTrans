@@ -551,15 +551,15 @@ data/Human_heart_allmerged_seurat.rds
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstreea155827964ac8d7e4f75a4838025a4ca1d96da00targetblanka155827a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree6ec9eda1708beae596b99c4a51d7ce64c634fa96targetblank6ec9edaa">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/a155827964ac8d7e4f75a4838025a4ca1d96da00" target="_blank">a155827</a>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/6ec9eda1708beae596b99c4a51d7ce64c634fa96" target="_blank">6ec9eda</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstreea155827964ac8d7e4f75a4838025a4ca1d96da00targetblanka155827a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree6ec9eda1708beae596b99c4a51d7ce64c634fa96targetblank6ec9edaa"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -569,7 +569,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/a155827964ac8d7e4f75a4838025a4ca1d96da00" target="_blank">a155827</a>.
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/6ec9eda1708beae596b99c4a51d7ce64c634fa96" target="_blank">6ec9eda</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -591,18 +591,8 @@ Ignored files:
     Ignored:    analysis/.Rhistory
     Ignored:    data/seurat files/
 
-Untracked files:
-    Untracked:  analysis/DEGenes.Rmd
-    Untracked:  analysis/DifferentialExpressionFb.Rmd
-    Untracked:  analysis/MarkerGenes.Rmd
-    Untracked:  analysis/QCindividual.Rmd
-    Untracked:  analysis/RelativeAbundances.Rmd
-    Untracked:  analysis/clusterMarkerGenes
-    Untracked:  analysis/markerGenesclusterName
-
 Unstaged changes:
     Modified:   analysis/HumanHeartCarTrans.Rmd
-    Modified:   analysis/index.Rmd
 
 </code></pre>
 <p>
@@ -648,6 +638,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/analysis/HumanHeartCarTrans.Rmd" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+<td>
+Sept24
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/angeldemartin/HumanHeartCarTrans/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/HumanHeartCarTrans.html" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+<td>
+Sept24
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1207,6 +1231,34 @@ table(seuratM$patient_ventricle)</code></pre>
                       4908                       9882                       1442 
           HH9_ventricle-NA 
                       1998 </code></pre>
+<pre class="r"><code>###combined slots
+seuratM$clusterName_diseaseCond &lt;- paste0(seuratM$clusterName, &#39;_&#39;, seuratM$diseaseCond)
+table(seuratM$clusterName_diseaseCond)</code></pre>
+<pre><code>
+ AdipoC_explant  AdipoC_healthy   AdipoC_visit1   AdipoC_visit2   AdipoC_visit3    BEC1_explant 
+            580              76               5              20               7           14584 
+   BEC1_healthy     BEC1_visit1     BEC1_visit2     BEC1_visit3    BEC2_explant    BEC2_healthy 
+           6644            1053            1309             968             821             686 
+    BEC2_visit1     BEC2_visit2     BEC2_visit3      CM_explant      CM_healthy       CM_visit1 
+            481             218             252            3937            5519            1509 
+      CM_visit2       CM_visit3      Fb_explant      Fb_healthy       Fb_visit1       Fb_visit2 
+            702            1125           32045            8426            3486            3530 
+      Fb_visit3     Int_explant     Int_healthy      Int_visit1      Int_visit2      Int_visit3 
+           3189            1444             469              77              84              93 
+    LEC_explant     LEC_healthy      LEC_visit1      LEC_visit2      LEC_visit3     Mph_explant 
+            740              88               3              36              17            8163 
+    Mph_healthy      Mph_visit1      Mph_visit2      Mph_visit3    Mph2_explant    Mph2_healthy 
+           3819            1551            2185            1180            1582             388 
+    Mph2_visit1     Mph2_visit2     Mph2_visit3      NC_explant      NC_healthy       NC_visit1 
+            156             189             163            1047             449             119 
+      NC_visit2       NC_visit3 PerivFb_explant PerivFb_healthy  PerivFb_visit1  PerivFb_visit2 
+            104             125           11528            8015             961             955 
+ PerivFb_visit3   Tcell_explant   Tcell_healthy    Tcell_visit1    Tcell_visit2    Tcell_visit3 
+            891            3147             513            1325             962             402 
+ Tcell2_explant  Tcell2_healthy   Tcell2_visit1   Tcell2_visit2   Tcell2_visit3    VSMC_explant 
+            737              90              98             110              52            2116 
+   VSMC_healthy     VSMC_visit1     VSMC_visit2     VSMC_visit3 
+            830             128             165             179 </code></pre>
 <p>##set color vectors</p>
 <pre class="r"><code>colclusterName &lt;- c(&quot;#67001f&quot;, &quot;#D53E4F&quot;, &quot;#f4a582&quot;, &quot;#FEE08B&quot;, &quot;#003c30&quot;,&quot;#01665e&quot;,&quot;#66C2A5&quot;, &quot;#3288BD&quot;,&quot;#BEAED4&quot;, &quot;#c7eae5&quot;,&quot;#355C7D&quot;,&quot;#202547&quot;,&quot;#B45B5C&quot;,&quot;#8c510a&quot;)
 names(colclusterName) &lt;- c(&quot;CM&quot;,&quot;Fb&quot;,&quot;PerivFb&quot;,&quot;VSMC&quot;,&quot;Int&quot;,&quot;BEC1&quot;, &quot;BEC2&quot;,&quot;LEC&quot;,&quot;NC&quot;,&quot;AdipoC&quot;,&quot;Mph&quot;,&quot;Mph2&quot;,&quot;Tcell&quot;,&quot;Tcell2&quot;)
@@ -1241,9 +1293,83 @@ pdetectedpat &lt;- ggplot(data = meta.data, aes(x = detected, color = patient, f
 list(ptotalpat, pdetectedpat)</code></pre>
 <pre><code>[[1]]</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/QC%20patient-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-QC-patient-1">
+Past versions of "QC patient-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-QC-patient-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/QC patient-1.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[2]]</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/QC%20patient-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-QC-patient-2">
+Past versions of "QC patient-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-QC-patient-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/QC patient-2.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Extract meta.data from the Seurat object
 meta.data &lt;- seuratM@meta.data
 # Create the density plot
@@ -1269,9 +1395,83 @@ pdetectedpat &lt;- ggplot(data = meta.data, aes(x = detected, color = dataset, f
 list(ptotalpat, pdetectedpat)</code></pre>
 <pre><code>[[1]]</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/QC%20dataset-1.png" width="3840" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-QC-dataset-1">
+Past versions of "QC dataset-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-QC-dataset-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/QC dataset-1.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[2]]</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/QC%20dataset-2.png" width="3840" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-QC-dataset-2">
+Past versions of "QC dataset-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-QC-dataset-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/QC dataset-2.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="plot-cell-numbers" class="section level2">
 <h2>plot cell numbers</h2>
@@ -1289,6 +1489,43 @@ ggplot(cell_count, aes(x = hsize, y = Freq, fill = patient)) +
   theme(plot.title = element_text(hjust = 0.5, size = 15)) +
   geom_text(aes(label = Freq), position = position_stack(vjust = 0.5))</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/cellnumber%20circle%20patient-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-cellnumber-circle-patient-1">
+Past versions of "cellnumber circle patient-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-cellnumber-circle-patient-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/cellnumber circle patient-1.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>cell_count &lt;- data.frame(table(seuratM$dataset))
 colnames(cell_count) &lt;- c(&quot;dataset&quot;, &quot;Freq&quot;)
 hsize &lt;- 1.5
@@ -1303,6 +1540,43 @@ ggplot(cell_count, aes(x = hsize, y = Freq, fill = dataset)) +
   theme(plot.title = element_text(hjust = 0.5, size = 15)) +
   geom_text(aes(label = Freq), position = position_stack(vjust = 0.5))</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/cellnumber%20circle%20dataset-1.png" width="3840" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-cellnumber-circle-dataset-1">
+Past versions of "cellnumber circle dataset-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-cellnumber-circle-dataset-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/cellnumber circle dataset-1.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="plot-umaps" class="section level2">
 <h2>plot umaps</h2>
@@ -1331,6 +1605,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/umap-1.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/57d61d1fcc11a9b583f80064614551badcdb1f67/docs/figure/HumanHeartCarTrans.Rmd/umap-1.png" target="_blank">57d61d1</a>
@@ -1384,6 +1669,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/umap-2.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/3b7da724c758b0362d6b5f4b162eed76f8e62a3d/docs/figure/HumanHeartCarTrans.Rmd/umap-2.png" target="_blank">3b7da72</a>
 </td>
 <td>
@@ -1421,6 +1717,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/umap-3.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/57d61d1fcc11a9b583f80064614551badcdb1f67/docs/figure/HumanHeartCarTrans.Rmd/umap-3.png" target="_blank">57d61d1</a>
@@ -1474,6 +1781,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/umap-4.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/3b7da724c758b0362d6b5f4b162eed76f8e62a3d/docs/figure/HumanHeartCarTrans.Rmd/umap-4.png" target="_blank">3b7da72</a>
 </td>
 <td>
@@ -1489,175 +1807,2439 @@ angeldemartin
 </div>
 <pre class="r"><code>DimPlot(seuratM, reduction = &quot;umap&quot;, pt.size = 0.1, cols = colclusterName, raster = FALSE) + theme(legend.position = &quot;null&quot;)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/umap-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-umap-5">
+Past versions of umap-5.png
+</button>
+</p>
+<div id="fig-umap-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/umap-5.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>DimPlot(seuratM, reduction = &quot;umap&quot;, pt.size = 0.1, cols = colclusterName, raster = FALSE, label = TRUE) + theme(legend.position = &quot;null&quot;)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/umap-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-umap-6">
+Past versions of umap-6.png
+</button>
+</p>
+<div id="fig-umap-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/umap-6.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>Idents(seuratM) &lt;- seuratM$diseaseCond
 order1 &lt;- c(&quot;visit3&quot;,&quot;visit2&quot;,&quot;visit1&quot;,&quot;explant&quot;,&quot;healthy&quot;)
 DimPlot(seuratM, reduction = &quot;umap&quot;, pt.size = 0.1, cols = coldiseaseCond, order = order1, raster=FALSE)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/umap-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-umap-7">
+Past versions of umap-7.png
+</button>
+</p>
+<div id="fig-umap-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/umap-7.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>DimPlot(seuratM, reduction = &quot;umap&quot;, pt.size = 0.1, cols = coldiseaseCond, order = order1, raster = FALSE) + theme(legend.position = &quot;null&quot;)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/umap-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-umap-8">
+Past versions of umap-8.png
+</button>
+</p>
+<div id="fig-umap-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/umap-8.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>seuratHealthy &lt;- subset(seuratM, diseaseCond == &quot;healthy&quot;)
 DimPlot(seuratHealthy, reduction = &quot;umap&quot;, pt.size = 0.1, cols = coldiseaseCond, raster=FALSE)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/subset%20umaps-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-subset-umaps-1">
+Past versions of "subset umaps-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-subset-umaps-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/subset umaps-1.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>DimPlot(seuratHealthy, reduction = &quot;umap&quot;, pt.size = 0.1, cols = coldiseaseCond, raster=FALSE) + theme(legend.position = &quot;null&quot;)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/subset%20umaps-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-subset-umaps-2">
+Past versions of "subset umaps-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-subset-umaps-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/subset umaps-2.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>seuratExplant &lt;- subset(seuratM, diseaseCond == &quot;explant&quot;)
 DimPlot(seuratExplant, reduction = &quot;umap&quot;, pt.size = 0.1, cols = coldiseaseCond, raster=FALSE)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/subset%20umaps-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-subset-umaps-3">
+Past versions of "subset umaps-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-subset-umaps-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/subset umaps-3.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>DimPlot(seuratExplant, reduction = &quot;umap&quot;, pt.size = 0.1, cols = coldiseaseCond, raster=FALSE) + theme(legend.position = &quot;null&quot;)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/subset%20umaps-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-subset-umaps-4">
+Past versions of "subset umaps-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-subset-umaps-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/subset umaps-4.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>seuratVisit1 &lt;- subset(seuratM, diseaseCond == &quot;visit1&quot;)
 DimPlot(seuratVisit1, reduction = &quot;umap&quot;, pt.size = 0.1, cols = coldiseaseCond, raster=FALSE)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/subset%20umaps-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-subset-umaps-5">
+Past versions of "subset umaps-5.png"
+</button>
+</p>
+<div id="fig-no-spaces-subset-umaps-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/subset umaps-5.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>DimPlot(seuratVisit1, reduction = &quot;umap&quot;, pt.size = 0.1, cols = coldiseaseCond, raster=FALSE) + theme(legend.position = &quot;null&quot;)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/subset%20umaps-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-subset-umaps-6">
+Past versions of "subset umaps-6.png"
+</button>
+</p>
+<div id="fig-no-spaces-subset-umaps-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/subset umaps-6.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>seuratVisit2 &lt;- subset(seuratM, diseaseCond == &quot;visit2&quot;)
 DimPlot(seuratVisit2, reduction = &quot;umap&quot;, pt.size = 0.1, cols = coldiseaseCond, raster=FALSE)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/subset%20umaps-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-subset-umaps-7">
+Past versions of "subset umaps-7.png"
+</button>
+</p>
+<div id="fig-no-spaces-subset-umaps-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/subset umaps-7.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>DimPlot(seuratVisit2, reduction = &quot;umap&quot;, pt.size = 0.1, cols = coldiseaseCond, raster=FALSE) + theme(legend.position = &quot;null&quot;)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/subset%20umaps-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-subset-umaps-8">
+Past versions of "subset umaps-8.png"
+</button>
+</p>
+<div id="fig-no-spaces-subset-umaps-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/subset umaps-8.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>seuratVisit3 &lt;- subset(seuratM, diseaseCond == &quot;visit3&quot;)
 DimPlot(seuratVisit3, reduction = &quot;umap&quot;, pt.size = 0.1, cols = coldiseaseCond, raster=FALSE)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/subset%20umaps-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-subset-umaps-9">
+Past versions of "subset umaps-9.png"
+</button>
+</p>
+<div id="fig-no-spaces-subset-umaps-9" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/subset umaps-9.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>DimPlot(seuratVisit3, reduction = &quot;umap&quot;, pt.size = 0.1, cols = coldiseaseCond, raster=FALSE) + theme(legend.position = &quot;null&quot;)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/subset%20umaps-10.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-subset-umaps-10">
+Past versions of "subset umaps-10.png"
+</button>
+</p>
+<div id="fig-no-spaces-subset-umaps-10" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/subset umaps-10.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>seuratVisits &lt;- subset(seuratM, diseaseCond %in% c(&quot;visit1&quot;, &quot;visit2&quot;, &quot;visit3&quot;))
 DimPlot(seuratVisits, reduction = &quot;umap&quot;, pt.size = 0.1, cols = coldiseaseCond, raster=FALSE)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/subset%20umaps-11.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-subset-umaps-11">
+Past versions of "subset umaps-11.png"
+</button>
+</p>
+<div id="fig-no-spaces-subset-umaps-11" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/subset umaps-11.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>DimPlot(seuratVisits, reduction = &quot;umap&quot;, pt.size = 0.1, cols = coldiseaseCond, raster=FALSE) + theme(legend.position = &quot;null&quot;)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/subset%20umaps-12.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-subset-umaps-12">
+Past versions of "subset umaps-12.png"
+</button>
+</p>
+<div id="fig-no-spaces-subset-umaps-12" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/subset umaps-12.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="plot-features" class="section level2">
 <h2>plot features</h2>
 <pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000197614.MFAP5&quot;, pt.size = 1, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-1">
+Past versions of "feature plot-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot-1.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000159674.SPON2&quot;, pt.size = 1, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-2">
+Past versions of "feature plot-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot-2.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000065320.NTN1&quot;, pt.size = 1, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-3">
+Past versions of "feature plot-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot-3.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000164136.IL15&quot;, pt.size = 1, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-4">
+Past versions of "feature plot-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot-4.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000172638.EFEMP2&quot;, pt.size = 1, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-5">
+Past versions of "feature plot-5.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot-5.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>Idents(seuratM) &lt;- seuratM$clusterName
 VlnPlot(object=seuratM, features = &quot;ENSG00000197614.MFAP5&quot;, pt.size = 1, cols = colclusterName)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-6">
+Past versions of "feature plot-6.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot-6.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratM, features = &quot;ENSG00000159674.SPON2&quot;, pt.size = 1, cols = colclusterName)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-7">
+Past versions of "feature plot-7.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot-7.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratM, features = &quot;ENSG00000065320.NTN1&quot;, pt.size = 1, cols = colclusterName)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-8">
+Past versions of "feature plot-8.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot-8.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratM, features = &quot;ENSG00000164136.IL15&quot;, pt.size = 1, cols = colclusterName)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-9">
+Past versions of "feature plot-9.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-9" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot-9.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratM, features = &quot;ENSG00000172638.EFEMP2&quot;, pt.size = 1, cols = colclusterName)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot-10.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-10">
+Past versions of "feature plot-10.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-10" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot-10.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>seuratM$diseaseCond &lt;- factor(seuratM$diseaseCond, levels=c(&quot;healthy&quot;, &quot;explant&quot;, &quot;visit1&quot;, &quot;visit2&quot;, &quot;visit3&quot;))
 Idents(seuratM) &lt;- seuratM$diseaseCond
 VlnPlot(object=seuratM, features = &quot;ENSG00000197614.MFAP5&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot-11.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-11">
+Past versions of "feature plot-11.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-11" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot-11.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratM, features = &quot;ENSG00000159674.SPON2&quot;, pt.size = 1, cols = colclusterName)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot-12.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-12">
+Past versions of "feature plot-12.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-12" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot-12.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratM, features = &quot;ENSG00000065320.NTN1&quot;, pt.size = 1, cols = colclusterName)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot-13.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-13">
+Past versions of "feature plot-13.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-13" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot-13.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratM, features = &quot;ENSG00000164136.IL15&quot;, pt.size = 1, cols = colclusterName)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot-14.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-14">
+Past versions of "feature plot-14.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-14" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot-14.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratM, features = &quot;ENSG00000172638.EFEMP2&quot;, pt.size = 1, cols = colclusterName)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot-15.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-15">
+Past versions of "feature plot-15.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-15" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot-15.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>## subset PerivFb
 seuratPerivFb &lt;- subset(seuratM, clusterName %in% c(&quot;PerivFb&quot;))
 Idents(seuratPerivFb) &lt;- seuratPerivFb$clusterName
 DimPlot(seuratPerivFb, reduction = &quot;umap&quot;, cols = colclusterName)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20PerivFb-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-PerivFb-1">
+Past versions of "feature plot PerivFb-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-PerivFb-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot PerivFb-1.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#make violin plot
 seuratPerivFb$diseaseCond &lt;- factor(seuratPerivFb$diseaseCond, levels=c(&quot;healthy&quot;, &quot;explant&quot;, &quot;visit1&quot;, &quot;visit2&quot;, &quot;visit3&quot;))
 Idents(seuratPerivFb) &lt;- seuratPerivFb$diseaseCond
 VlnPlot(object=seuratPerivFb, features = &quot;ENSG00000197614.MFAP5&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20PerivFb-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-PerivFb-2">
+Past versions of "feature plot PerivFb-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-PerivFb-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot PerivFb-2.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratPerivFb, features = &quot;ENSG00000159674.SPON2&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20PerivFb-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-PerivFb-3">
+Past versions of "feature plot PerivFb-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-PerivFb-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot PerivFb-3.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratPerivFb, features = &quot;ENSG00000065320.NTN1&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20PerivFb-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-PerivFb-4">
+Past versions of "feature plot PerivFb-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-PerivFb-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot PerivFb-4.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratPerivFb, features = &quot;ENSG00000164136.IL15&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20PerivFb-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-PerivFb-5">
+Past versions of "feature plot PerivFb-5.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-PerivFb-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot PerivFb-5.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratPerivFb, features = &quot;ENSG00000172638.EFEMP2&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20PerivFb-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-PerivFb-6">
+Past versions of "feature plot PerivFb-6.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-PerivFb-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot PerivFb-6.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>## subset Fb
 seuratFb &lt;- subset(seuratM, clusterName %in% c(&quot;Fb&quot;))
 Idents(seuratFb) &lt;- seuratFb$clusterName
 DimPlot(seuratFb, reduction = &quot;umap&quot;, cols = colclusterName)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20Fb-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-Fb-1">
+Past versions of "feature plot Fb-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-Fb-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot Fb-1.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#make violin plot
 seuratFb$diseaseCond &lt;- factor(seuratFb$diseaseCond, levels=c(&quot;healthy&quot;, &quot;explant&quot;, &quot;visit1&quot;, &quot;visit2&quot;, &quot;visit3&quot;))
 Idents(seuratFb) &lt;- seuratFb$diseaseCond
 VlnPlot(object=seuratFb, features = &quot;ENSG00000197614.MFAP5&quot;, pt.size = 0, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20Fb-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-Fb-2">
+Past versions of "feature plot Fb-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-Fb-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot Fb-2.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratFb, features = &quot;ENSG00000159674.SPON2&quot;, pt.size = 0, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20Fb-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-Fb-3">
+Past versions of "feature plot Fb-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-Fb-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot Fb-3.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratFb, features = &quot;ENSG00000065320.NTN1&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20Fb-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-Fb-4">
+Past versions of "feature plot Fb-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-Fb-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot Fb-4.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratFb, features = &quot;ENSG00000164136.IL15&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20Fb-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-Fb-5">
+Past versions of "feature plot Fb-5.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-Fb-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot Fb-5.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratFb, features = &quot;ENSG00000172638.EFEMP2&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20Fb-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-Fb-6">
+Past versions of "feature plot Fb-6.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-Fb-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot Fb-6.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>## subset CM
 seuratCM &lt;- subset(seuratM, clusterName %in% c(&quot;CM&quot;))
 Idents(seuratCM) &lt;- seuratCM$clusterName
 DimPlot(seuratCM, reduction = &quot;umap&quot;, cols = colclusterName)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20CM-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-CM-1">
+Past versions of "feature plot CM-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-CM-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot CM-1.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#make violin plot
 seuratCM$diseaseCond &lt;- factor(seuratCM$diseaseCond, levels=c(&quot;healthy&quot;, &quot;explant&quot;, &quot;visit1&quot;, &quot;visit2&quot;, &quot;visit3&quot;))
 Idents(seuratCM) &lt;- seuratCM$diseaseCond
 VlnPlot(object=seuratCM, features = &quot;ENSG00000197614.MFAP5&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20CM-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-CM-2">
+Past versions of "feature plot CM-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-CM-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot CM-2.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratCM, features = &quot;ENSG00000159674.SPON2&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20CM-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-CM-3">
+Past versions of "feature plot CM-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-CM-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot CM-3.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratCM, features = &quot;ENSG00000065320.NTN1&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20CM-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-CM-4">
+Past versions of "feature plot CM-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-CM-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot CM-4.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratCM, features = &quot;ENSG00000164136.IL15&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20CM-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-CM-5">
+Past versions of "feature plot CM-5.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-CM-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot CM-5.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratCM, features = &quot;ENSG00000172638.EFEMP2&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20CM-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-CM-6">
+Past versions of "feature plot CM-6.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-CM-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot CM-6.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>## subset BEC
 seuratBEC &lt;- subset(seuratM, clusterName %in% c(&quot;BEC1&quot;, &quot;BEC2&quot;))
 Idents(seuratBEC) &lt;- seuratBEC$clusterName
 DimPlot(seuratBEC, reduction = &quot;umap&quot;, cols = colclusterName)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20BEC-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-BEC-1">
+Past versions of "feature plot BEC-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-BEC-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot BEC-1.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#make violin plot
 seuratBEC$diseaseCond &lt;- factor(seuratBEC$diseaseCond, levels=c(&quot;healthy&quot;, &quot;explant&quot;, &quot;visit1&quot;, &quot;visit2&quot;, &quot;visit3&quot;))
 Idents(seuratBEC) &lt;- seuratBEC$diseaseCond
 VlnPlot(object=seuratBEC, features = &quot;ENSG00000197614.MFAP5&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20BEC-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-BEC-2">
+Past versions of "feature plot BEC-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-BEC-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot BEC-2.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratBEC, features = &quot;ENSG00000159674.SPON2&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20BEC-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-BEC-3">
+Past versions of "feature plot BEC-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-BEC-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot BEC-3.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratBEC, features = &quot;ENSG00000065320.NTN1&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20BEC-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-BEC-4">
+Past versions of "feature plot BEC-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-BEC-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot BEC-4.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratBEC, features = &quot;ENSG00000164136.IL15&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20BEC-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-BEC-5">
+Past versions of "feature plot BEC-5.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-BEC-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot BEC-5.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratBEC, features = &quot;ENSG00000172638.EFEMP2&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20BEC-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-BEC-6">
+Past versions of "feature plot BEC-6.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-BEC-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot BEC-6.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>## subset Mph
 seuratMph &lt;- subset(seuratM, clusterName %in% c(&quot;Mph&quot;, &quot;Mph2&quot;))
 Idents(seuratMph) &lt;- seuratMph$clusterName
 DimPlot(seuratMph, reduction = &quot;umap&quot;, cols = colclusterName, label = TRUE)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20Mph-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-Mph-1">
+Past versions of "feature plot Mph-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-Mph-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot Mph-1.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#make violin plot
 seuratMph$diseaseCond &lt;- factor(seuratMph$diseaseCond, levels=c(&quot;healthy&quot;, &quot;explant&quot;, &quot;visit1&quot;, &quot;visit2&quot;, &quot;visit3&quot;))
 Idents(seuratMph) &lt;- seuratMph$diseaseCond
 VlnPlot(object=seuratMph, features = &quot;ENSG00000197614.MFAP5&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20Mph-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-Mph-2">
+Past versions of "feature plot Mph-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-Mph-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot Mph-2.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSG00000159674.SPON2&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20Mph-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-Mph-3">
+Past versions of "feature plot Mph-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-Mph-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot Mph-3.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSG00000065320.NTN1&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20Mph-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-Mph-4">
+Past versions of "feature plot Mph-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-Mph-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot Mph-4.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSG00000164136.IL15&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20Mph-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-Mph-5">
+Past versions of "feature plot Mph-5.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-Mph-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot Mph-5.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSG00000172638.EFEMP2&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/HumanHeartCarTrans.Rmd/feature%20plot%20Mph-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-Mph-6">
+Past versions of "feature plot Mph-6.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-Mph-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6ec9eda1708beae596b99c4a51d7ce64c634fa96/docs/figure/HumanHeartCarTrans.Rmd/feature plot Mph-6.png" target="_blank">6ec9eda</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-03
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="session-info" class="section level2">
-<h2>session info</h2>
+</div>
+<div id="dotplot" class="section level3">
+<h3>dotplot</h3>
+<pre class="r"><code>genes &lt;- data.frame(gene=rownames(seuratM)) %&gt;% 
+  mutate(geneID=gsub(&quot;^.*\\.&quot;, &quot;&quot;, gene))
+
+selGenes &lt;- data.frame(geneID=c(&quot;NTN1&quot;,&quot;IL15&quot;,&quot;EFEMP2&quot;)) %&gt;% left_join(., genes, by=&quot;geneID&quot;)
+
+DotPlot(seuratM, features = selGenes, group.by= &quot;clusterName_diseaseCond&quot;) + RotatedAxis() + scale_color_viridis(option=&quot;D&quot;) + coord_flip()</code></pre>
+<p><img src="figure/HumanHeartCarTrans.Rmd/dotplot-1.png" width="1920" style="display: block; margin: auto;" />
+## session info</p>
 <pre class="r"><code>date()</code></pre>
-<pre><code>[1] &quot;Tue Sep  3 18:35:12 2024&quot;</code></pre>
+<pre><code>[1] &quot;Tue Sep  3 19:22:39 2024&quot;</code></pre>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.4.0 (2024-04-24)
 Platform: x86_64-apple-darwin20
@@ -1908,6 +4490,7 @@ loaded via a namespace (and not attached):
 [244] bslib_0.7.0               pillar_1.9.0              gplots_3.1.3.1           
 [247] pcaMethods_1.96.0         locfit_1.5-9.10           jsonlite_1.8.8           
 [250] GetoptLong_1.0.5         </code></pre>
+</div>
 </div>
 </div>
 

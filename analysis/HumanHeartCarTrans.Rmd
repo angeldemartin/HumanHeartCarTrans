@@ -289,6 +289,10 @@ ordpatient_diseasecond <- c("HH1_healthy","HH10_healthy","HH2_healthy","HH3_heal
 
 seuratM$patient_ventricle <- paste0(seuratM$patient, '_', seuratM$ventricle)
 table(seuratM$patient_ventricle)
+
+###combined slots
+seuratM$clusterName_diseaseCond <- paste0(seuratM$clusterName, '_', seuratM$diseaseCond)
+table(seuratM$clusterName_diseaseCond)
 ```
 
 ##set color vectors 
@@ -529,7 +533,15 @@ VlnPlot(object=seuratMph, features = "ENSG00000065320.NTN1", pt.size = 1, cols =
 VlnPlot(object=seuratMph, features = "ENSG00000164136.IL15", pt.size = 1, cols = coldiseaseCond)
 VlnPlot(object=seuratMph, features = "ENSG00000172638.EFEMP2", pt.size = 1, cols = coldiseaseCond)
 ```
+### dotplot 
+```{r dotplot, fig.height=5, fig.width=20}
+genes <- data.frame(gene=rownames(seuratM)) %>% 
+  mutate(geneID=gsub("^.*\\.", "", gene))
 
+selGenes <- data.frame(geneID=c("NTN1","IL15","EFEMP2")) %>% left_join(., genes, by="geneID")
+
+DotPlot(seuratM, features = selGenes, group.by= "clusterName_diseaseCond") + RotatedAxis() + scale_color_viridis(option="D") + coord_flip()
+```
 ## session info
 ```{r date and session info}
 date()

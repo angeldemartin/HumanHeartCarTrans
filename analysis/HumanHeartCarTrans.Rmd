@@ -1,6 +1,6 @@
 ---
 title: "HumanHeartCarTrans"
-author: "ADM"
+author: "A.DeMartin"
 date: "2024-02-21"
 output: 
   html_document:
@@ -17,7 +17,7 @@ seed <- 1234
 ```
 
 ## load packages
-```{r load packages, warning=FALSE}
+```{r load packages, warning=FALSE, include=FALSE}
 library(ExploreSCdataSeurat3)
 library(runSeurat3)
 library(Seurat)
@@ -66,8 +66,10 @@ remove(seuratS)
 table(seuratM$dataset)
 table(seuratM$orig.ident)
 
-##filter "o28576_1_09-9_20220525_Hu_nucseq_Graz_9_HH_GEM" (separate CM cluster)
-seuratMfilt <- subset(seuratM, dataset ==  "o28576_1_09-9_20220525_Hu_nucseq_Graz_9_HH_GEM", invert = T)
+## exclude patient_9 ("347741_1-1_20240326_Hu_nucseq_USZ_HTx009_RV", "347741_2-2_20240326_Hu_nucseq_USZ_HTx009_LV")
+## exclude "o28576_1_09-9_20220525_Hu_nucseq_Graz_9_HH_GEM" (separate CM cluster)
+## exclude visit 4 sample: 347741_3-3_20240326_Hu_nucseq_USZ_EMB002_V4_inf
+seuratMfilt <- subset(seuratM, dataset %in% c("o28576_1_09-9_20220525_Hu_nucseq_Graz_9_HH_GEM", "347741_1-1_20240326_Hu_nucseq_USZ_HTx009_RV", "347741_2-2_20240326_Hu_nucseq_USZ_HTx009_LV", "347741_3-3_20240326_Hu_nucseq_USZ_EMB002_V4_inf"), invert = T)
 unique(seuratMfilt$dataset)
 table(seuratMfilt$dataset)
 table(seuratMfilt$orig.ident)
@@ -81,7 +83,7 @@ seuratM <- NormalizeData (object = seuratM)
 seuratM <- FindVariableFeatures(object = seuratM)
 seuratM <- ScaleData(object = seuratM, verbose = TRUE)
 seuratM <- RunPCA(object=seuratM, npcs = 30, verbose = FALSE)
-seuratM <- RunTSNE(object=seuratM, reduction="pca", dims = 1:20)
+#seuratM <- RunTSNE(object=seuratM, reduction="pca", dims = 1:20)
 seuratM <- RunUMAP(object=seuratM, reduction="pca", dims = 1:20)
 seuratM <- FindNeighbors(object = seuratM, reduction = "pca", dims= 1:20)
 
@@ -107,26 +109,26 @@ table(seuratM$dataset)
 table(seuratM$RNA_snn_res.0.25)
 table(seuratM$orig.ident)
 ```
-##set color vectors 
-```{r set color vector}
-colclusterName <- c("#67001f", "#b2182b", "#d6604d", "#f4a582", "#dfc27d","#003c30","#01665e","#35978f","#c7eae5","#4d4d4d","#1a1a1a","#8c510a", "#355C7D") 
-names(colclusterName) <- c("CM" ,"Fb1", "Tcell", "PerivFb/VSMC", "Fb2", "NC", "BEC3", "AdipoC", "LEC", "BEC1", "Mph2","BEC2", "Mph1")
-
-coldiseaseCond <- c("#202547","#BE3144","#727077","#355C7D","#779d8d")
-names(coldiseaseCond) <- unique(seuratM$diseaseCond)
-```
 
 ```{r add metadata}
 ### add any type of metadata
 ### patient
 pat_1 <- c("331571_3-5_20231012_Hu_nucseq_USZ_HTx001","334131_10-10_20231108_Hu_nucseq_USZ_HTx001_RV","336431_08-8_20231129_Hu_nucseq_USZ_EMB001_V1", "340831_1-1_20240118_Hu_nucseq_USZ_EMB001_V2", "340821_03-9_20240123_Hu_nucseq_USZ_EMB001_V3")
-pat_2 <- c("331571_4-6_20231012_Hu_nucseq_USZ_HTx002","334131_01-1_20231103_Hu_nucseq_USZ_HTx002_RV","336431_13-13_20231129_Hu_nucseq_USZ_EMB002_V1", "340831_2-2_20240118_Hu_nucseq_USZ_EMB002_V2", "340821_04-10_20240123_Hu_nucseq_USZ_EMB002_V3")
+pat_2 <- c("331571_4-6_20231012_Hu_nucseq_USZ_HTx002","334131_01-1_20231103_Hu_nucseq_USZ_HTx002_RV","336431_13-13_20231129_Hu_nucseq_USZ_EMB002_V1", "340831_2-2_20240118_Hu_nucseq_USZ_EMB002_V2", "340821_04-10_20240123_Hu_nucseq_USZ_EMB002_V3", "347741_3-3_20240326_Hu_nucseq_USZ_EMB002_V4_inf")
 pat_3 <- c("334131_02-2_20231103_Hu_nucseq_USZ_HTx003_LV","334131_04-4_20231106_Hu_nucseq_USZ_HTx003_RV","336431_14-14_20231129_Hu_nucseq_USZ_EMB003_V1","340831_3-3_20240118_Hu_nucseq_USZ_EMB003_V2","340821_05-11_20240123_Hu_nucseq_USZ_EMB003_V3")
 pat_4 <- c("334131_05-5_20231106_Hu_nucseq_USZ_HTx004_LV","334131_03-3_20231103_Hu_nucseq_USZ_HTx004_RV","336431_15-15_20231129_Hu_nucseq_USZ_EMB004_V1", "340831_4-4_20240118_Hu_nucseq_USZ_EMB004_V2" ,"340821_06-12_20240123_Hu_nucseq_USZ_EMB004_V3")
 pat_5 <- c("334131_07-7_20231107_Hu_nucseq_USZ_HTx005_LV","334131_06-6_20231106_Hu_nucseq_USZ_HTx005_RV","336431_10-10_20231129_Hu_nucseq_USZ_EMB005_V1","340831_5-5_20240118_Hu_nucseq_USZ_EMB005_V2" ,"340821_07-13_20240123_Hu_nucseq_USZ_EMB005_V3")
 pat_6 <- c("334131_09-9_20231108_Hu_nucseq_USZ_HTx006_LV","334131_08-8_20231107_Hu_nucseq_USZ_HTx006_RV","336431_11-11_20231129_Hu_nucseq_USZ_EMB006_V1", "340831_6-6_20240118_Hu_nucseq_USZ_EMB006_V2", "340821_08-14_20240123_Hu_nucseq_USZ_EMB006_V3")
 pat_7 <- c("340821_13-19_20240123_Hu_nucseq_USZ_HTx007_LV","340821_12-18_20240123_Hu_nucseq_USZ_HTx007_RV","336431_12-12_20231129_Hu_nucseq_USZ_EMB007_V1","340821_01-7_20240118_Hu_nucseq_USZ_EMB007_V2","340821_09-15_20240123_Hu_nucseq_USZ_EMB007_V3")
 pat_8 <- c("336431_07-7_20231129_Hu_nucseq_USZ_HTx008_RV","336431_09-9_20231129_Hu_nucseq_USZ_HTx008_LV","340821_11-17_20240123_Hu_nucseq_USZ_EMB008_V1", "340821_02-8_20240118_Hu_nucseq_USZ_EMB008_V2", "340821_10-16_20240123_Hu_nucseq_USZ_EMB008_V3")
+### excluded - pat_9 <- c("347741_1-1_20240326_Hu_nucseq_USZ_HTx009_RV", "347741_2-2_20240326_Hu_nucseq_USZ_HTx009_LV")
+pat_10 <- c("347741_4-4_20240326_Hu_nucseq_USZ_HTx010_RV","347741_5-5_20240326_Hu_nucseq_USZ_HTx010_LV","353921_11-11_20240515_Hu_nucseq_USZ_EMB010_V1_1","353921_12-12_20240515_Hu_nucseq_USZ_EMB010_V1_2","353921_08-8_20240515_Hu_nucseq_USZ_EMB010_V3")
+pat_11 <- c("353921_01-1_20240515_Hu_nucseq_USZ_HTx011_RV","353921_02-2_20240515_Hu_nucseq_USZ_HTx011_LV", "353921_03-3_20240515_Hu_nucseq_USZ_EMB011_V1", "353921_04-4_20240515_Hu_nucseq_USZ_EMB011_V2","353921_14-14_20240524_Hu_nucseq_USZ_EMB011_V3")
+pat_12 <- c("353921_05-5_20240515_Hu_nucseq_USZ_HTx012_RV","353921_06-6_20240515_Hu_nucseq_USZ_HTx012_LV", "353921_07-7_20240515_Hu_nucseq_USZ_EMB012_V1","353921_15-15_20240524_Hu_nucseq_USZ_EMB012_V2","353921_16-16_20240524_Hu_nucseq_USZ_EMB012_V3")
+pat_13 <- c("353921_09-9_20240515_Hu_nucseq_USZ_HTx013_RV","353921_10-10_20240515_Hu_nucseq_USZ_HTx013_LV", "353921_18-18_20240524_Hu_nucseq_USZ_EMB013_V1","353921_19-19_20240524_Hu_nucseq_USZ_EMB013_V2","353921_20-20_20240524_Hu_nucseq_USZ_EMB013_V3")
+pat_14 <- c("353921_21-21_20240524_Hu_nucseq_USZ_HTx014_RV","353921_22-22_20240524_Hu_nucseq_USZ_HTx014_LV","353921_23-23_20240524_Hu_nucseq_USZ_EMB014_V1","353921_24-24_20240524_Hu_nucseq_USZ_EMB014_V2", "359861_03-3_20240715_Hu_nucseq_USZ_EMB014_V3")
+pat_15 <- c("353921_13-13_20240524_Hu_nucseq_USZ_HTx015_RV","353921_17-17_20240524_Hu_nucseq_USZ_HTx015_LV","359861_04-4_20240715_Hu_nucseq_USZ_EMB015_V1","359861_05-5_20240715_Hu_nucseq_USZ_EMB015_V2","359861_06-6_20240715_Hu_nucseq_USZ_EMB015_V3")
+pat_16 <- c("359861_02-2_20240715_Hu_nucseq_USZ_HTx016_RV","359861_01-1_20240715_Hu_nucseq_USZ_HTx016_LV","359861_07-7_20240715_Hu_nucseq_USZ_EMB016_V1","359861_08-8_20240715_Hu_nucseq_USZ_EMB016_V2","359861_18-10_20240730_Hu_nucseq_USZ_EMB016_V3")
 
 HH_1 <- c("o28576_1_08-8_20220525_Hu_nucseq_Graz_8_HH_GEM")
 ### excluded - CM cluster separately### HH_2 <- c("o28576_1_09-9_20220525_Hu_nucseq_Graz_9_HH_GEM")
@@ -149,6 +151,14 @@ seuratM$patient[which(seuratM$dataset %in% pat_5)] <- "CarTransPat5"
 seuratM$patient[which(seuratM$dataset %in% pat_6)] <- "CarTransPat6"
 seuratM$patient[which(seuratM$dataset %in% pat_7)] <- "CarTransPat7"
 seuratM$patient[which(seuratM$dataset %in% pat_8)] <- "CarTransPat8"
+### seuratM$patient[which(seuratM$dataset %in% pat_9)] <- "CarTransPat9"
+seuratM$patient[which(seuratM$dataset %in% pat_10)] <- "CarTransPat10"
+seuratM$patient[which(seuratM$dataset %in% pat_11)] <- "CarTransPat11"
+seuratM$patient[which(seuratM$dataset %in% pat_12)] <- "CarTransPat12"
+seuratM$patient[which(seuratM$dataset %in% pat_13)] <- "CarTransPat13"
+seuratM$patient[which(seuratM$dataset %in% pat_14)] <- "CarTransPat14"
+seuratM$patient[which(seuratM$dataset %in% pat_15)] <- "CarTransPat15"
+seuratM$patient[which(seuratM$dataset %in% pat_16)] <- "CarTransPat16"
 seuratM$patient[which(seuratM$dataset %in% HH_1)] <- "HH1"
 seuratM$patient[which(seuratM$dataset %in% HH_3)] <- "HH3"
 seuratM$patient[which(seuratM$dataset %in% HH_4)] <- "HH4"
@@ -162,28 +172,63 @@ seuratM$patient[which(seuratM$dataset %in% HH_11)] <- "HH2"
 
 table(seuratM$patient)
 
-orddatasets <- c("o28576_1_08-8_20220525_Hu_nucseq_Graz_8_HH_GEM","o28576_1_10-10_20220525_Hu_nucseq_Graz_10_HH_GEM","o28576_1_11-11_20220525_Hu_nucseq_Graz_11_HH_GEM","o28576_1_12-12_20220525_Hu_nucseq_Graz_12_HH_GEM","o292731_1-1_20220818_Hu_nucseq_Graz_9_HH_GEM","o292731_2-2_20220818_Hu_nucseq_Graz_13_HH_GEM","o294781_01-1_20220912_Hu_nucseq_Graz_21_HH_GEM","o294781_02-2_20220912_Hu_nucseq_Graz_22_HH_GEM","o294781_03-3_20220912_Hu_nucseq_Graz_23_HH_GEM","o294781_04-4_20220912_Hu_nucseq_Graz_24_HH_GEM","331571_3-5_20231012_Hu_nucseq_USZ_HTx001","334131_10-10_20231108_Hu_nucseq_USZ_HTx001_RV","331571_4-6_20231012_Hu_nucseq_USZ_HTx002","334131_01-1_20231103_Hu_nucseq_USZ_HTx002_RV","334131_02-2_20231103_Hu_nucseq_USZ_HTx003_LV","334131_04-4_20231106_Hu_nucseq_USZ_HTx003_RV",  "334131_05-5_20231106_Hu_nucseq_USZ_HTx004_LV","334131_03-3_20231103_Hu_nucseq_USZ_HTx004_RV","334131_07-7_20231107_Hu_nucseq_USZ_HTx005_LV","334131_06-6_20231106_Hu_nucseq_USZ_HTx005_RV","334131_09-9_20231108_Hu_nucseq_USZ_HTx006_LV","334131_08-8_20231107_Hu_nucseq_USZ_HTx006_RV","340821_13-19_20240123_Hu_nucseq_USZ_HTx007_LV","340821_12-18_20240123_Hu_nucseq_USZ_HTx007_RV","336431_07-7_20231129_Hu_nucseq_USZ_HTx008_RV","336431_09-9_20231129_Hu_nucseq_USZ_HTx008_LV","336431_08-8_20231129_Hu_nucseq_USZ_EMB001_V1", "340831_1-1_20240118_Hu_nucseq_USZ_EMB001_V2","340821_03-9_20240123_Hu_nucseq_USZ_EMB001_V3","336431_13-13_20231129_Hu_nucseq_USZ_EMB002_V1","340831_2-2_20240118_Hu_nucseq_USZ_EMB002_V2","340821_04-10_20240123_Hu_nucseq_USZ_EMB002_V3","336431_14-14_20231129_Hu_nucseq_USZ_EMB003_V1","340831_3-3_20240118_Hu_nucseq_USZ_EMB003_V2","340821_05-11_20240123_Hu_nucseq_USZ_EMB003_V3","336431_15-15_20231129_Hu_nucseq_USZ_EMB004_V1", "340831_4-4_20240118_Hu_nucseq_USZ_EMB004_V2","340821_06-12_20240123_Hu_nucseq_USZ_EMB004_V3","336431_10-10_20231129_Hu_nucseq_USZ_EMB005_V1","340831_5-5_20240118_Hu_nucseq_USZ_EMB005_V2","340821_07-13_20240123_Hu_nucseq_USZ_EMB005_V3","336431_11-11_20231129_Hu_nucseq_USZ_EMB006_V1","340831_6-6_20240118_Hu_nucseq_USZ_EMB006_V2","340821_08-14_20240123_Hu_nucseq_USZ_EMB006_V3","336431_12-12_20231129_Hu_nucseq_USZ_EMB007_V1","340821_01-7_20240118_Hu_nucseq_USZ_EMB007_V2","340821_09-15_20240123_Hu_nucseq_USZ_EMB007_V3","340821_11-17_20240123_Hu_nucseq_USZ_EMB008_V1","340821_02-8_20240118_Hu_nucseq_USZ_EMB008_V2","340821_10-16_20240123_Hu_nucseq_USZ_EMB008_V3")                 
-                 
+orddatasets <- c("o28576_1_08-8_20220525_Hu_nucseq_Graz_8_HH_GEM","o28576_1_10-10_20220525_Hu_nucseq_Graz_10_HH_GEM","o28576_1_11-11_20220525_Hu_nucseq_Graz_11_HH_GEM","o28576_1_12-12_20220525_Hu_nucseq_Graz_12_HH_GEM","o292731_1-1_20220818_Hu_nucseq_Graz_9_HH_GEM","o292731_2-2_20220818_Hu_nucseq_Graz_13_HH_GEM","o294781_01-1_20220912_Hu_nucseq_Graz_21_HH_GEM","o294781_02-2_20220912_Hu_nucseq_Graz_22_HH_GEM","o294781_03-3_20220912_Hu_nucseq_Graz_23_HH_GEM","o294781_04-4_20220912_Hu_nucseq_Graz_24_HH_GEM",
+"334131_10-10_20231108_Hu_nucseq_USZ_HTx001_RV","331571_3-5_20231012_Hu_nucseq_USZ_HTx001",
+"334131_01-1_20231103_Hu_nucseq_USZ_HTx002_RV","331571_4-6_20231012_Hu_nucseq_USZ_HTx002",
+"334131_04-4_20231106_Hu_nucseq_USZ_HTx003_RV","334131_02-2_20231103_Hu_nucseq_USZ_HTx003_LV",
+"334131_03-3_20231103_Hu_nucseq_USZ_HTx004_RV","334131_05-5_20231106_Hu_nucseq_USZ_HTx004_LV", 
+"334131_06-6_20231106_Hu_nucseq_USZ_HTx005_RV","334131_07-7_20231107_Hu_nucseq_USZ_HTx005_LV",
+"334131_08-8_20231107_Hu_nucseq_USZ_HTx006_RV","334131_09-9_20231108_Hu_nucseq_USZ_HTx006_LV",
+"340821_12-18_20240123_Hu_nucseq_USZ_HTx007_RV","340821_13-19_20240123_Hu_nucseq_USZ_HTx007_LV",
+"336431_07-7_20231129_Hu_nucseq_USZ_HTx008_RV","336431_09-9_20231129_Hu_nucseq_USZ_HTx008_LV",
+"347741_4-4_20240326_Hu_nucseq_USZ_HTx010_RV","347741_5-5_20240326_Hu_nucseq_USZ_HTx010_LV",
+"353921_01-1_20240515_Hu_nucseq_USZ_HTx011_RV","353921_02-2_20240515_Hu_nucseq_USZ_HTx011_LV",
+"353921_05-5_20240515_Hu_nucseq_USZ_HTx012_RV","353921_06-6_20240515_Hu_nucseq_USZ_HTx012_LV",
+"353921_09-9_20240515_Hu_nucseq_USZ_HTx013_RV","353921_10-10_20240515_Hu_nucseq_USZ_HTx013_LV",
+"353921_21-21_20240524_Hu_nucseq_USZ_HTx014_RV","353921_22-22_20240524_Hu_nucseq_USZ_HTx014_LV",
+"353921_13-13_20240524_Hu_nucseq_USZ_HTx015_RV", "353921_17-17_20240524_Hu_nucseq_USZ_HTx015_LV",
+"359861_02-2_20240715_Hu_nucseq_USZ_HTx016_RV","359861_01-1_20240715_Hu_nucseq_USZ_HTx016_LV",
+"336431_08-8_20231129_Hu_nucseq_USZ_EMB001_V1","340831_1-1_20240118_Hu_nucseq_USZ_EMB001_V2","340821_03-9_20240123_Hu_nucseq_USZ_EMB001_V3",
+"336431_13-13_20231129_Hu_nucseq_USZ_EMB002_V1","340831_2-2_20240118_Hu_nucseq_USZ_EMB002_V2","340821_04-10_20240123_Hu_nucseq_USZ_EMB002_V3",
+"336431_14-14_20231129_Hu_nucseq_USZ_EMB003_V1","340831_3-3_20240118_Hu_nucseq_USZ_EMB003_V2","340821_05-11_20240123_Hu_nucseq_USZ_EMB003_V3",
+"336431_15-15_20231129_Hu_nucseq_USZ_EMB004_V1","340831_4-4_20240118_Hu_nucseq_USZ_EMB004_V2","340821_06-12_20240123_Hu_nucseq_USZ_EMB004_V3",
+"336431_10-10_20231129_Hu_nucseq_USZ_EMB005_V1","340831_5-5_20240118_Hu_nucseq_USZ_EMB005_V2","340821_07-13_20240123_Hu_nucseq_USZ_EMB005_V3",
+"336431_11-11_20231129_Hu_nucseq_USZ_EMB006_V1","340831_6-6_20240118_Hu_nucseq_USZ_EMB006_V2","340821_08-14_20240123_Hu_nucseq_USZ_EMB006_V3",
+"336431_12-12_20231129_Hu_nucseq_USZ_EMB007_V1","340821_01-7_20240118_Hu_nucseq_USZ_EMB007_V2","340821_09-15_20240123_Hu_nucseq_USZ_EMB007_V3",
+"340821_11-17_20240123_Hu_nucseq_USZ_EMB008_V1","340821_02-8_20240118_Hu_nucseq_USZ_EMB008_V2","340821_10-16_20240123_Hu_nucseq_USZ_EMB008_V3",
+"353921_11-11_20240515_Hu_nucseq_USZ_EMB010_V1_1","353921_12-12_20240515_Hu_nucseq_USZ_EMB010_V1_2","353921_08-8_20240515_Hu_nucseq_USZ_EMB010_V3", "353921_03-3_20240515_Hu_nucseq_USZ_EMB011_V1","353921_04-4_20240515_Hu_nucseq_USZ_EMB011_V2","353921_14-14_20240524_Hu_nucseq_USZ_EMB011_V3", "353921_07-7_20240515_Hu_nucseq_USZ_EMB012_V1","353921_15-15_20240524_Hu_nucseq_USZ_EMB012_V2","353921_16-16_20240524_Hu_nucseq_USZ_EMB012_V3", "353921_18-18_20240524_Hu_nucseq_USZ_EMB013_V1","353921_19-19_20240524_Hu_nucseq_USZ_EMB013_V2","353921_20-20_20240524_Hu_nucseq_USZ_EMB013_V3",
+"353921_23-23_20240524_Hu_nucseq_USZ_EMB014_V1","353921_24-24_20240524_Hu_nucseq_USZ_EMB014_V2", "359861_03-3_20240715_Hu_nucseq_USZ_EMB014_V3",
+"359861_04-4_20240715_Hu_nucseq_USZ_EMB015_V1","359861_05-5_20240715_Hu_nucseq_USZ_EMB015_V2","359861_06-6_20240715_Hu_nucseq_USZ_EMB015_V3",
+"359861_07-7_20240715_Hu_nucseq_USZ_EMB016_V1","359861_08-8_20240715_Hu_nucseq_USZ_EMB016_V2","359861_18-10_20240730_Hu_nucseq_USZ_EMB016_V3")
+
 #### diseaseCondSp and diseaseCond
 #healthy
 healthy <- c("o28576_1_08-8_20220525_Hu_nucseq_Graz_8_HH_GEM","o28576_1_10-10_20220525_Hu_nucseq_Graz_10_HH_GEM","o28576_1_11-11_20220525_Hu_nucseq_Graz_11_HH_GEM", "o28576_1_12-12_20220525_Hu_nucseq_Graz_12_HH_GEM","o292731_1-1_20220818_Hu_nucseq_Graz_9_HH_GEM","o292731_2-2_20220818_Hu_nucseq_Graz_13_HH_GEM", "o294781_01-1_20220912_Hu_nucseq_Graz_21_HH_GEM", "o294781_02-2_20220912_Hu_nucseq_Graz_22_HH_GEM", "o294781_03-3_20220912_Hu_nucseq_Graz_23_HH_GEM", "o294781_04-4_20220912_Hu_nucseq_Graz_24_HH_GEM")
 #Giant cell myocarditis
 GCM <- c("331571_3-5_20231012_Hu_nucseq_USZ_HTx001","334131_10-10_20231108_Hu_nucseq_USZ_HTx001_RV")
 #Dilated Cardiomyopathy
-DCM <- c("334131_02-2_20231103_Hu_nucseq_USZ_HTx003_LV","334131_04-4_20231106_Hu_nucseq_USZ_HTx003_RV", "334131_05-5_20231106_Hu_nucseq_USZ_HTx004_LV","334131_03-3_20231103_Hu_nucseq_USZ_HTx004_RV", "334131_07-7_20231107_Hu_nucseq_USZ_HTx005_LV","334131_06-6_20231106_Hu_nucseq_USZ_HTx005_RV", "334131_09-9_20231108_Hu_nucseq_USZ_HTx006_LV","334131_08-8_20231107_Hu_nucseq_USZ_HTx006_RV","340821_13-19_20240123_Hu_nucseq_USZ_HTx007_LV","340821_12-18_20240123_Hu_nucseq_USZ_HTx007_RV")
+DCM <- c("334131_02-2_20231103_Hu_nucseq_USZ_HTx003_LV","334131_04-4_20231106_Hu_nucseq_USZ_HTx003_RV", "334131_05-5_20231106_Hu_nucseq_USZ_HTx004_LV","334131_03-3_20231103_Hu_nucseq_USZ_HTx004_RV", "334131_07-7_20231107_Hu_nucseq_USZ_HTx005_LV","334131_06-6_20231106_Hu_nucseq_USZ_HTx005_RV", "334131_09-9_20231108_Hu_nucseq_USZ_HTx006_LV","334131_08-8_20231107_Hu_nucseq_USZ_HTx006_RV",
+"340821_13-19_20240123_Hu_nucseq_USZ_HTx007_LV","340821_12-18_20240123_Hu_nucseq_USZ_HTx007_RV",
+"347741_4-4_20240326_Hu_nucseq_USZ_HTx010_RV","347741_5-5_20240326_Hu_nucseq_USZ_HTx010_LV",
+"353921_01-1_20240515_Hu_nucseq_USZ_HTx011_RV","353921_02-2_20240515_Hu_nucseq_USZ_HTx011_LV",
+"353921_21-21_20240524_Hu_nucseq_USZ_HTx014_RV","353921_22-22_20240524_Hu_nucseq_USZ_HTx014_LV",
+"359861_02-2_20240715_Hu_nucseq_USZ_HTx016_RV","359861_01-1_20240715_Hu_nucseq_USZ_HTx016_LV")
 #LoefflerEndocarditis
 LoeEndoc <- c("331571_4-6_20231012_Hu_nucseq_USZ_HTx002","334131_01-1_20231103_Hu_nucseq_USZ_HTx002_RV")
 #hypertrophic cardiomyopathy (non-obstructive)
 HCM <- c("336431_07-7_20231129_Hu_nucseq_USZ_HTx008_RV","336431_09-9_20231129_Hu_nucseq_USZ_HTx008_LV")
+#Ischemic cardiomyopathy
+ICM <- c("353921_05-5_20240515_Hu_nucseq_USZ_HTx012_RV","353921_06-6_20240515_Hu_nucseq_USZ_HTx012_LV","353921_09-9_20240515_Hu_nucseq_USZ_HTx013_RV","353921_10-10_20240515_Hu_nucseq_USZ_HTx013_LV","353921_13-13_20240524_Hu_nucseq_USZ_HTx015_RV", "353921_17-17_20240524_Hu_nucseq_USZ_HTx015_LV")
 #EMBs of transplanted hearts
-visit1 <- c("336431_08-8_20231129_Hu_nucseq_USZ_EMB001_V1","336431_13-13_20231129_Hu_nucseq_USZ_EMB002_V1","336431_14-14_20231129_Hu_nucseq_USZ_EMB003_V1","336431_15-15_20231129_Hu_nucseq_USZ_EMB004_V1","336431_10-10_20231129_Hu_nucseq_USZ_EMB005_V1","336431_11-11_20231129_Hu_nucseq_USZ_EMB006_V1", "336431_12-12_20231129_Hu_nucseq_USZ_EMB007_V1","340821_11-17_20240123_Hu_nucseq_USZ_EMB008_V1")
-visit2 <- c("340831_1-1_20240118_Hu_nucseq_USZ_EMB001_V2","340831_2-2_20240118_Hu_nucseq_USZ_EMB002_V2","340831_3-3_20240118_Hu_nucseq_USZ_EMB003_V2","340831_4-4_20240118_Hu_nucseq_USZ_EMB004_V2","340831_5-5_20240118_Hu_nucseq_USZ_EMB005_V2","340831_6-6_20240118_Hu_nucseq_USZ_EMB006_V2","340821_01-7_20240118_Hu_nucseq_USZ_EMB007_V2","340821_02-8_20240118_Hu_nucseq_USZ_EMB008_V2")
-visit3 <- c("340821_03-9_20240123_Hu_nucseq_USZ_EMB001_V3","340821_04-10_20240123_Hu_nucseq_USZ_EMB002_V3","340821_05-11_20240123_Hu_nucseq_USZ_EMB003_V3","340821_06-12_20240123_Hu_nucseq_USZ_EMB004_V3","340821_07-13_20240123_Hu_nucseq_USZ_EMB005_V3","340821_08-14_20240123_Hu_nucseq_USZ_EMB006_V3","340821_09-15_20240123_Hu_nucseq_USZ_EMB007_V3","340821_10-16_20240123_Hu_nucseq_USZ_EMB008_V3")
+visit1 <- c("336431_08-8_20231129_Hu_nucseq_USZ_EMB001_V1","336431_13-13_20231129_Hu_nucseq_USZ_EMB002_V1","336431_14-14_20231129_Hu_nucseq_USZ_EMB003_V1","336431_15-15_20231129_Hu_nucseq_USZ_EMB004_V1","336431_10-10_20231129_Hu_nucseq_USZ_EMB005_V1","336431_11-11_20231129_Hu_nucseq_USZ_EMB006_V1", "336431_12-12_20231129_Hu_nucseq_USZ_EMB007_V1","340821_11-17_20240123_Hu_nucseq_USZ_EMB008_V1","353921_11-11_20240515_Hu_nucseq_USZ_EMB010_V1_1","353921_03-3_20240515_Hu_nucseq_USZ_EMB011_V1","353921_07-7_20240515_Hu_nucseq_USZ_EMB012_V1","353921_18-18_20240524_Hu_nucseq_USZ_EMB013_V1","353921_23-23_20240524_Hu_nucseq_USZ_EMB014_V1","359861_04-4_20240715_Hu_nucseq_USZ_EMB015_V1","359861_07-7_20240715_Hu_nucseq_USZ_EMB016_V1")
+visit2 <- c("340831_1-1_20240118_Hu_nucseq_USZ_EMB001_V2","340831_2-2_20240118_Hu_nucseq_USZ_EMB002_V2","340831_3-3_20240118_Hu_nucseq_USZ_EMB003_V2","340831_4-4_20240118_Hu_nucseq_USZ_EMB004_V2","340831_5-5_20240118_Hu_nucseq_USZ_EMB005_V2","340831_6-6_20240118_Hu_nucseq_USZ_EMB006_V2","340821_01-7_20240118_Hu_nucseq_USZ_EMB007_V2","340821_02-8_20240118_Hu_nucseq_USZ_EMB008_V2","353921_12-12_20240515_Hu_nucseq_USZ_EMB010_V1_2","353921_04-4_20240515_Hu_nucseq_USZ_EMB011_V2","353921_15-15_20240524_Hu_nucseq_USZ_EMB012_V2","353921_19-19_20240524_Hu_nucseq_USZ_EMB013_V2","353921_24-24_20240524_Hu_nucseq_USZ_EMB014_V2","359861_05-5_20240715_Hu_nucseq_USZ_EMB015_V2","359861_08-8_20240715_Hu_nucseq_USZ_EMB016_V2")
+visit3 <- c("340821_03-9_20240123_Hu_nucseq_USZ_EMB001_V3","340821_04-10_20240123_Hu_nucseq_USZ_EMB002_V3","340821_05-11_20240123_Hu_nucseq_USZ_EMB003_V3","340821_06-12_20240123_Hu_nucseq_USZ_EMB004_V3","340821_07-13_20240123_Hu_nucseq_USZ_EMB005_V3","340821_08-14_20240123_Hu_nucseq_USZ_EMB006_V3","340821_09-15_20240123_Hu_nucseq_USZ_EMB007_V3","340821_10-16_20240123_Hu_nucseq_USZ_EMB008_V3","353921_08-8_20240515_Hu_nucseq_USZ_EMB010_V3","353921_14-14_20240524_Hu_nucseq_USZ_EMB011_V3","353921_16-16_20240524_Hu_nucseq_USZ_EMB012_V3","353921_20-20_20240524_Hu_nucseq_USZ_EMB013_V3","359861_03-3_20240715_Hu_nucseq_USZ_EMB014_V3","359861_06-6_20240715_Hu_nucseq_USZ_EMB015_V3","359861_18-10_20240730_Hu_nucseq_USZ_EMB016_V3")
 
 seuratM$diseaseCondSp <- "diseaseCondSp"
 seuratM$diseaseCondSp[which(seuratM$dataset %in% GCM )] <- "GCM"
 seuratM$diseaseCondSp[which(seuratM$dataset %in% DCM)] <- "DCM"
 seuratM$diseaseCondSp[which(seuratM$dataset %in% HCM)] <- "HCM"
+seuratM$diseaseCondSp[which(seuratM$dataset %in% ICM)] <- "ICM"
 seuratM$diseaseCondSp[which(seuratM$dataset %in% LoeEndoc)] <- "LoeEndoc"
 seuratM$diseaseCondSp[which(seuratM$dataset %in% healthy)] <- "healthy"
 seuratM$diseaseCondSp[which(seuratM$dataset %in% visit1)] <- "visit1"
@@ -192,7 +237,7 @@ seuratM$diseaseCondSp[which(seuratM$dataset %in% visit3)] <- "visit3"
 table(seuratM$diseaseCondSp)
 
 seuratM$diseaseCond <- "diseaseCond"
-seuratM$diseaseCond[which(seuratM$dataset %in% c(GCM, DCM, HCM, LoeEndoc))] <- "explant"
+seuratM$diseaseCond[which(seuratM$dataset %in% c(GCM, DCM, HCM,ICM,LoeEndoc))] <- "explant"
 seuratM$diseaseCond[which(seuratM$dataset %in% visit1)] <- "visit1"
 seuratM$diseaseCond[which(seuratM$dataset %in% visit2)] <- "visit2"
 seuratM$diseaseCond[which(seuratM$dataset %in% visit3)] <- "visit3"
@@ -203,31 +248,32 @@ orddiseaseCond <- c("healthy", "explant", "visit1", "visit2" ,"visit3")
 
 #### cluster_name
 seuratM$clusterName <- "clusterName"
-seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "0" )] <- "Fb1"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "0" )] <- "Fb"
 seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "1" )] <- "BEC1"
-seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "2" )] <- "PerivFb/VSMC"
-seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "3" )] <- "Fb2"
-seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "4" )] <- "Mph1"
-seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "5" )] <- "CM"
-seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "6" )] <- "Tcell"
-seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "7" )] <- "BEC2"
-seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "8" )] <- "BEC3"
-seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "9" )] <- "Mph2"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "2" )] <- "PerivFb"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "3" )] <- "Mph"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "4" )] <- "CM"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "5" )] <- "Tcell"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "6" )] <- "VSMC"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "7" )] <- "Mph2"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "8" )] <- "BEC2"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "9" )] <- "Int"
 seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "10" )] <- "NC"
-seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "11" )] <- "LEC"
-seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "12" )] <- "AdipoC"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "11" )] <- "Tcell2"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "12" )] <- "LEC"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "13" )] <- "AdipoC"
 table(seuratM$clusterName)
 table(seuratM$RNA_snn_res.0.25)
 
 ###order
 Idents(seuratM) <- seuratM$clusterName
-seuratM$clusterName <- factor(seuratM$clusterName, levels=c("CM","Fb1","Fb2","PerivFb/VSMC","BEC1", "BEC2","BEC3","LEC","NC","AdipoC","Mph1","Mph2","Tcell"))
+seuratM$clusterName <- factor(seuratM$clusterName, levels=c("CM","Fb","PerivFb","VSMC","Int","BEC1", "BEC2","LEC","NC","AdipoC","Mph","Mph2","Tcell","Tcell2"))
 Idents(seuratM) <- seuratM$clusterName
 table(seuratM$clusterName)
 
 #### ventricle
-LV <- c("331571_3-5_20231012_Hu_nucseq_USZ_HTx001","331571_4-6_20231012_Hu_nucseq_USZ_HTx002","334131_02-2_20231103_Hu_nucseq_USZ_HTx003_LV","334131_05-5_20231106_Hu_nucseq_USZ_HTx004_LV","334131_07-7_20231107_Hu_nucseq_USZ_HTx005_LV","334131_09-9_20231108_Hu_nucseq_USZ_HTx006_LV","340821_13-19_20240123_Hu_nucseq_USZ_HTx007_LV","336431_09-9_20231129_Hu_nucseq_USZ_HTx008_LV")
-RV <- c("334131_10-10_20231108_Hu_nucseq_USZ_HTx001_RV","334131_01-1_20231103_Hu_nucseq_USZ_HTx002_RV","334131_04-4_20231106_Hu_nucseq_USZ_HTx003_RV","334131_03-3_20231103_Hu_nucseq_USZ_HTx004_RV","334131_06-6_20231106_Hu_nucseq_USZ_HTx005_RV","334131_08-8_20231107_Hu_nucseq_USZ_HTx006_RV","340821_12-18_20240123_Hu_nucseq_USZ_HTx007_RV","336431_07-7_20231129_Hu_nucseq_USZ_HTx008_RV")
+LV <- c("331571_3-5_20231012_Hu_nucseq_USZ_HTx001","331571_4-6_20231012_Hu_nucseq_USZ_HTx002","334131_02-2_20231103_Hu_nucseq_USZ_HTx003_LV","334131_05-5_20231106_Hu_nucseq_USZ_HTx004_LV","334131_07-7_20231107_Hu_nucseq_USZ_HTx005_LV","334131_09-9_20231108_Hu_nucseq_USZ_HTx006_LV","340821_13-19_20240123_Hu_nucseq_USZ_HTx007_LV","336431_09-9_20231129_Hu_nucseq_USZ_HTx008_LV","347741_1-1_20240326_Hu_nucseq_USZ_HTx009_RV","347741_4-4_20240326_Hu_nucseq_USZ_HTx010_RV","353921_01-1_20240515_Hu_nucseq_USZ_HTx011_RV","353921_05-5_20240515_Hu_nucseq_USZ_HTx012_RV","353921_09-9_20240515_Hu_nucseq_USZ_HTx013_RV","353921_21-21_20240524_Hu_nucseq_USZ_HTx014_RV","353921_13-13_20240524_Hu_nucseq_USZ_HTx015_RV","359861_02-2_20240715_Hu_nucseq_USZ_HTx016_RV")
+RV <- c("334131_10-10_20231108_Hu_nucseq_USZ_HTx001_RV","334131_01-1_20231103_Hu_nucseq_USZ_HTx002_RV","334131_04-4_20231106_Hu_nucseq_USZ_HTx003_RV","334131_03-3_20231103_Hu_nucseq_USZ_HTx004_RV","334131_06-6_20231106_Hu_nucseq_USZ_HTx005_RV","334131_08-8_20231107_Hu_nucseq_USZ_HTx006_RV","340821_12-18_20240123_Hu_nucseq_USZ_HTx007_RV","336431_07-7_20231129_Hu_nucseq_USZ_HTx008_RV","347741_2-2_20240326_Hu_nucseq_USZ_HTx009_LV","347741_5-5_20240326_Hu_nucseq_USZ_HTx010_LV","353921_02-2_20240515_Hu_nucseq_USZ_HTx011_LV","353921_06-6_20240515_Hu_nucseq_USZ_HTx012_LV","353921_10-10_20240515_Hu_nucseq_USZ_HTx013_LV","353921_22-22_20240524_Hu_nucseq_USZ_HTx014_LV","353921_17-17_20240524_Hu_nucseq_USZ_HTx015_LV","359861_01-1_20240715_Hu_nucseq_USZ_HTx016_LV")
 
 seuratM$ventricle <- "ventricle-NA"
 seuratM$ventricle[which(seuratM$dataset %in% LV)] <- "LV"
@@ -238,18 +284,119 @@ table(seuratM$ventricle)
 seuratM$patient_diseaseCond <- paste0(seuratM$patient, '_', seuratM$diseaseCond)
 table(seuratM$patient_diseaseCond)
 
-ordpatient_diseasecond <- c("HH1_healthy","HH10_healthy","HH2_healthy","HH3_healthy","HH4_healthy","HH5_healthy","HH6_healthy","HH7_healthy","HH8_healthy","HH9_healthy","CarTransPat1_explant","CarTransPat2_explant","CarTransPat3_explant","CarTransPat4_explant","CarTransPat5_explant","CarTransPat6_explant","CarTransPat7_explant","CarTransPat8_explant","CarTransPat1_visit1","CarTransPat1_visit2","CarTransPat1_visit3","CarTransPat2_visit1","CarTransPat2_visit2","CarTransPat2_visit3","CarTransPat3_visit1","CarTransPat3_visit2","CarTransPat3_visit3","CarTransPat4_visit1","CarTransPat4_visit2","CarTransPat4_visit3","CarTransPat5_visit1","CarTransPat5_visit2","CarTransPat5_visit3","CarTransPat6_visit1","CarTransPat6_visit2","CarTransPat6_visit3","CarTransPat7_visit1","CarTransPat7_visit2","CarTransPat7_visit3","CarTransPat8_visit1","CarTransPat8_visit2","CarTransPat8_visit3")
+ordpatient_diseasecond <- c("HH1_healthy","HH10_healthy","HH2_healthy","HH3_healthy","HH4_healthy","HH5_healthy","HH6_healthy","HH7_healthy","HH8_healthy","HH9_healthy","CarTransPat1_explant","CarTransPat2_explant","CarTransPat3_explant","CarTransPat4_explant","CarTransPat5_explant","CarTransPat6_explant","CarTransPat7_explant","CarTransPat8_explant","CarTransPat10_explant","CarTransPat11_explant","CarTransPat12_explant","CarTransPat13_explant","CarTransPat14_explant","CarTransPat15_explant", "CarTransPat16_explant",
+"CarTransPat1_visit1","CarTransPat1_visit2","CarTransPat1_visit3","CarTransPat2_visit1","CarTransPat2_visit2","CarTransPat2_visit3","CarTransPat3_visit1","CarTransPat3_visit2","CarTransPat3_visit3","CarTransPat4_visit1","CarTransPat4_visit2","CarTransPat4_visit3","CarTransPat5_visit1","CarTransPat5_visit2","CarTransPat5_visit3","CarTransPat6_visit1","CarTransPat6_visit2","CarTransPat6_visit3","CarTransPat7_visit1","CarTransPat7_visit2","CarTransPat7_visit3","CarTransPat8_visit1","CarTransPat8_visit2","CarTransPat8_visit3","CarTransPat10_visit1","CarTransPat10_visit2","CarTransPat10_visit3","CarTransPat11_visit1","CarTransPat11_visit2","CarTransPat11_visit3","CarTransPat12_visit1","CarTransPat12_visit2","CarTransPat12_visit3","CarTransPat13_visit1","CarTransPat13_visit2","CarTransPat13_visit3","CarTransPat14_visit1","CarTransPat14_visit2", "CarTransPat14_visit3","CarTransPat15_visit1","CarTransPat15_visit2", "CarTransPat15_visit3","CarTransPat16_visit1","CarTransPat16_visit2", "CarTransPat16_visit3")
 
 seuratM$patient_ventricle <- paste0(seuratM$patient, '_', seuratM$ventricle)
 table(seuratM$patient_ventricle)
 ```
 
+##set color vectors 
+```{r set color vector}
+colclusterName <- c("#67001f", "#D53E4F", "#f4a582", "#FEE08B", "#003c30","#01665e","#66C2A5", "#3288BD","#BEAED4", "#c7eae5","#355C7D","#202547","#B45B5C","#8c510a")
+names(colclusterName) <- c("CM","Fb","PerivFb","VSMC","Int","BEC1", "BEC2","LEC","NC","AdipoC","Mph","Mph2","Tcell","Tcell2")
+
+coldiseaseCond <- c("#dfc27d","#BE3144","#202547","#355C7D","#779d8d")
+names(coldiseaseCond) <- c("healthy", "explant", "visit1", "visit2", "visit3")
+```
+
+## QC merged 
+```{r QC patient}
+# Extract meta.data from the Seurat object
+meta.data <- seuratM@meta.data
+# Create the density plot
+ptotalpat <- ggplot(data = meta.data, aes(x = total, color = patient, fill = patient)) +
+  geom_density(alpha = 0.2) +
+  #scale_fill_manual(values = colpat) +
+  #scale_color_manual(values = colpat) +
+  theme_classic() +
+  scale_x_log10() +
+  ylab("density") +
+  geom_vline(xintercept = 100)
+
+pdetectedpat <- ggplot(data = meta.data, aes(x = detected, color = patient, fill = patient)) +
+  geom_density(alpha = 0.2) +
+ #scale_fill_manual(values = colpat) +
+  #scale_color_manual(values = colpat) +
+  theme_classic() +
+  scale_x_log10() +
+  ylab("density") +
+  geom_vline(xintercept = 100)
+
+# Return the plots as a list
+list(ptotalpat, pdetectedpat)
+```
+```{r QC dataset, fig.height=20, fig.width=40}
+# Extract meta.data from the Seurat object
+meta.data <- seuratM@meta.data
+# Create the density plot
+ptotalpat <- ggplot(data = meta.data, aes(x = total, color = dataset, fill = dataset)) +
+  geom_density(alpha = 0.2) +
+  #scale_fill_manual(values = colpat) +
+  #scale_color_manual(values = colpat) +
+  theme_classic() +
+  scale_x_log10() +
+  ylab("density") +
+  geom_vline(xintercept = 100)
+
+pdetectedpat <- ggplot(data = meta.data, aes(x = detected, color = dataset, fill = dataset)) +
+  geom_density(alpha = 0.2) +
+ #scale_fill_manual(values = colpat) +
+  #scale_color_manual(values = colpat) +
+  theme_classic() +
+  scale_x_log10() +
+  ylab("density") +
+  geom_vline(xintercept = 100)
+
+# Return the plots as a list
+list(ptotalpat, pdetectedpat)
+```
+
+## plot cell numbers
+```{r cellnumber circle patient}
+cell_count <- data.frame(table(seuratM$patient))
+colnames(cell_count) <- c("patient", "Freq")
+hsize <- 1.5
+
+ggplot(cell_count, aes(x = hsize, y = Freq, fill = patient)) +
+  #scale_fill_manual(values = colpat2) +
+  geom_col(color = "white") +
+  coord_polar(theta = "y") +
+  xlim(c(0.2, hsize + 0.5)) +
+  theme_void() +
+  ggtitle("cell number") +
+  theme(plot.title = element_text(hjust = 0.5, size = 15)) +
+  geom_text(aes(label = Freq), position = position_stack(vjust = 0.5))
+```
+```{r cellnumber circle dataset, fig.height=20, fig.width=40}
+cell_count <- data.frame(table(seuratM$dataset))
+colnames(cell_count) <- c("dataset", "Freq")
+hsize <- 1.5
+
+ggplot(cell_count, aes(x = hsize, y = Freq, fill = dataset)) +
+  #scale_fill_manual(values = colpat2) +
+  geom_col(color = "white") +
+  coord_polar(theta = "y") +
+  xlim(c(0.2, hsize + 0.5)) +
+  theme_void() +
+  ggtitle("cell number") +
+  theme(plot.title = element_text(hjust = 0.5, size = 15)) +
+  geom_text(aes(label = Freq), position = position_stack(vjust = 0.5))
+```
 
 ## plot umaps
 ```{r umap}
+Idents(seuratM) <- seuratM$RNA_snn_res.0.25
+DimPlot(seuratM, reduction = "umap", pt.size = 0.1, raster = FALSE) 
+
+Idents(seuratM) <- seuratM$patient
+DimPlot(seuratM, reduction = "umap", pt.size = 0.1, raster = FALSE) 
+DimPlot(seuratM, reduction = "umap", pt.size = 0.1, raster = FALSE) + theme(legend.position = "null")
+
 Idents(seuratM) <- seuratM$clusterName
 DimPlot(seuratM, reduction = "umap", pt.size = 0.1, cols = colclusterName, raster = FALSE) 
 DimPlot(seuratM, reduction = "umap", pt.size = 0.1, cols = colclusterName, raster = FALSE) + theme(legend.position = "null")
+DimPlot(seuratM, reduction = "umap", pt.size = 0.1, cols = colclusterName, raster = FALSE, label = TRUE) + theme(legend.position = "null")
 
 Idents(seuratM) <- seuratM$diseaseCond
 order1 <- c("visit3","visit2","visit1","explant","healthy")
@@ -257,248 +404,130 @@ DimPlot(seuratM, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, order
 DimPlot(seuratM, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, order = order1, raster = FALSE) + theme(legend.position = "null")
 ```
 
-## calculate marker genes
-```{r marker genes, eval=FALSE, include=TRUE}
-#marker genes
+```{r subset umaps}
+seuratHealthy <- subset(seuratM, diseaseCond == "healthy")
+DimPlot(seuratHealthy, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE)
+DimPlot(seuratHealthy, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE) + theme(legend.position = "null")
+
+seuratExplant <- subset(seuratM, diseaseCond == "explant")
+DimPlot(seuratExplant, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE)
+DimPlot(seuratExplant, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE) + theme(legend.position = "null")
+
+seuratVisit1 <- subset(seuratM, diseaseCond == "visit1")
+DimPlot(seuratVisit1, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE)
+DimPlot(seuratVisit1, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE) + theme(legend.position = "null")
+
+seuratVisit2 <- subset(seuratM, diseaseCond == "visit2")
+DimPlot(seuratVisit2, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE)
+DimPlot(seuratVisit2, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE) + theme(legend.position = "null")
+
+seuratVisit3 <- subset(seuratM, diseaseCond == "visit3")
+DimPlot(seuratVisit3, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE)
+DimPlot(seuratVisit3, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE) + theme(legend.position = "null")
+
+seuratVisits <- subset(seuratM, diseaseCond %in% c("visit1", "visit2", "visit3"))
+DimPlot(seuratVisits, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE)
+DimPlot(seuratVisits, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE) + theme(legend.position = "null")
+```
+
+## plot features
+```{r feature plot}
+FeaturePlot(seuratM, features = "ENSG00000197614.MFAP5", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000159674.SPON2", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000065320.NTN1", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000164136.IL15", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000172638.EFEMP2", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+
 Idents(seuratM) <- seuratM$clusterName
-levels(seuratM)
-markerGenes <- FindAllMarkers(seuratM, only.pos=T,logfc.threshold = 0.2) %>% 
-  dplyr::filter(p_val_adj < 0.1) 
+VlnPlot(object=seuratM, features = "ENSG00000197614.MFAP5", pt.size = 1, cols = colclusterName)
+VlnPlot(object=seuratM, features = "ENSG00000159674.SPON2", pt.size = 1, cols = colclusterName)
+VlnPlot(object=seuratM, features = "ENSG00000065320.NTN1", pt.size = 1, cols = colclusterName)
+VlnPlot(object=seuratM, features = "ENSG00000164136.IL15", pt.size = 1, cols = colclusterName)
+VlnPlot(object=seuratM, features = "ENSG00000172638.EFEMP2", pt.size = 1, cols = colclusterName)
 
-#save 
-write.table(markerGenes, 
-            file= "/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/analysis/",
-            sep="\t",
-            quote=F,
-            row.names=F,
-            col.names=T)
-```
-
-## dotplot marker genes
-```{r dotplot marker genes, fig.height=8, fig.width=10}
-Idents(seuratM) <-seuratM$clusterName
-seuratM$clusterName <- factor(seuratM$clusterName, levels=c("CM","Fb1","Fb2","PerivFb/VSMC","BEC1","BEC2","BEC3","LEC","NC","AdipoC","Mph1","Mph2","Tcell"))
-
-genes <- data.frame(gene=rownames(seuratM)) %>% 
-  mutate(geneID=gsub("^.*\\.", "", gene))
-
-selGenes <- data.frame(geneID=rev(c("TTN", "MYBPC3", "RYR2", "NEBL", "TNNT2", "CMYA5", "COL6A3", "DCN",  "FBN1", "C7", "PDGFRA", "CDH19", "PDGFRB","ITGA7","RGS5", "NOTCH3", "MYH11", "ACTA2","PECAM1", "VWF", "EGFL7", "POSTN", "ITGA10", "CDH11","CCL21", "PROX1", "FLT4", "NRXN1", "ANK3", "PTPRZ1", "ACACB", "PLIN1", "GPAM", "CD163", "MRC1", "SIGLEC1", "STAB1", "CSF1R", "MERTK", "IL7R", "PTPRC", "CD2"))) %>% left_join(., genes, by="geneID") %>% filter(gene != "ENSG00000232995.RGS5") 
-
-DotPlot(seuratM, features = selGenes, group.by= "clusterName") + RotatedAxis() + scale_color_viridis(option="F") + coord_flip()
-```
-
-## average Heatmap - cluster marker genes
-```{r avg heatmap, fig.height=10, fig.width=8}
-Idents(seuratM) <- seuratM$clusterName
-levels(seuratM)
-
-seurat <- seuratM
-
-avgHeatmap <- function(seurat, selGenes, colVecIdent, colVecCond=NULL,
-                       ordVec=NULL, gapVecR=NULL, gapVecC=NULL,cc=FALSE,
-                       cr=FALSE, condCol=FALSE){
-  selGenes <- selGenes$gene
-  ## assay data
-  clusterAssigned <- as.data.frame(Idents(seurat)) %>%
-  dplyr::mutate(cell=rownames(.))
-  colnames(clusterAssigned)[1] <- "ident"
-  seuratDat <- GetAssayData(seurat)
-  
-  ## genes of interest
-  genes <- data.frame(gene=rownames(seurat)) %>% 
-    mutate(geneID=gsub("^.*\\.", "", gene)) %>% filter(geneID %in% selGenes)
-
-  ## matrix with averaged cnts per ident
-  logNormExpres <- as.data.frame(t(as.matrix(
-    seuratDat[which(rownames(seuratDat) %in% genes$gene),])))
-  logNormExpres <- logNormExpres %>% dplyr::mutate(cell=rownames(.)) %>%
-    dplyr::left_join(.,clusterAssigned, by=c("cell")) %>%
-    dplyr::select(-cell) %>% dplyr::group_by(ident) %>%
-    dplyr::summarise_all(mean)
-  logNormExpresMa <- logNormExpres %>% dplyr::select(-ident) %>% as.matrix()
-  rownames(logNormExpresMa) <- logNormExpres$ident
-  logNormExpresMa <- t(logNormExpresMa)
-  rownames(logNormExpresMa) <- gsub("^.*?\\.","",rownames(logNormExpresMa))
-  
-  ## remove genes if they are all the same in all groups
-  ind <- apply(logNormExpresMa, 1, sd) == 0
-  logNormExpresMa <- logNormExpresMa[!ind,]
-  genes <- genes[!ind,]
-
-  ## color columns according to cluster
-  annotation_col <- as.data.frame(gsub("(^.*?_)","",
-                                       colnames(logNormExpresMa)))%>%
-    dplyr::mutate(celltype=gsub("(_.*$)","",colnames(logNormExpresMa)))
-  colnames(annotation_col)[1] <- "col1"
-  annotation_col <- annotation_col %>%
-    dplyr::mutate(cond = gsub("(^[0-9]_?)","",col1)) %>%
-    dplyr::select(cond, celltype)
-  rownames(annotation_col) <- colnames(logNormExpresMa) 
-
-  ann_colors = list(
-      celltype=colVec)
-  if(is.null(ann_colors$cond)){
-    annotation_col$cond <- NULL
-  }
-  
-  ## adjust order
-  logNormExpresMa <- logNormExpresMa[selGenes,]
-  if(is.null(ordVec)){
-  ordVec <- levels(seurat)
-  ordVec <-c("CM","Fb1","Fb2","PerivFb/VSMC","BEC1", "BEC2","BEC3","LEC","NC","AdipoC","Mph1","Mph2","Tcell")
-  }
-  logNormExpresMa <- logNormExpresMa[,ordVec]
-
-  ## scaled row-wise
-  pheatmap(logNormExpresMa, scale="row" ,treeheight_row = 0,cluster_rows = cr, 
-         cluster_cols = cc, color = colorRampPalette(c("#2166AC", "#F7F7F7", "#B2182B"))(50),
-         annotation_col = annotation_col, cellwidth=15, cellheight=10,
-         annotation_colors = ann_colors, gaps_row = gapVecR, gaps_col = gapVecC)
-}
-
-genesPlot <- data.frame(gene=c("TTN", "MYBPC3", "RYR2", "NEBL", "TNNT2", "CMYA5", "COL6A3", "DCN",  "FBN1", "C7", "PDGFRA", "CDH19", "PDGFRB","ITGA7","RGS5", "NOTCH3", "MYH11", "ACTA2","PECAM1", "VWF", "EGFL7", "POSTN", "ITGA10", "CDH11","CCL21", "PROX1", "FLT4", "NRXN1", "ANK3", "PTPRZ1", "ACACB", "PLIN1", "GPAM", "CD163", "MRC1", "SIGLEC1", "STAB1", "CSF1R", "MERTK", "IL7R", "PTPRC", "CD2"))
-
-levels(seurat)
-colVec <- colclusterName
-
-# colVec <- c(colPal, colPal, colPal)
-# colVec <- c("blue", "red")
-
-avgHeatmap(seurat, selGenes = genesPlot, colVecIdent = colVec)
-```
-## Abundance plots
-```{r abundance plot, fig.height=8, fig.width=10}
-###dataset
-datList <- NULL
-for(con in unique(seuratM$dataset)){
-  seuratSub <- subset(seuratM, dataset==con)
-  print(dim(seuratSub))
-  dat_con <- as.data.frame(table(seuratSub$clusterName)) %>%
-  mutate(percent=Freq/ncol(seuratSub)) %>% mutate(dataset=con)
-  datList[[con]] <- dat_con
-}
-dat_all <- do.call("rbind", datList)
-
-## plot abundance
-ggbarplot(dat_all, x= "dataset", y= "percent", fill = "Var1", palette = colclusterName, legend = "right", legend.titel = "cluster", ylab = "frequency")  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + scale_x_discrete(limits=orddatasets)
-
-###patient_diseaseCond
-datList <- NULL
-for(con in unique(seuratM$patient_diseaseCond)){
-  seuratSub <- subset(seuratM, patient_diseaseCond==con)
-  print(dim(seuratSub))
-  dat_con <- as.data.frame(table(seuratSub$clusterName)) %>%
-  mutate(percent=Freq/ncol(seuratSub)) %>% mutate(patient_diseaseCond=con)
-  datList[[con]] <- dat_con
-}
-dat_all <- do.call("rbind", datList)
-
-## plot abundance
-ggbarplot(dat_all, x= "patient_diseaseCond", y= "percent", fill = "Var1", palette = colclusterName, legend = "right", legend.titel = "cluster", ylab = "frequency")  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + scale_x_discrete(limits=ordpatient_diseasecond)
-
-###diseaseCond
-datList <- NULL
-for(con in unique(seuratM$diseaseCond)){
-  seuratSub <- subset(seuratM, diseaseCond==con)
-  print(dim(seuratSub))
-  dat_con <- as.data.frame(table(seuratSub$clusterName)) %>%
-  mutate(percent=Freq/ncol(seuratSub)) %>% mutate(diseaseCond=con)
-  datList[[con]] <- dat_con
-}
-dat_all <- do.call("rbind", datList)
-
-## plot abundance
-ggbarplot(dat_all, x= "diseaseCond", y= "percent", fill = "Var1", palette = colclusterName, legend = "right", legend.titel = "cluster", ylab = "frequency")  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + scale_x_discrete(limits=orddiseaseCond)
-```
-## fraction of subsets/patient
-```{r fraction for subsets, fig.height=8, fig.width=10}
-##set order
 seuratM$diseaseCond <- factor(seuratM$diseaseCond, levels=c("healthy", "explant", "visit1", "visit2", "visit3"))
-
-## 1. create data.frame with cluster counts per patient
-## change "RNA_snn_res.0.25" to subset/cluster you're interested in ...
-datFrac <- data.frame(table(seuratM$patient_diseaseCond, seuratM$clusterName))
-colnames(datFrac) <- c("patient_diseaseCond", "subset", "cnt")
-
-## 2. get total counts per patient to compute relative abundances from
-## I added cond here as grouping variable for the plotting later ...
-datSumPat <- data.frame(table(seuratM$patient_diseaseCond, seuratM$diseaseCond)) %>% 
-  filter(Freq >0)
-colnames(datSumPat) <- c("patient_diseaseCond", "diseaseCond", "cntPatTot")
-
-## 3. join data.frames to compute rel abundances per patient
-datFracSum <- datFrac %>% left_join(., datSumPat, by = "patient_diseaseCond") %>% 
-  mutate(relCnt = cnt/cntPatTot)
-
-## plot barplot with abundances for each subset grouped by cond
-ggbarplot(datFracSum, x = "subset", y = "relCnt",
-          fill = "diseaseCond", color = "diseaseCond",
-          palette = coldiseaseCond,
-          add = c("mean_se", "dotplot"),
-          add.params = list(color="black", fill="diseaseCond", size=0.2),
-          position = position_dodge(0.9),
-          xlab = "subset",
-          ylab = "relative abundance",
-          legend = "right",
-          legend.title = "") +
-  rotate_x_text(angle = 90) 
-
-## plot barplot with abundances for individual subsets
-clusterVec <- levels(seuratM)
-createClusterPlot <- function(cluster) {
-  datFracSumC <- datFracSum %>% filter(subset == cluster)
-
-  ggbarplot(datFracSumC, x = "diseaseCond", y = "relCnt",
-            fill = "diseaseCond", color = "diseaseCond",
-            palette = coldiseaseCond,
-            add = c("mean_se", "dotplot"),
-            size = 5,
-            add.params = list(color = "black", fill = "diseaseCond"),
-            position = position_dodge(0.9),
-            xlab = cluster,
-            ylab = "relative abundance",
-            legend = "right",
-            legend.title = "") +
-    stat_compare_means(method = "kruskal.test", label.y = 0.0)
-}
-lapply(clusterVec, createClusterPlot)
+Idents(seuratM) <- seuratM$diseaseCond
+VlnPlot(object=seuratM, features = "ENSG00000197614.MFAP5", pt.size = 1, cols = coldiseaseCond)
+VlnPlot(object=seuratM, features = "ENSG00000159674.SPON2", pt.size = 1, cols = colclusterName)
+VlnPlot(object=seuratM, features = "ENSG00000065320.NTN1", pt.size = 1, cols = colclusterName)
+VlnPlot(object=seuratM, features = "ENSG00000164136.IL15", pt.size = 1, cols = colclusterName)
+VlnPlot(object=seuratM, features = "ENSG00000172638.EFEMP2", pt.size = 1, cols = colclusterName)
 ```
 
-## GSEA Fb1 vs Fb2
-```{r DE genes, fig.height=10, fig.width=12}
-#DE genes
-Idents(seuratM) <- seuratM$clusterName
-seuratFb <- subset(seuratM, clusterName %in% c("Fb1", "Fb2"))
-levels(seuratFb)
-DEGenesFb <- FindAllMarkers(seuratFb, only.pos=T,logfc.threshold = 0.2) %>% 
-  dplyr::filter(p_val_adj < 0.1) 
-#save 
-write.table(DEGenesFb, 
-            file= "/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/analysis/DeGenesFb",
-            sep="\t",
-            quote=F,
-            row.names=F,
-            col.names=T)
-##adjust table
-DEGenesFbadj <- DEGenesFb %>% rownames_to_column(., var = "long") %>%
-  mutate(gene=gsub("^.*\\.", "", long))  %>%
-  mutate(EnsID=gsub("\\..*","", long))
+```{r feature plot PerivFb}
+## subset PerivFb
+seuratPerivFb <- subset(seuratM, clusterName %in% c("PerivFb"))
+Idents(seuratPerivFb) <- seuratPerivFb$clusterName
+DimPlot(seuratPerivFb, reduction = "umap", cols = colclusterName)
 
-##GSEA
-Fbsubsets <- c("Fb1", "Fb2")
-GSEAFbsub <- function(Fbsubsets) {
-  DEGenesFbC <- DEGenesFbadj %>% filter (cluster == Fbsubsets)
-  ego <- enrichGO(gene = unique(DEGenesFbC$EnsID),
-                          OrgDb = org.Hs.eg.db,
-                          keyType = 'ENSEMBL',
-                          ont = "BP",
-                          pAdjustMethod = "BH",
-                          pvalueCutoff = 0.05,
-                          qvalueCutoff = 0.05)
-ego <- setReadable(ego, OrgDb = org.Hs.eg.db)
-dotplot(ego, showCategory=30, title = Fbsubsets, font.size = 10)
-}
-lapply(Fbsubsets, GSEAFbsub)
+#make violin plot
+seuratPerivFb$diseaseCond <- factor(seuratPerivFb$diseaseCond, levels=c("healthy", "explant", "visit1", "visit2", "visit3"))
+Idents(seuratPerivFb) <- seuratPerivFb$diseaseCond
+VlnPlot(object=seuratPerivFb, features = "ENSG00000197614.MFAP5", pt.size = 1, cols = coldiseaseCond)
+VlnPlot(object=seuratPerivFb, features = "ENSG00000159674.SPON2", pt.size = 1, cols = coldiseaseCond)
+VlnPlot(object=seuratPerivFb, features = "ENSG00000065320.NTN1", pt.size = 1, cols = coldiseaseCond)
+VlnPlot(object=seuratPerivFb, features = "ENSG00000164136.IL15", pt.size = 1, cols = coldiseaseCond)
+VlnPlot(object=seuratPerivFb, features = "ENSG00000172638.EFEMP2", pt.size = 1, cols = coldiseaseCond)
+```
+```{r feature plot Fb}
+## subset Fb
+seuratFb <- subset(seuratM, clusterName %in% c("Fb"))
+Idents(seuratFb) <- seuratFb$clusterName
+DimPlot(seuratFb, reduction = "umap", cols = colclusterName)
+
+#make violin plot
+seuratFb$diseaseCond <- factor(seuratFb$diseaseCond, levels=c("healthy", "explant", "visit1", "visit2", "visit3"))
+Idents(seuratFb) <- seuratFb$diseaseCond
+VlnPlot(object=seuratFb, features = "ENSG00000197614.MFAP5", pt.size = 0, cols = coldiseaseCond)
+VlnPlot(object=seuratFb, features = "ENSG00000159674.SPON2", pt.size = 0, cols = coldiseaseCond)
+VlnPlot(object=seuratFb, features = "ENSG00000065320.NTN1", pt.size = 1, cols = coldiseaseCond)
+VlnPlot(object=seuratFb, features = "ENSG00000164136.IL15", pt.size = 1, cols = coldiseaseCond)
+VlnPlot(object=seuratFb, features = "ENSG00000172638.EFEMP2", pt.size = 1, cols = coldiseaseCond)
+```
+```{r feature plot CM}
+## subset CM
+seuratCM <- subset(seuratM, clusterName %in% c("CM"))
+Idents(seuratCM) <- seuratCM$clusterName
+DimPlot(seuratCM, reduction = "umap", cols = colclusterName)
+
+#make violin plot
+seuratCM$diseaseCond <- factor(seuratCM$diseaseCond, levels=c("healthy", "explant", "visit1", "visit2", "visit3"))
+Idents(seuratCM) <- seuratCM$diseaseCond
+VlnPlot(object=seuratCM, features = "ENSG00000197614.MFAP5", pt.size = 1, cols = coldiseaseCond)
+VlnPlot(object=seuratCM, features = "ENSG00000159674.SPON2", pt.size = 1, cols = coldiseaseCond)
+VlnPlot(object=seuratCM, features = "ENSG00000065320.NTN1", pt.size = 1, cols = coldiseaseCond)
+VlnPlot(object=seuratCM, features = "ENSG00000164136.IL15", pt.size = 1, cols = coldiseaseCond)
+VlnPlot(object=seuratCM, features = "ENSG00000172638.EFEMP2", pt.size = 1, cols = coldiseaseCond)
+```
+```{r feature plot BEC}
+## subset BEC
+seuratBEC <- subset(seuratM, clusterName %in% c("BEC1", "BEC2"))
+Idents(seuratBEC) <- seuratBEC$clusterName
+DimPlot(seuratBEC, reduction = "umap", cols = colclusterName)
+
+#make violin plot
+seuratBEC$diseaseCond <- factor(seuratBEC$diseaseCond, levels=c("healthy", "explant", "visit1", "visit2", "visit3"))
+Idents(seuratBEC) <- seuratBEC$diseaseCond
+VlnPlot(object=seuratBEC, features = "ENSG00000197614.MFAP5", pt.size = 1, cols = coldiseaseCond)
+VlnPlot(object=seuratBEC, features = "ENSG00000159674.SPON2", pt.size = 1, cols = coldiseaseCond)
+VlnPlot(object=seuratBEC, features = "ENSG00000065320.NTN1", pt.size = 1, cols = coldiseaseCond)
+VlnPlot(object=seuratBEC, features = "ENSG00000164136.IL15", pt.size = 1, cols = coldiseaseCond)
+VlnPlot(object=seuratBEC, features = "ENSG00000172638.EFEMP2", pt.size = 1, cols = coldiseaseCond)
+```
+```{r feature plot Mph}
+## subset Mph
+seuratMph <- subset(seuratM, clusterName %in% c("Mph", "Mph2"))
+Idents(seuratMph) <- seuratMph$clusterName
+DimPlot(seuratMph, reduction = "umap", cols = colclusterName, label = TRUE)
+
+#make violin plot
+seuratMph$diseaseCond <- factor(seuratMph$diseaseCond, levels=c("healthy", "explant", "visit1", "visit2", "visit3"))
+Idents(seuratMph) <- seuratMph$diseaseCond
+VlnPlot(object=seuratMph, features = "ENSG00000197614.MFAP5", pt.size = 1, cols = coldiseaseCond)
+VlnPlot(object=seuratMph, features = "ENSG00000159674.SPON2", pt.size = 1, cols = coldiseaseCond)
+VlnPlot(object=seuratMph, features = "ENSG00000065320.NTN1", pt.size = 1, cols = coldiseaseCond)
+VlnPlot(object=seuratMph, features = "ENSG00000164136.IL15", pt.size = 1, cols = coldiseaseCond)
+VlnPlot(object=seuratMph, features = "ENSG00000172638.EFEMP2", pt.size = 1, cols = coldiseaseCond)
 ```
 
 ## session info

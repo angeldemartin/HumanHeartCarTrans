@@ -1,0 +1,208 @@
+---
+title: "MarkerGenes"
+author: "A.DeMartin"
+date: "2024-02-21"
+output: 
+  html_document:
+    keep_md: true
+    toc: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+options(width = 100)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, dev = c("png", "pdf"))
+seed <- 1234
+```
+
+## load packages
+```{r load packages, warning=FALSE, include=FALSE}
+library(ExploreSCdataSeurat3)
+library(runSeurat3)
+library(Seurat)
+library(ggpubr)
+library(pheatmap)
+library(SingleCellExperiment)
+library(dplyr)
+library(tidyverse)
+library(viridis)
+library(muscat)
+library(circlize)
+library(destiny)
+library(scater)
+library(metap)
+library(multtest)
+library(clusterProfiler)
+library(org.Hs.eg.db)
+library(msigdbr)
+library(enrichplot)
+library(DOSE)
+library(grid)
+library(gridExtra)
+library(ggupset)
+library(VennDiagram)
+library(NCmisc)
+```
+
+## load file
+```{r load merged file}
+##load merged file 
+fileNam <- "/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/data/Human_heart_allmerged_seurat.rds"
+seuratM <- readRDS(fileNam)
+```
+
+## set color vectors 
+```{r set color vector}
+colclusterName <- c("#67001f", "#b2182b", "#d6604d", "#f4a582", "#dfc27d","#003c30","#01665e","#35978f","#c7eae5","#4d4d4d","#1a1a1a","#8c510a", "#355C7D") 
+names(colclusterName) <- c("CM" ,"Fb1", "Tcell", "PerivFb/VSMC", "Fb2", "NC", "BEC3", "AdipoC", "LEC", "BEC1", "Mph2","BEC2", "Mph1")
+
+coldiseaseCond <- c("#202547","#BE3144","#727077","#355C7D","#779d8d")
+names(coldiseaseCond) <- unique(seuratM$diseaseCond)
+```
+
+## calculate marker genes
+```{r marker genes, eval=FALSE, include=TRUE}
+#marker genes
+Idents(seuratM) <- seuratM$clusterName
+levels(seuratM)
+markerGenes <- FindAllMarkers(seuratM, only.pos=T,logfc.threshold = 0.2) %>% 
+  dplyr::filter(p_val_adj < 0.1) 
+
+#save 
+write.table(markerGenes, 
+            file= "/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/analysis/clusterMarkerGenes",
+            sep="\t",
+            quote=F,
+            row.names=F,
+            col.names=T)
+```
+
+## dotplot marker genes
+```{r dotplot marker genes, fig.height=8, fig.width=10}
+Idents(seuratM) <-seuratM$clusterName
+seuratM$clusterName <- factor(seuratM$clusterName, levels=c("CM","Fb1","Fb2","PerivFb/VSMC","BEC1","BEC2","BEC3","LEC","NC","AdipoC","Mph1","Mph2","Tcell"))
+
+genes <- data.frame(gene=rownames(seuratM)) %>% 
+  mutate(geneID=gsub("^.*\\.", "", gene))
+
+selGenes <- data.frame(geneID=rev(c("TTN", "MYBPC3", "RYR2", "NEBL", "TNNT2", "CMYA5", "COL6A3", "DCN",  "FBN1", "C7", "PDGFRA", "CDH19", "PDGFRB","ITGA7","RGS5", "NOTCH3", "MYH11", "ACTA2","PECAM1", "VWF", "EGFL7", "POSTN", "ITGA10", "CDH11","CCL21", "PROX1", "FLT4", "NRXN1", "ANK3", "PTPRZ1", "ACACB", "PLIN1", "GPAM", "CD163", "MRC1", "SIGLEC1", "STAB1", "CSF1R", "MERTK", "IL7R", "PTPRC", "CD2"))) %>% left_join(., genes, by="geneID") %>% filter(gene != "ENSG00000232995.RGS5") 
+
+DotPlot(seuratM, features = selGenes, group.by= "clusterName") + RotatedAxis() + scale_color_viridis(option="F") + coord_flip()
+```
+
+## average heatmap marker genes
+```{r avg heatmap, fig.height=10, fig.width=8}
+Idents(seuratM) <- seuratM$clusterName
+levels(seuratM)
+
+seurat <- seuratM
+
+avgHeatmap <- function(seurat, selGenes, colVecIdent, colVecCond=NULL,
+                       ordVec=NULL, gapVecR=NULL, gapVecC=NULL,cc=FALSE,
+                       cr=FALSE, condCol=FALSE){
+  selGenes <- selGenes$gene
+  ## assay data
+  clusterAssigned <- as.data.frame(Idents(seurat)) %>%
+  dplyr::mutate(cell=rownames(.))
+  colnames(clusterAssigned)[1] <- "ident"
+  seuratDat <- GetAssayData(seurat)
+  
+  ## genes of interest
+  genes <- data.frame(gene=rownames(seurat)) %>% 
+    mutate(geneID=gsub("^.*\\.", "", gene)) %>% filter(geneID %in% selGenes)
+
+  ## matrix with averaged cnts per ident
+  logNormExpres <- as.data.frame(t(as.matrix(
+    seuratDat[which(rownames(seuratDat) %in% genes$gene),])))
+  logNormExpres <- logNormExpres %>% dplyr::mutate(cell=rownames(.)) %>%
+    dplyr::left_join(.,clusterAssigned, by=c("cell")) %>%
+    dplyr::select(-cell) %>% dplyr::group_by(ident) %>%
+    dplyr::summarise_all(mean)
+  logNormExpresMa <- logNormExpres %>% dplyr::select(-ident) %>% as.matrix()
+  rownames(logNormExpresMa) <- logNormExpres$ident
+  logNormExpresMa <- t(logNormExpresMa)
+  rownames(logNormExpresMa) <- gsub("^.*?\\.","",rownames(logNormExpresMa))
+  
+  ## remove genes if they are all the same in all groups
+  ind <- apply(logNormExpresMa, 1, sd) == 0
+  logNormExpresMa <- logNormExpresMa[!ind,]
+  genes <- genes[!ind,]
+
+  ## color columns according to cluster
+  annotation_col <- as.data.frame(gsub("(^.*?_)","",
+                                       colnames(logNormExpresMa)))%>%
+    dplyr::mutate(celltype=gsub("(_.*$)","",colnames(logNormExpresMa)))
+  colnames(annotation_col)[1] <- "col1"
+  annotation_col <- annotation_col %>%
+    dplyr::mutate(cond = gsub("(^[0-9]_?)","",col1)) %>%
+    dplyr::select(cond, celltype)
+  rownames(annotation_col) <- colnames(logNormExpresMa) 
+
+  ann_colors = list(
+      celltype=colVec)
+  if(is.null(ann_colors$cond)){
+    annotation_col$cond <- NULL
+  }
+  
+  ## adjust order
+  logNormExpresMa <- logNormExpresMa[selGenes,]
+  if(is.null(ordVec)){
+  ordVec <- levels(seurat)
+  ordVec <-c("CM","Fb1","Fb2","PerivFb/VSMC","BEC1", "BEC2","BEC3","LEC","NC","AdipoC","Mph1","Mph2","Tcell")
+  }
+  logNormExpresMa <- logNormExpresMa[,ordVec]
+
+  ## scaled row-wise
+  pheatmap(logNormExpresMa, scale="row" ,treeheight_row = 0,cluster_rows = cr, 
+         cluster_cols = cc, color = colorRampPalette(c("#2166AC", "#F7F7F7", "#B2182B"))(50),
+         annotation_col = annotation_col, cellwidth=15, cellheight=10,
+         annotation_colors = ann_colors, gaps_row = gapVecR, gaps_col = gapVecC)
+}
+
+genesPlot <- data.frame(gene=c("TTN", "MYBPC3", "RYR2", "NEBL", "TNNT2", "CMYA5", "COL6A3", "DCN",  "FBN1", "C7", "PDGFRA", "CDH19", "PDGFRB","ITGA7","RGS5", "NOTCH3", "MYH11", "ACTA2","PECAM1", "VWF", "EGFL7", "POSTN", "ITGA10", "CDH11","CCL21", "PROX1", "FLT4", "NRXN1", "ANK3", "PTPRZ1", "ACACB", "PLIN1", "GPAM", "CD163", "MRC1", "SIGLEC1", "STAB1", "CSF1R", "MERTK", "IL7R", "PTPRC", "CD2"))
+
+levels(seurat)
+colVec <- colclusterName
+
+# colVec <- c(colPal, colPal, colPal)
+# colVec <- c("blue", "red")
+
+avgHeatmap(seurat, selGenes = genesPlot, colVecIdent = colVec)
+```
+
+## plot features
+```{r feature plot marker genes}
+##Fb
+FeaturePlot(seuratM, features = "ENSG00000026025.VIM", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000163359.COL6A3", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000091136.LAMB1", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000011465.DCN", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000196569.LAMA2", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000011465.DCN", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000071991.CDH19", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+
+##PerivFb/VSMC
+FeaturePlot(seuratM, features = "ENSG00000113721.PDGFRB", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000143248.RGS5", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000076706.MCAM", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000135424.ITGA7", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000107796.ACTA2", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+
+##CM
+FeaturePlot(seuratM, features = "ENSG00000197616.MYH6", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000078814.MYH7B", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000134571.MYBPC3", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000092054.MYH7", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000198626.RYR2", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000078114.NEBL", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000175084.DES", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000155657.TTN", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000118194.TNNT2", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+```
+
+## session info
+```{r date and session info}
+date()
+sessionInfo()
+```

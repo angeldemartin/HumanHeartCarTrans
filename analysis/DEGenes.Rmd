@@ -1,0 +1,151 @@
+---
+title: "DEGenes"
+author: "A.DeMartin"
+date: "2024-02-21"
+output: 
+  html_document:
+    keep_md: true
+    toc: true
+editor_options: 
+  chunk_output_type: console
+---
+
+## load packages
+```{r load packages, warning=FALSE, include=FALSE}
+library(ExploreSCdataSeurat3)
+library(runSeurat3)
+library(Seurat)
+library(ggpubr)
+library(pheatmap)
+library(SingleCellExperiment)
+library(dplyr)
+library(tidyverse)
+library(viridis)
+library(muscat)
+library(circlize)
+library(destiny)
+library(scater)
+library(metap)
+library(multtest)
+library(clusterProfiler)
+library(org.Hs.eg.db)
+library(msigdbr)
+library(enrichplot)
+library(DOSE)
+library(grid)
+library(gridExtra)
+library(ggupset)
+library(VennDiagram)
+library(NCmisc)
+```
+
+```{r setup, include=FALSE}
+options(width = 100)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, dev = c("png", "pdf"))
+seed <- 1234
+```
+
+## load file
+```{r load merged file}
+##load merged file 
+fileNam <- "/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/data/Human_heart_allmerged_seurat.rds"
+seuratM <- readRDS(fileNam)
+```
+
+## set color vectors 
+```{r set color vector}
+colclusterName <- c("#67001f", "#D53E4F", "#f4a582", "#FEE08B", "#003c30","#01665e","#66C2A5", "#3288BD","#BEAED4", "#c7eae5","#355C7D","#202547","#B45B5C","#8c510a")
+names(colclusterName) <- c("CM","Fb","PerivFb","VSMC","Int","BEC1", "BEC2","LEC","NC","AdipoC","Mph","Mph2","Tcell","Tcell2")
+
+coldiseaseCond <- c("#dfc27d","#BE3144","#202547","#355C7D","#779d8d")
+names(coldiseaseCond) <- c("healthy", "explant", "visit1", "visit2", "visit3")
+```
+
+## calculate cluster marker genes
+```{r marker genes, include=TRUE, eval=FALSE}
+##cluster marker
+Idents(seuratM) <- seuratM$clusterName
+markerGenes <- FindAllMarkers(seuratM, only.pos=T) %>% 
+  dplyr::filter(p_val_adj < 0.01)
+#save table
+write.table(markerGenes, 
+            file= "/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/analysis/markerGenesclusterName",
+            sep="\t",
+            quote=F,
+            row.names=F,
+            col.names=T)
+```
+
+## subset healthy and explant
+```{r subset healthy and explant}
+seuratHealthyExplant <- subset(seuratM, diseaseCond %in% c("healthy", "explant"))
+table(seuratHealthyExplant$diseaseCond)
+table(seuratHealthyExplant$dataset)
+seuratHealthyExplant$clusterName_diseaseCond <- paste0(seuratHealthyExplant$clusterName, '_', seuratHealthyExplant$diseaseCond)
+table(seuratHealthyExplant$clusterName_diseaseCond)
+Idents(seuratHealthyExplant) <- seuratHealthyExplant$diseaseCond
+DimPlot(seuratHealthyExplant, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster = FALSE, split.by = "diseaseCond") + theme(legend.position = "null")
+```
+
+```{r save object subset healthy and explant, eval=FALSE, include=TRUE}
+### save seurat object
+saveRDS(seuratHealthyExplant, file="/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/data/Human_heart_subset_healthyANDexplant_seurat.rds")
+```
+
+## load file
+```{r load object subset healthy and explant}
+##load merged file 
+fileNam <- "/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/data/Human_heart_subset_healthyANDexplant_seurat.rds"
+seuratHealthyExplant <- readRDS(fileNam)
+table(seuratHealthyExplant$diseaseCond)
+```
+
+## celltype vise DEGenes
+```{r DE genes celltypes}
+#top 100 DE genes CM
+seuratCM <- subset(seuratHealthyExplant, clusterName == "CM")
+table(seuratCM$diseaseCond)
+levels(seuratCM)
+DEGenesCM <- FindAllMarkers(seuratCM, only.pos=T,logfc.threshold = 0.2) %>% 
+  dplyr::filter(p_val_adj < 0.1) 
+DEGenesCMExpl <- DEGenesCM %>% filter (cluster == "explant")
+DEGenesCMtop100 <- DEGenesCMExpl %>% top_n(100, avg_log2FC) %>% mutate(celltype = "CM")
+
+#top 100 DE genes Fb1 and Fb2
+seuratFb <- subset(seuratHealthyExplant, clusterName %in% c("Fb1", "Fb2"))
+Idents(seuratFb) <- seuratFb$clusterName
+DimPlot(seuratFb, reduction = "umap", cols = colclusterName)
+Idents(seuratFb) <- seuratFb$diseaseCond
+levels(seuratFb)
+
+DEGenesFb <- FindAllMarkers(seuratFb, only.pos=T,logfc.threshold = 0.2) %>% 
+  dplyr::filter(p_val_adj < 0.1) 
+DEGenesFbExpl <- DEGenesFb %>% filter (cluster == "explant")
+DEGenesFbtop100 <- DEGenesFbExpl %>% top_n(100, avg_log2FC) %>% mutate(celltype = "Fb")
+
+#top 100 DE genes BEC1, BEC2, BEC3
+seuratBEC <- subset(seuratHealthyExplant, clusterName %in% c("BEC1", "BEC2", "BEC3"))
+Idents(seuratBEC) <- seuratBEC$clusterName
+DimPlot(seuratBEC, reduction = "umap", cols = colclusterName)
+Idents(seuratBEC) <- seuratBEC$diseaseCond
+levels(seuratBEC)
+
+DEGenesBEC <- FindAllMarkers(seuratBEC, only.pos=T,logfc.threshold = 0.2) %>% 
+  dplyr::filter(p_val_adj < 0.1) 
+DEGenesBECExpl <- DEGenesBEC %>% filter (cluster == "explant")
+DEGenesBECtop100 <- DEGenesBECExpl %>% top_n(100, avg_log2FC) %>% mutate(celltype = "BEC")
+
+DEGenesAll <- full_join(DEGenesCMtop100, DEGenesFbtop100)
+DEGenesAll <- full_join(DEGenesAll, DEGenesBECtop100)
+```
+
+## boxplot top100 DEGenes
+```{r boxplot DE genes celltypes}
+colcelltype <- c("#67001f",  "#d6604d", "#f4a582") 
+names(colcelltype) <- c("CM" ,"Fb", "BEC")
+
+## make barplot
+p <- ggplot(DEGenesAll, aes(x=celltype, y=avg_log2FC, color=celltype)) + 
+  geom_boxplot()
+p + geom_jitter(shape=16, position=position_jitter(0.5))
+p + geom_dotplot(binaxis='y', stackdir='up', dotsize=1)

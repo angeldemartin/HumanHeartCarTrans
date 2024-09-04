@@ -8,8 +8,20 @@ editor_options:
   chunk_output_type: console
 ---
 
-### HumanHeartCarTrans. 
-merge data HeartCarTrans and display umaps
-[link](HumanHeartCarTrans.html)
+### QCindividual. 
+QC individual seurat files
+[link](QCindividual.html)
+
+### Merge-QC-UMAPS. 
+merge QC and display umaps
+[link](Merge-QC-UMAPS.html)
+
+### MarkerGenes. 
+Calculate and plot marker and DE genes
+[link](MarkerGenes.html)
+
+### GeneExprPatterns. 
+Expr pattern of selected genes
+[link](GeneExprPatterns.html)
 
 

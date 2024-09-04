@@ -7,7 +7,7 @@ output:
     keep_md: true
     toc: true
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 ---
 
 ```{r setup, include=FALSE}
@@ -54,34 +54,33 @@ seuratM <- readRDS(fileNam)
 
 ## set color vectors 
 ```{r set color vector}
-colclusterName <- c("#67001f", "#b2182b", "#d6604d", "#f4a582", "#dfc27d","#003c30","#01665e","#35978f","#c7eae5","#4d4d4d","#1a1a1a","#8c510a", "#355C7D") 
-names(colclusterName) <- c("CM" ,"Fb1", "Tcell", "PerivFb/VSMC", "Fb2", "NC", "BEC3", "AdipoC", "LEC", "BEC1", "Mph2","BEC2", "Mph1")
+colclusterName <- c("#67001f", "#D53E4F", "#f4a582", "#FEE08B", "#003c30","#01665e","#66C2A5", "#3288BD","#BEAED4", "#c7eae5","#355C7D","#202547","#B45B5C","#8c510a")
+names(colclusterName) <- c("CM","Fb","PerivFb","VSMC","Int","BEC1", "BEC2","LEC","NC","AdipoC","Mph","Mph2","Tcell","Tcell2")
 
-coldiseaseCond <- c("#202547","#BE3144","#727077","#355C7D","#779d8d")
-names(coldiseaseCond) <- unique(seuratM$diseaseCond)
+coldiseaseCond <- c("#dfc27d","#BE3144","#202547","#355C7D","#779d8d")
+names(coldiseaseCond) <- c("healthy", "explant", "visit1", "visit2", "visit3")
 ```
 
-## calculate marker genes
-```{r marker genes, eval=FALSE, include=TRUE}
-#marker genes
+## calculate cluster marker genes
+```{r marker genes, include=TRUE, eval=FALSE}
+##cluster marker
 Idents(seuratM) <- seuratM$clusterName
-levels(seuratM)
-markerGenes <- FindAllMarkers(seuratM, only.pos=T,logfc.threshold = 0.2) %>% 
-  dplyr::filter(p_val_adj < 0.1) 
-
-#save 
+markerGenes <- FindAllMarkers(seuratM, only.pos=T) %>% 
+  dplyr::filter(p_val_adj < 0.01)
+#save table
 write.table(markerGenes, 
-            file= "/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/analysis/clusterMarkerGenes",
+            file= "/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/analysis/markerGenesclusterName",
             sep="\t",
             quote=F,
             row.names=F,
             col.names=T)
 ```
 
+
 ## dotplot marker genes
 ```{r dotplot marker genes, fig.height=8, fig.width=10}
+seuratM$clusterName <- factor(seuratM$clusterName, levels=c("CM","Fb","PerivFb","VSMC","Int","BEC1", "BEC2","LEC","NC","AdipoC","Mph","Mph2","Tcell","Tcell2"))
 Idents(seuratM) <-seuratM$clusterName
-seuratM$clusterName <- factor(seuratM$clusterName, levels=c("CM","Fb1","Fb2","PerivFb/VSMC","BEC1","BEC2","BEC3","LEC","NC","AdipoC","Mph1","Mph2","Tcell"))
 
 genes <- data.frame(gene=rownames(seuratM)) %>% 
   mutate(geneID=gsub("^.*\\.", "", gene))
@@ -149,7 +148,7 @@ avgHeatmap <- function(seurat, selGenes, colVecIdent, colVecCond=NULL,
   logNormExpresMa <- logNormExpresMa[selGenes,]
   if(is.null(ordVec)){
   ordVec <- levels(seurat)
-  ordVec <-c("CM","Fb1","Fb2","PerivFb/VSMC","BEC1", "BEC2","BEC3","LEC","NC","AdipoC","Mph1","Mph2","Tcell")
+  ordVec <-c("CM","Fb","PerivFb","VSMC","Int","BEC1", "BEC2","LEC","NC","AdipoC","Mph","Mph2","Tcell","Tcell2")
   }
   logNormExpresMa <- logNormExpresMa[,ordVec]
 
@@ -199,6 +198,21 @@ FeaturePlot(seuratM, features = "ENSG00000078114.NEBL", pt.size = 1, cols = c("l
 FeaturePlot(seuratM, features = "ENSG00000175084.DES", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
 FeaturePlot(seuratM, features = "ENSG00000155657.TTN", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
 FeaturePlot(seuratM, features = "ENSG00000118194.TNNT2", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+```
+
+## calculate DE genes disease cond
+```{r DE genes disease cond, include=TRUE, eval=FALSE}
+##cluster marker
+Idents(seuratM) <- seuratM$diseaseCond
+markerGenes <- FindAllMarkers(seuratM, only.pos=T) %>% 
+  dplyr::filter(p_val_adj < 0.01)
+#save table
+write.table(markerGenes, 
+            file= "/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/analysis/DEGenesdiseaseCond",
+            sep="\t",
+            quote=F,
+            row.names=F,
+            col.names=T)
 ```
 
 ## session info

@@ -16,6 +16,10 @@ QC individual seurat files
 merge QC and display umaps
 [link](Merge-QC-UMAPS.html)
 
+### RelativeAbundances. 
+Relative abundance
+[link](RelativeAbundances.html)
+
 ### MarkerGenes. 
 Calculate and plot marker and DE genes
 [link](MarkerGenes.html)

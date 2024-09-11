@@ -93,10 +93,12 @@ orddatasets <- c("o28576_1_08-8_20220525_Hu_nucseq_Graz_8_HH_GEM","o28576_1_10-1
 
 ordpatient_diseasecond <- c("HH1_healthy","HH10_healthy","HH2_healthy","HH3_healthy","HH4_healthy","HH5_healthy","HH6_healthy","HH7_healthy","HH8_healthy","HH9_healthy","CarTransPat1_explant","CarTransPat2_explant","CarTransPat3_explant","CarTransPat4_explant","CarTransPat5_explant","CarTransPat6_explant","CarTransPat7_explant","CarTransPat8_explant","CarTransPat10_explant","CarTransPat11_explant","CarTransPat12_explant","CarTransPat13_explant","CarTransPat14_explant","CarTransPat15_explant", "CarTransPat16_explant",
 "CarTransPat1_visit1","CarTransPat1_visit2","CarTransPat1_visit3","CarTransPat2_visit1","CarTransPat2_visit2","CarTransPat2_visit3","CarTransPat3_visit1","CarTransPat3_visit2","CarTransPat3_visit3","CarTransPat4_visit1","CarTransPat4_visit2","CarTransPat4_visit3","CarTransPat5_visit1","CarTransPat5_visit2","CarTransPat5_visit3","CarTransPat6_visit1","CarTransPat6_visit2","CarTransPat6_visit3","CarTransPat7_visit1","CarTransPat7_visit2","CarTransPat7_visit3","CarTransPat8_visit1","CarTransPat8_visit2","CarTransPat8_visit3","CarTransPat10_visit1","CarTransPat10_visit2","CarTransPat10_visit3","CarTransPat11_visit1","CarTransPat11_visit2","CarTransPat11_visit3","CarTransPat12_visit1","CarTransPat12_visit2","CarTransPat12_visit3","CarTransPat13_visit1","CarTransPat13_visit2","CarTransPat13_visit3","CarTransPat14_visit1","CarTransPat14_visit2", "CarTransPat14_visit3","CarTransPat15_visit1","CarTransPat15_visit2", "CarTransPat15_visit3","CarTransPat16_visit1","CarTransPat16_visit2", "CarTransPat16_visit3")
+
+orddiseaseCond <- c("healthy", "explant", "visit1", "visit2" ,"visit3")
 ```
 
 ## abundance plots
-```{r abundance plot, fig.height=8, fig.width=10}
+```{r abundance dataset, fig.height=8, fig.width=10}
 ###dataset
 datList <- NULL
 for(con in unique(seuratM$dataset)){
@@ -110,7 +112,9 @@ dat_all <- do.call("rbind", datList)
 
 ## plot abundance
 ggbarplot(dat_all, x= "dataset", y= "percent", fill = "Var1", palette = colclusterName, legend = "right", legend.titel = "cluster", ylab = "frequency")  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + scale_x_discrete(limits=orddatasets)
+```
 
+```{r abundance patient_diseaseCond, fig.height=8, fig.width=10}
 ###patient_diseaseCond
 datList <- NULL
 for(con in unique(seuratM$patient_diseaseCond)){
@@ -124,7 +128,9 @@ dat_all <- do.call("rbind", datList)
 
 ## plot abundance
 ggbarplot(dat_all, x= "patient_diseaseCond", y= "percent", fill = "Var1", palette = colclusterName, legend = "right", legend.titel = "cluster", ylab = "frequency")  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + scale_x_discrete(limits=ordpatient_diseasecond)
+```
 
+```{r abundance diseaseCond, fig.height=8, fig.width=10}
 ###diseaseCond
 datList <- NULL
 for(con in unique(seuratM$diseaseCond)){

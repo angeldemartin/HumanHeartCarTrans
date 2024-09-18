@@ -382,13 +382,13 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-09-04
+<strong>Last updated:</strong> 2024-09-18
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 5
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+aria-hidden="true"></span> 2
 </p>
 <p>
 <strong>Knit directory:</strong> <code>HumanHeartCarTrans/</code> <span
@@ -411,18 +411,21 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate"
+<div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git
-repository, you know the exact version of the code that produced these
-results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
 </div>
 </div>
 </div>
@@ -539,15 +542,15 @@ data/Human_heart_allmerged_seurat.rds
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree99a51f6e5e783931c21efdc308b08722966c7a8atargetblank99a51f6a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree827952ad9d0fb3897ff3f583ac36317a9143bcbetargetblank827952aa">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/99a51f6e5e783931c21efdc308b08722966c7a8a" target="_blank">99a51f6</a>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/827952ad9d0fb3897ff3f583ac36317a9143bcbe" target="_blank">827952a</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree99a51f6e5e783931c21efdc308b08722966c7a8atargetblank99a51f6a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree827952ad9d0fb3897ff3f583ac36317a9143bcbetargetblank827952aa"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -557,7 +560,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/99a51f6e5e783931c21efdc308b08722966c7a8a" target="_blank">99a51f6</a>.
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/827952ad9d0fb3897ff3f583ac36317a9143bcbe" target="_blank">827952a</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -578,6 +581,16 @@ Ignored files:
     Ignored:    analysis/.DS_Store
     Ignored:    analysis/.Rhistory
     Ignored:    data/seurat files/
+
+Untracked files:
+    Untracked:  analysis/FbHighres.Rmd
+
+Unstaged changes:
+    Deleted:    analysis/ClusterDEGenes.Rmd
+    Deleted:    analysis/DifferentialExpressionFb.Rmd
+    Modified:   analysis/GeneExprPatterns.Rmd
+    Deleted:    analysis/HumanHeartCarTrans.Rmd
+    Modified:   analysis/MarkerGenes.Rmd
 
 </code></pre>
 <p>
@@ -623,6 +636,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/angeldemartin/HumanHeartCarTrans/4cb970ef74561b303b31fdcfcc7670817ea26c2d/docs/GeneExprPatterns.html" target="_blank">4cb970e</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-09-04
+</td>
+<td>
+Sept24.2
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -715,7 +745,7 @@ names(coldiseaseCond) &lt;- c(&quot;healthy&quot;, &quot;explant&quot;, &quot;vi
 </div>
 <div id="plot-features" class="section level2">
 <h2>plot features</h2>
-<pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000197614.MFAP5&quot;, pt.size = 1, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
+<pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000197614.MFAP5&quot;, pt.size = 0.5, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
 <p><img src="figure/GeneExprPatterns.Rmd/feature%20plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-1">
@@ -754,7 +784,7 @@ angeldemartin
 </table>
 </div>
 </div>
-<pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000159674.SPON2&quot;, pt.size = 1, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
+<pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000159674.SPON2&quot;, pt.size = 0.5, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
 <p><img src="figure/GeneExprPatterns.Rmd/feature%20plot-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-2">
@@ -793,7 +823,7 @@ angeldemartin
 </table>
 </div>
 </div>
-<pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000065320.NTN1&quot;, pt.size = 1, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
+<pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000065320.NTN1&quot;, pt.size = 0.5, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
 <p><img src="figure/GeneExprPatterns.Rmd/feature%20plot-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-3">
@@ -832,7 +862,7 @@ angeldemartin
 </table>
 </div>
 </div>
-<pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000164136.IL15&quot;, pt.size = 1, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
+<pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000164136.IL15&quot;, pt.size = 0.5, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
 <p><img src="figure/GeneExprPatterns.Rmd/feature%20plot-4.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-4">
@@ -871,7 +901,7 @@ angeldemartin
 </table>
 </div>
 </div>
-<pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000172638.EFEMP2&quot;, pt.size = 1, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
+<pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000172638.EFEMP2&quot;, pt.size = 0.5, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
 <p><img src="figure/GeneExprPatterns.Rmd/feature%20plot-5.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-5">
@@ -2565,11 +2595,11 @@ angeldemartin
 <div id="session-info" class="section level2">
 <h2>session info</h2>
 <pre class="r"><code>date()</code></pre>
-<pre><code>[1] &quot;Wed Sep  4 13:21:09 2024&quot;</code></pre>
+<pre><code>[1] &quot;Wed Sep 18 18:09:06 2024&quot;</code></pre>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.4.0 (2024-04-24)
 Platform: x86_64-apple-darwin20
-Running under: macOS Ventura 13.6.7
+Running under: macOS Ventura 13.6.9
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRblas.0.dylib 
@@ -2617,7 +2647,7 @@ loaded via a namespace (and not attached):
  [34] qqconf_1.3.2              httpuv_1.6.15             magrittr_2.0.3           
  [37] splines_4.4.0             ggraph_2.2.1              sctransform_0.4.1        
  [40] ggbeeswarm_0.7.2          DBI_1.2.3                 jquerylib_0.1.4          
- [43] smoother_1.3              withr_3.0.0               git2r_0.33.0             
+ [43] smoother_1.3              withr_3.0.1               git2r_0.33.0             
  [46] corpcor_1.6.10            class_7.3-22              rprojroot_2.0.4          
  [49] lmtest_0.9-40             tidygraph_1.3.1           formatR_1.14             
  [52] colourpicker_1.3.0        htmlwidgets_1.6.4         fs_1.6.4                 
@@ -2627,7 +2657,7 @@ loaded via a namespace (and not attached):
  [64] zoo_1.8-12                XVector_0.44.0            knitr_1.48               
  [67] ggplot.multistats_1.0.0   UCSC.utils_1.0.0          RhpcBLASctl_0.23-42      
  [70] timechange_0.3.0          foreach_1.5.2             fansi_1.0.6              
- [73] patchwork_1.2.0           caTools_1.18.2            data.table_1.15.4        
+ [73] patchwork_1.2.0           caTools_1.18.2            data.table_1.16.0        
  [76] ggtree_3.12.0             RSpectra_0.16-1           irlba_2.3.5.1            
  [79] ggrastr_1.0.2             fastDummies_1.7.3         gridGraphics_0.5-1       
  [82] lazyeval_0.2.2            yaml_2.3.9                survival_3.7-0           
@@ -2670,7 +2700,7 @@ loaded via a namespace (and not attached):
 [193] qvalue_2.36.0             sandwich_3.1-0            fgsea_1.30.0             
 [196] DelayedArray_0.30.1       proxy_0.4-27              GO.db_3.19.1             
 [199] compiler_4.4.0            prettyunits_1.2.0         boot_1.3-30              
-[202] beachmat_2.20.0           listenv_0.9.1             Rcpp_1.0.12              
+[202] beachmat_2.20.0           listenv_0.9.1             Rcpp_1.0.13              
 [205] edgeR_4.2.0               workflowr_1.7.1           BiocSingular_1.20.0      
 [208] tensor_1.5                MASS_7.3-61               progress_1.2.3           
 [211] BiocParallel_1.38.0       babelgene_22.9            spatstat.random_3.2-3    
@@ -2698,7 +2728,7 @@ Session information
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.4.0 (2024-04-24)
 Platform: x86_64-apple-darwin20
-Running under: macOS Ventura 13.6.7
+Running under: macOS Ventura 13.6.9
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRblas.0.dylib 
@@ -2746,7 +2776,7 @@ loaded via a namespace (and not attached):
  [34] qqconf_1.3.2              httpuv_1.6.15             magrittr_2.0.3           
  [37] splines_4.4.0             ggraph_2.2.1              sctransform_0.4.1        
  [40] ggbeeswarm_0.7.2          DBI_1.2.3                 jquerylib_0.1.4          
- [43] smoother_1.3              withr_3.0.0               git2r_0.33.0             
+ [43] smoother_1.3              withr_3.0.1               git2r_0.33.0             
  [46] corpcor_1.6.10            class_7.3-22              rprojroot_2.0.4          
  [49] lmtest_0.9-40             tidygraph_1.3.1           formatR_1.14             
  [52] colourpicker_1.3.0        htmlwidgets_1.6.4         fs_1.6.4                 
@@ -2756,7 +2786,7 @@ loaded via a namespace (and not attached):
  [64] zoo_1.8-12                XVector_0.44.0            knitr_1.48               
  [67] ggplot.multistats_1.0.0   UCSC.utils_1.0.0          RhpcBLASctl_0.23-42      
  [70] timechange_0.3.0          foreach_1.5.2             fansi_1.0.6              
- [73] patchwork_1.2.0           caTools_1.18.2            data.table_1.15.4        
+ [73] patchwork_1.2.0           caTools_1.18.2            data.table_1.16.0        
  [76] ggtree_3.12.0             RSpectra_0.16-1           irlba_2.3.5.1            
  [79] ggrastr_1.0.2             fastDummies_1.7.3         gridGraphics_0.5-1       
  [82] lazyeval_0.2.2            yaml_2.3.9                survival_3.7-0           
@@ -2799,7 +2829,7 @@ loaded via a namespace (and not attached):
 [193] qvalue_2.36.0             sandwich_3.1-0            fgsea_1.30.0             
 [196] DelayedArray_0.30.1       proxy_0.4-27              GO.db_3.19.1             
 [199] compiler_4.4.0            prettyunits_1.2.0         boot_1.3-30              
-[202] beachmat_2.20.0           listenv_0.9.1             Rcpp_1.0.12              
+[202] beachmat_2.20.0           listenv_0.9.1             Rcpp_1.0.13              
 [205] edgeR_4.2.0               workflowr_1.7.1           BiocSingular_1.20.0      
 [208] tensor_1.5                MASS_7.3-61               progress_1.2.3           
 [211] BiocParallel_1.38.0       babelgene_22.9            spatstat.random_3.2-3    

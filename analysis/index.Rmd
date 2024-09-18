@@ -1,5 +1,5 @@
 ---
-title: "Home"
+title: "snRNAseqHumanCarTrans"
 site: workflowr::wflow_site
 output:
   workflowr::wflow_html:
@@ -7,11 +7,6 @@ output:
 editor_options:
   chunk_output_type: console
 ---
-
-### QCindividual. 
-QC individual seurat files
-[link](QCindividual.html)
-
 ### Merge-QC-UMAPS. 
 merge QC and display umaps
 [link](Merge-QC-UMAPS.html)
@@ -28,4 +23,6 @@ Calculate and plot marker and DE genes
 Expr pattern of selected genes
 [link](GeneExprPatterns.html)
 
-
+### FbHighres. 
+High resolution ananlysis Fibroblasts
+[link](FbHighres.html)

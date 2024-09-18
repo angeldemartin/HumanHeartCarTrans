@@ -63,11 +63,11 @@ names(coldiseaseCond) <- c("healthy", "explant", "visit1", "visit2", "visit3")
 
 ## plot features
 ```{r feature plot}
-FeaturePlot(seuratM, features = "ENSG00000197614.MFAP5", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
-FeaturePlot(seuratM, features = "ENSG00000159674.SPON2", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
-FeaturePlot(seuratM, features = "ENSG00000065320.NTN1", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
-FeaturePlot(seuratM, features = "ENSG00000164136.IL15", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
-FeaturePlot(seuratM, features = "ENSG00000172638.EFEMP2", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000197614.MFAP5", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000159674.SPON2", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000065320.NTN1", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000164136.IL15", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000172638.EFEMP2", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
 
 Idents(seuratM) <- seuratM$clusterName
 VlnPlot(object=seuratM, features = "ENSG00000197614.MFAP5", pt.size = 1, cols = colclusterName)

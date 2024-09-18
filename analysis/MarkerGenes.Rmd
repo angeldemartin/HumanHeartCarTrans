@@ -173,31 +173,31 @@ avgHeatmap(seurat, selGenes = genesPlot, colVecIdent = colVec)
 ## plot features
 ```{r feature plot marker genes}
 ##Fb
-FeaturePlot(seuratM, features = "ENSG00000026025.VIM", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
-FeaturePlot(seuratM, features = "ENSG00000163359.COL6A3", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
-FeaturePlot(seuratM, features = "ENSG00000091136.LAMB1", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
-FeaturePlot(seuratM, features = "ENSG00000011465.DCN", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
-FeaturePlot(seuratM, features = "ENSG00000196569.LAMA2", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
-FeaturePlot(seuratM, features = "ENSG00000011465.DCN", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
-FeaturePlot(seuratM, features = "ENSG00000071991.CDH19", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000026025.VIM", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000163359.COL6A3", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000091136.LAMB1", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000011465.DCN", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000196569.LAMA2", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000011465.DCN", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000071991.CDH19", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
 
 ##PerivFb/VSMC
-FeaturePlot(seuratM, features = "ENSG00000113721.PDGFRB", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
-FeaturePlot(seuratM, features = "ENSG00000143248.RGS5", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
-FeaturePlot(seuratM, features = "ENSG00000076706.MCAM", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
-FeaturePlot(seuratM, features = "ENSG00000135424.ITGA7", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
-FeaturePlot(seuratM, features = "ENSG00000107796.ACTA2", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000113721.PDGFRB", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000143248.RGS5", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000076706.MCAM", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000135424.ITGA7", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000107796.ACTA2", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
 
 ##CM
-FeaturePlot(seuratM, features = "ENSG00000197616.MYH6", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
-FeaturePlot(seuratM, features = "ENSG00000078814.MYH7B", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
-FeaturePlot(seuratM, features = "ENSG00000134571.MYBPC3", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
-FeaturePlot(seuratM, features = "ENSG00000092054.MYH7", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
-FeaturePlot(seuratM, features = "ENSG00000198626.RYR2", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
-FeaturePlot(seuratM, features = "ENSG00000078114.NEBL", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
-FeaturePlot(seuratM, features = "ENSG00000175084.DES", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
-FeaturePlot(seuratM, features = "ENSG00000155657.TTN", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
-FeaturePlot(seuratM, features = "ENSG00000118194.TNNT2", pt.size = 1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000197616.MYH6", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000078814.MYH7B", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000134571.MYBPC3", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000092054.MYH7", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000198626.RYR2", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000078114.NEBL", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000175084.DES", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000155657.TTN", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000118194.TNNT2", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
 ```
 
 ## calculate DE genes disease cond

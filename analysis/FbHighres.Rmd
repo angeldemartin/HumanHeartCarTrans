@@ -191,7 +191,6 @@ ordpatient_diseasecond <- c("HH1_healthy","HH10_healthy","HH2_healthy","HH3_heal
 orddiseaseCond <- c("healthy", "explant", "visit1", "visit2" ,"visit3")
 ```
 
-
 ## abundance plots
 ```{r abundance dataset, fig.height=8, fig.width=10}
 ###dataset
@@ -223,6 +222,7 @@ dat_all <- do.call("rbind", datList)
 ## plot abundance
 ggbarplot(dat_all, x= "patient_diseaseCond", y= "percent", fill = "Var1", palette = colAllFb, legend = "right", legend.titel = "cluster", ylab = "frequency")  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + scale_x_discrete(limits=ordpatient_diseasecond)
 ```
+
 ```{r abundance diseaseCond, fig.height=8, fig.width=10}
 ###diseaseCond
 datList <- NULL
@@ -500,6 +500,7 @@ plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc +
   theme(legend.position = "none")
 plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc
 ```
+
 ```{r umap response to type II interferon}
 ego1 <- dplyr::filter(egoFb2@result,egoFb2@result$Description=="response to type II interferon")
 g1 <- ego1$geneID
@@ -524,6 +525,7 @@ plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc +
   theme(legend.position = "none")
 plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc
 ```
+
 ```{r GSEA Fb3, fig.height=10, fig.width=12}
 ##GSEA Fb3
 DEGenesFb3 <- DEGenesFb1to4adj %>% filter(cluster == "Fb3")
@@ -561,6 +563,7 @@ plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc +
   theme(legend.position = "none")
 plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc
 ```
+
 ```{r umap transforming growth factor beta receptor signaling pathway}
 ego1 <- dplyr::filter(egoFb3@result,egoFb3@result$Description=="transforming growth factor beta receptor signaling pathway")
 g1 <- ego1$geneID
@@ -585,6 +588,32 @@ plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc +
   theme(legend.position = "none")
 plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc
 ```
+
+```{r umap BMP signaling pathway}
+ego1 <- dplyr::filter(egoFb3@result,egoFb3@result$Description=="BMP signaling pathway")
+g1 <- ego1$geneID
+Str <-(g1)
+StrSub <- strsplit(Str, "/")
+df <- as.data.frame(StrSub)
+colnames(df) <- c("gene")
+
+##make a count matrix of signature genes
+signGenes <- genes %>% dplyr::filter(gene %in% df$gene)
+
+sceSub <- sce[which(rownames(sce) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    sceSub@assays@data$logcounts)))/nrow(signGenes)
+sceSub$sign <- cntMat
+sceSub$sign2 <- sceSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.8))
+sceSub$sign2[which(sceSub$sign > 0.8)] <- 0.8
+plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc
+```
+
 ```{r GSEA Fb4, fig.height=10, fig.width=12}
 ##GSEA Fb4
 DEGenesFb4 <- DEGenesFb1to4adj %>% filter(cluster == "Fb4")
@@ -598,6 +627,8 @@ egoFb4 <- enrichGO(gene = unique(DEGenesFb4$EnsID),
 egoFb4 <- setReadable(egoFb4, OrgDb = org.Hs.eg.db)
 dotplot(egoFb4, showCategory=30, title = "Fb4", font.size = 10)
 ```
+
+
 ```{r umap response to steroid hormone}
 ego1 <- dplyr::filter(egoFb4@result,egoFb4@result$Description=="response to steroid hormone")
 g1 <- ego1$geneID
@@ -622,6 +653,28 @@ plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc +
   theme(legend.position = "none")
 plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc
 ```
+
+## subset Fb4
+```{r subset Fb4}
+Idents(seuratAllFb) <- seuratAllFb$clusterNameAllFb
+seuratFb2 <- subset(seuratAllFb, clusterNameAllFb %in% c("Fb2"))
+levels(seuratFb2)
+DimPlot(seuratFb2, reduction = "umap", cols = colAllFb, pt.size = 0.5)
+```
+```{r violin plots Fb2}
+seuratFb2$diseaseCond <- factor(seuratFb2$diseaseCond, levels=c("healthy", "explant", "visit1", "visit2", "visit3"))
+Idents(seuratFb2) <- seuratFb2$diseaseCond
+levels(seuratFb2)
+VlnPlot(object=seuratFb2, features = "ENSG00000172724.CCL19", pt.size = 1, cols = coldiseaseCond)
+VlnPlot(object=seuratFb2, features = "ENSG00000108691.CCL2", pt.size = 0, cols = coldiseaseCond)
+VlnPlot(object=seuratFb2, features = "ENSG00000172156.CCL11", pt.size = 1, cols = coldiseaseCond)
+VlnPlot(object=seuratFb2, features = "ENSG00000125347.IRF1", pt.size = 0, cols = coldiseaseCond)
+VlnPlot(object=seuratFb2, features = "ENSG00000115415.STAT1", pt.size = 0, cols = coldiseaseCond)
+
+VlnPlot(object=seuratFb2, features = "ENSG00000169245.CXCL10", pt.size = 1, cols = coldiseaseCond)
+VlnPlot(object=seuratFb2, features = "ENSG00000163739.CXCL1", pt.size = 1, cols = coldiseaseCond)
+```
+
 
 ## session info
 ```{r date and session info}

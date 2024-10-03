@@ -215,6 +215,14 @@ write.table(markerGenes,
             col.names=T)
 ```
 
+## genes plot
+```{r feature plot genes}
+FeaturePlot(seuratM, features = "ENSG00000139329.LUM", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000133392.MYH11", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000107796.ACTA2", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000163359.COL6A3", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+```
+
 ## session info
 ```{r date and session info}
 date()

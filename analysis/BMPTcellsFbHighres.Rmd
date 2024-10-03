@@ -1,0 +1,80 @@
+---
+title: "BMPTcellsFbHighres"
+author: "A.DeMartin"
+date: "2024-02-21"
+output: 
+  html_document:
+    keep_md: true
+    toc: true
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+options(width = 100)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, dev = c("png", "pdf"))
+seed <- 1234
+```
+
+## load packages
+```{r load packages, warning=FALSE, include=FALSE}
+library(ExploreSCdataSeurat3)
+library(runSeurat3)
+library(Seurat)
+library(ggpubr)
+library(pheatmap)
+library(SingleCellExperiment)
+library(dplyr)
+library(tidyverse)
+library(viridis)
+library(muscat)
+library(circlize)
+library(destiny)
+library(scater)
+library(metap)
+library(multtest)
+library(clusterProfiler)
+library(org.Hs.eg.db)
+library(msigdbr)
+library(enrichplot)
+library(DOSE)
+library(grid)
+library(gridExtra)
+library(ggupset)
+library(VennDiagram)
+library(NCmisc)
+```
+
+## load file AllFb
+```{r load file AllFb}
+fileNam <- "/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/data/Human_heart_AllFb.rds"
+seuratAllFb <- readRDS(fileNam)
+table(seuratAllFb$dataset)
+table(seuratAllFb$RNA_snn_res.0.25)
+table(seuratAllFb$orig.ident)
+```
+
+##set color vectors AllFb
+```{r set color vector AllFb}
+colAllFb <- c("#D53E4F","#f4a582","#ff7b7b","#8e0b00","#FEE08B","#42090D","#FF7B00","#FFF4DF")
+names(colAllFb) <- c("Fb1","PerivFb1","Fb2","Fb3","VSMC","Fb4","PerivFb2", "PerivFb3")
+```
+
+## BMP features
+```{r BMP features}
+FeaturePlot(seuratAllFb, features = "ENSG00000125378.BMP4", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratAllFb, features = "ENSG00000112175.BMP5", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratAllFb, features = "ENSG00000153162.BMP6", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratAllFb, features = "ENSG00000168487.BMP1", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratAllFb, features = "ENSG00000183682.BMP8A", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratAllFb, features = "ENSG00000138756.BMP2K", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+
+FeaturePlot(seuratAllFb, features = "ENSG00000107779.BMPR1A", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratAllFb, features = "ENSG00000204217.BMPR2", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+```
+
+## session info
+```{r date and session info}
+date()
+sessionInfo()
+```

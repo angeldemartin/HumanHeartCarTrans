@@ -1,0 +1,237 @@
+---
+title: "BMP Tcell"
+author: "A.DeMartin"
+date: "2024-02-21"
+output: 
+  html_document:
+    keep_md: true
+    toc: true
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+options(width = 100)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, dev = c("png", "pdf"))
+seed <- 1234
+```
+
+## load packages
+```{r load packages, warning=FALSE, include=FALSE}
+library(ExploreSCdataSeurat3)
+library(runSeurat3)
+library(Seurat)
+library(ggpubr)
+library(pheatmap)
+library(SingleCellExperiment)
+library(dplyr)
+library(tidyverse)
+library(viridis)
+library(muscat)
+library(circlize)
+library(destiny)
+library(scater)
+library(metap)
+library(multtest)
+library(clusterProfiler)
+library(org.Hs.eg.db)
+library(msigdbr)
+library(enrichplot)
+library(DOSE)
+library(grid)
+library(gridExtra)
+library(ggupset)
+library(VennDiagram)
+library(NCmisc)
+```
+
+## load file
+```{r load merged file}
+##load merged file 
+fileNam <- "/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/data/Human_heart_allmerged_seurat.rds"
+seuratM <- readRDS(fileNam)
+table(seuratM$dataset)
+table(seuratM$RNA_snn_res.0.25)
+table(seuratM$orig.ident)
+table(seuratM$clusterName)
+```
+##set color vectors 
+```{r set color vector}
+colclusterName <- c("#67001f", "#D53E4F", "#f4a582", "#FEE08B", "#003c30","#01665e","#66C2A5", "#3288BD","#BEAED4", "#c7eae5","#355C7D","#202547","#B45B5C","#8c510a")
+names(colclusterName) <- c("CM","Fb","PerivFb","VSMC","Int","BEC1", "BEC2","LEC","NC","AdipoC","Mph","Mph2","Tcell","Tcell2")
+
+coldiseaseCond <- c("#dfc27d","#BE3144","#202547","#355C7D","#779d8d")
+names(coldiseaseCond) <- c("healthy", "explant", "visit1", "visit2", "visit3")
+```
+
+
+## BMP features
+```{r BMP features}
+FeaturePlot(seuratM, features = "ENSG00000125378.BMP4", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000112175.BMP5", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000125845.BMP2", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000153162.BMP6", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000168487.BMP1", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000183682.BMP8A", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000138756.BMP2K", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+
+FeaturePlot(seuratM, features = "ENSG00000107779.BMPR1A", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000204217.BMPR2", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+```
+
+## VlnPlot BMP4 expression
+```{r violin BMP4 and BMP5}
+###violin plot BMP4 on Fb
+seuratFb <- subset(seuratM, clusterName %in% c("Fb"))
+table(seuratFb$clusterName)
+seuratFb$diseaseCond <- factor(seuratFb$diseaseCond, levels=c("healthy", "explant", "visit1", "visit2", "visit3"))
+Idents(seuratFb) <- seuratFb$diseaseCond
+levels(seuratFb)
+VlnPlot(object=seuratFb, features = "ENSG00000125378.BMP4", cols = coldiseaseCond) + theme(legend.position = "none")
+
+###violin plot BMP5 on PerivFb
+seuratPerivFb <- subset(seuratM, clusterName %in% c("PerivFb"))
+table(seuratPerivFb$clusterName)
+seuratPerivFb$diseaseCond <- factor(seuratPerivFb$diseaseCond, levels=c("healthy", "explant", "visit1", "visit2", "visit3"))
+Idents(seuratPerivFb) <- seuratPerivFb$diseaseCond
+levels(seuratPerivFb)
+VlnPlot(object=seuratPerivFb, features = "ENSG00000112175.BMP5", cols = coldiseaseCond) + theme(legend.position = "none")
+```
+
+## Scatter plot BMP4 in Fb vs CD8 T cell numbers
+```{r scatter BMP4vsTcells}
+###rel abundance CD8 Tcells
+datList <- NULL
+for(con in unique(seuratM$patient_diseaseCond)){
+  seuratSub <- subset(seuratM, patient_diseaseCond==con)
+  print(dim(seuratSub))
+  dat_con <- as.data.frame(table(seuratSub$clusterName)) %>%
+  mutate(percent=Freq/ncol(seuratSub)) %>% mutate(patient_diseaseCond=con)
+  datList[[con]] <- dat_con
+}
+dat_allclust <- do.call("rbind", datList)
+datTcell <- dat_allclust %>% filter(Var1 == "Tcell") 
+rownames(datTcell) <- datTcell$patient_diseaseCond
+
+###BMP4 expr fb
+Idents(seuratFb) <- seuratFb$patient_diseaseCond
+levels(seuratFb)
+BMP4 <- "ENSG00000125378.BMP4"
+
+avg.all <- AverageExpression(seuratFb, group.by = "patient_diseaseCond")
+avg.all <- data.frame(log1p(avg.all$RNA)) %>% 
+  rownames_to_column(var="gene")
+avg.BMP4 <- avg.all  %>% filter(gene == BMP4)
+avg.BMP4 <- avg.BMP4 %>% tibble::column_to_rownames(var="gene")
+avg.BMP4t <- data.frame(t(avg.BMP4)) 
+avg.BMP4t$patient_diseaseCond <- rownames(avg.BMP4t)
+avg.BMP4t <- avg.BMP4t %>% mutate(patient_diseaseCond=gsub("\\.", "_", patient_diseaseCond))
+
+dat_all <- merge(datTcell, avg.BMP4t, by = "patient_diseaseCond")
+dat_all <- dat_all %>% mutate(diseasecond=gsub(".*_","",patient_diseaseCond)) %>% mutate(patient=gsub("_.*","",patient_diseaseCond))
+
+# scatterplot
+p <- ggscatter(dat_all, x="percent", y="ENSG00000125378.BMP4",
+                     label= "patient_diseaseCond",
+                     color = "diseasecond",
+                     palette = c("#dfc27d","#BE3144","#202547","#355C7D","#779d8d"),
+                     repel = T,
+                     label.rectangle = F,
+                     xlab = "TcellFreq",
+                     ylab = "BMP4",
+                     font.label = c("0", "plain","black"),
+                     size=2,)
+p
+
+
+## plot indiviual diseasecond
+dat_HH <- dat_all %>% filter(diseasecond == "healthy") 
+
+p <- ggscatter(dat_HH, x="percent", y="ENSG00000125378.BMP4",
+                     label= "patient",
+                     color = "diseasecond",
+                     palette = c("#dfc27d"),
+                     repel = T,
+                     label.rectangle = F,
+                     xlab = "TcellFreq",
+                     ylab = "BMP4",
+                     font.label = c("10", "plain","black"),
+                     size=2,)
+p
+
+
+dat_expl <- dat_all %>% filter(diseasecond == "explant") 
+
+p <- ggscatter(dat_expl, x="percent", y="ENSG00000125378.BMP4",
+                     label= "patient",
+                     color = "diseasecond",
+                     palette = c("#BE3144"),
+                     repel = T,
+                     label.rectangle = F,
+                     xlab = "TcellFreq",
+                     ylab = "BMP4",
+                     font.label = c("10", "plain","black"),
+                     size=2,)
+p
+
+dat_v1to3 <- dat_all %>% filter(diseasecond %in% c("visit1", "visit2", "visit3"))
+p <- ggscatter(dat_v1to3, x="percent", y="ENSG00000125378.BMP4",
+                     label= "patient",
+                     color = "diseasecond",
+                     palette = c("#202547","#355C7D","#779d8d"),
+                     repel = T,
+                     label.rectangle = F,
+                     xlab = "TcellFreq",
+                     ylab = "BMP4",
+                     font.label = c("0", "plain","black"),
+                     size=2,)
+p
+
+
+dat_v1 <- dat_all %>% filter(diseasecond %in% c("visit1"))
+p <- ggscatter(dat_v1, x="percent", y="ENSG00000125378.BMP4",
+                     label= "patient",
+                     color = "diseasecond",
+                     palette = c("#202547"),
+                     repel = T,
+                     label.rectangle = F,
+                     xlab = "TcellFreq",
+                     ylab = "BMP4",
+                     font.label = c("10", "plain","black"),
+                     size=2,)
+p
+
+
+dat_v2 <- dat_all %>% filter(diseasecond %in% c("visit2"))
+p <- ggscatter(dat_v2, x="percent", y="ENSG00000125378.BMP4",
+                     label= "patient",
+                     color = "diseasecond",
+                     palette = c("#355C7D"),
+                     repel = T,
+                     label.rectangle = F,
+                     xlab = "TcellFreq",
+                     ylab = "BMP4",
+                     font.label = c("10", "plain","black"),
+                     size=2,)
+p
+
+
+dat_v3 <- dat_all %>% filter(diseasecond %in% c("visit3"))
+p <- ggscatter(dat_v3, x="percent", y="ENSG00000125378.BMP4",
+                     label= "patient",
+                     color = "diseasecond",
+                     palette = c("#779d8d"),
+                     repel = T,
+                     label.rectangle = F,
+                     xlab = "TcellFreq",
+                     ylab = "BMP4",
+                     font.label = c("10", "plain","black"),
+                     size=2,)
+p
+```
+
+## session info
+```{r date and session info}
+date()
+sessionInfo()
+```

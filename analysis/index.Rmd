@@ -8,10 +8,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-### QCindividual. 
-QC individual seurat files
-[link](QCindividual.html)
-
 ### Merge-QC-UMAPS. 
 merge QC and display umaps
 [link](Merge-QC-UMAPS.html)
@@ -24,9 +20,9 @@ Relative abundance
 Calculate and plot marker and DE genes
 [link](MarkerGenes.html)
 
-### DifferentialExpressionFb. 
-DE genes Fb
-[link](DifferentialExpressionFb.html)
+### Fb high res. 
+Fb high resolution analysis
+[link](FbHighres.html)
 
 ### BMPTcell. 
 BMP and T cells

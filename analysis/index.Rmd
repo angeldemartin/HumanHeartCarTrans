@@ -20,7 +20,7 @@ Relative abundance
 Calculate and plot marker and DE genes
 [link](MarkerGenes.html)
 
-### Fb high res. 
+### FbHighres. 
 Fb high resolution analysis
 [link](FbHighres.html)
 

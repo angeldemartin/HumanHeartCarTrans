@@ -79,8 +79,8 @@ FeaturePlot(seuratM, features = "ENSG00000107779.BMPR1A", pt.size = 0.1, cols = 
 FeaturePlot(seuratM, features = "ENSG00000204217.BMPR2", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
 ```
 
-## VlnPlot BMP4 expression
-```{r violin BMP4 and BMP5}
+## VlnPlot BMP4 in Fb
+```{r violin BMP4 Fb}
 ###violin plot BMP4 on Fb
 seuratFb <- subset(seuratM, clusterName %in% c("Fb"))
 table(seuratFb$clusterName)
@@ -88,7 +88,10 @@ seuratFb$diseaseCond <- factor(seuratFb$diseaseCond, levels=c("healthy", "explan
 Idents(seuratFb) <- seuratFb$diseaseCond
 levels(seuratFb)
 VlnPlot(object=seuratFb, features = "ENSG00000125378.BMP4", cols = coldiseaseCond) + theme(legend.position = "none")
+```
 
+## VlnPlot BMP5 in PerivFb
+```{r violin BMP5 PerivFb}
 ###violin plot BMP5 on PerivFb
 seuratPerivFb <- subset(seuratM, clusterName %in% c("PerivFb"))
 table(seuratPerivFb$clusterName)
@@ -98,7 +101,7 @@ levels(seuratPerivFb)
 VlnPlot(object=seuratPerivFb, features = "ENSG00000112175.BMP5", cols = coldiseaseCond) + theme(legend.position = "none")
 ```
 
-## Scatter plot BMP4 in Fb vs CD8 T cell numbers
+## Scatter plot BMP4 in Fb vs Tcells
 ```{r scatter BMP4vsTcells}
 ###rel abundance CD8 Tcells
 datList <- NULL

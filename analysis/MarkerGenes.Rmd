@@ -221,6 +221,14 @@ FeaturePlot(seuratM, features = "ENSG00000139329.LUM", pt.size = 0.5, cols = c("
 FeaturePlot(seuratM, features = "ENSG00000133392.MYH11", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
 FeaturePlot(seuratM, features = "ENSG00000107796.ACTA2", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
 FeaturePlot(seuratM, features = "ENSG00000163359.COL6A3", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+
+##Mph markers
+FeaturePlot(seuratM, features = "ENSG00000260314.MRC1", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000129226.CD68", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000244731.C4A", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000224389.C4B", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000090339.ICAM1", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000133800.LYVE1", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
 ```
 
 ## session info

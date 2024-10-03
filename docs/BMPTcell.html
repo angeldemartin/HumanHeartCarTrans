@@ -420,10 +420,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -542,15 +542,15 @@ data/Human_heart_allmerged_seurat.rds
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree6397a5e809c4ced4f594bd73907a741b7a20035etargetblank6397a5ea">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree2254ff080634e47be879f54e479ff4ecafb376detargetblank2254ff0a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/6397a5e809c4ced4f594bd73907a741b7a20035e" target="_blank">6397a5e</a>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/2254ff080634e47be879f54e479ff4ecafb376de" target="_blank">2254ff0</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree6397a5e809c4ced4f594bd73907a741b7a20035etargetblank6397a5ea"
+id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree2254ff080634e47be879f54e479ff4ecafb376detargetblank2254ff0a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -560,7 +560,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/6397a5e809c4ced4f594bd73907a741b7a20035e" target="_blank">6397a5e</a>.
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/2254ff080634e47be879f54e479ff4ecafb376de" target="_blank">2254ff0</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -582,14 +582,8 @@ Ignored files:
     Ignored:    analysis/.Rhistory
     Ignored:    data/seurat files/
 
-Untracked files:
-    Untracked:  analysis/BMPTcell.Rmd
-    Untracked:  analysis/BMPTcellsFbHighres.Rmd
-
 Unstaged changes:
-    Modified:   analysis/FbHighres.Rmd
-    Modified:   analysis/MarkerGenes.Rmd
-    Modified:   analysis/index.Rmd
+    Modified:   analysis/BMPTcell.Rmd
 
 </code></pre>
 <p>
@@ -605,9 +599,72 @@ have uncommitted changes.
 </div>
 <div id="versions" class="tab-pane fade">
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/BMPTcell.Rmd</code>) and HTML
+(<code>docs/BMPTcell.html</code>) files. If you’ve configured a remote
+Git repository (see <code>?wflow_git_remote</code>), click on the
+hyperlinks in the table below to view the files as they were in that
+past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/analysis/BMPTcell.Rmd" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+<td>
+Oct24
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/angeldemartin/HumanHeartCarTrans/5bf6503e89f0251b3eaf131c688f07153582623f/docs/BMPTcell.html" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+<td>
+Oct24
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -733,25 +790,358 @@ names(coldiseaseCond) &lt;- c(&quot;healthy&quot;, &quot;explant&quot;, &quot;vi
 <h2>BMP features</h2>
 <pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000125378.BMP4&quot;, pt.size = 0.1, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
 <p><img src="figure/BMPTcell.Rmd/BMP%20features-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-BMP-features-1">
+Past versions of "BMP features-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-BMP-features-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/BMPTcell.Rmd/BMP features-1.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000112175.BMP5&quot;, pt.size = 0.1, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
 <p><img src="figure/BMPTcell.Rmd/BMP%20features-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-BMP-features-2">
+Past versions of "BMP features-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-BMP-features-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/BMPTcell.Rmd/BMP features-2.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000125845.BMP2&quot;, pt.size = 0.1, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
 <p><img src="figure/BMPTcell.Rmd/BMP%20features-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-BMP-features-3">
+Past versions of "BMP features-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-BMP-features-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/BMPTcell.Rmd/BMP features-3.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000153162.BMP6&quot;, pt.size = 0.1, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
 <p><img src="figure/BMPTcell.Rmd/BMP%20features-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-BMP-features-4">
+Past versions of "BMP features-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-BMP-features-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/BMPTcell.Rmd/BMP features-4.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000168487.BMP1&quot;, pt.size = 0.1, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
 <p><img src="figure/BMPTcell.Rmd/BMP%20features-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-BMP-features-5">
+Past versions of "BMP features-5.png"
+</button>
+</p>
+<div id="fig-no-spaces-BMP-features-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/BMPTcell.Rmd/BMP features-5.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000183682.BMP8A&quot;, pt.size = 0.1, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
 <p><img src="figure/BMPTcell.Rmd/BMP%20features-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-BMP-features-6">
+Past versions of "BMP features-6.png"
+</button>
+</p>
+<div id="fig-no-spaces-BMP-features-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/BMPTcell.Rmd/BMP features-6.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000138756.BMP2K&quot;, pt.size = 0.1, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
 <p><img src="figure/BMPTcell.Rmd/BMP%20features-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-BMP-features-7">
+Past versions of "BMP features-7.png"
+</button>
+</p>
+<div id="fig-no-spaces-BMP-features-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/BMPTcell.Rmd/BMP features-7.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000107779.BMPR1A&quot;, pt.size = 0.1, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
 <p><img src="figure/BMPTcell.Rmd/BMP%20features-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-BMP-features-8">
+Past versions of "BMP features-8.png"
+</button>
+</p>
+<div id="fig-no-spaces-BMP-features-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/BMPTcell.Rmd/BMP features-8.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(seuratM, features = &quot;ENSG00000204217.BMPR2&quot;, pt.size = 0.1, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), raster = FALSE)</code></pre>
 <p><img src="figure/BMPTcell.Rmd/BMP%20features-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-BMP-features-9">
+Past versions of "BMP features-9.png"
+</button>
+</p>
+<div id="fig-no-spaces-BMP-features-9" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/BMPTcell.Rmd/BMP features-9.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="vlnplot-bmp4-expression" class="section level2">
-<h2>VlnPlot BMP4 expression</h2>
+</div>
+</div>
+<div id="vlnplot-bmp4-in-fb" class="section level2">
+<h2>VlnPlot BMP4 in Fb</h2>
 <pre class="r"><code>###violin plot BMP4 on Fb
 seuratFb &lt;- subset(seuratM, clusterName %in% c(&quot;Fb&quot;))
 table(seuratFb$clusterName)</code></pre>
@@ -765,7 +1155,10 @@ Idents(seuratFb) &lt;- seuratFb$diseaseCond
 levels(seuratFb)</code></pre>
 <pre><code>[1] &quot;healthy&quot; &quot;explant&quot; &quot;visit1&quot;  &quot;visit2&quot;  &quot;visit3&quot; </code></pre>
 <pre class="r"><code>VlnPlot(object=seuratFb, features = &quot;ENSG00000125378.BMP4&quot;, cols = coldiseaseCond) + theme(legend.position = &quot;none&quot;)</code></pre>
-<p><img src="figure/BMPTcell.Rmd/violin%20BMP4%20and%20BMP5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/BMPTcell.Rmd/violin%20BMP4%20Fb-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="vlnplot-bmp5-in-perivfb" class="section level2">
+<h2>VlnPlot BMP5 in PerivFb</h2>
 <pre class="r"><code>###violin plot BMP5 on PerivFb
 seuratPerivFb &lt;- subset(seuratM, clusterName %in% c(&quot;PerivFb&quot;))
 table(seuratPerivFb$clusterName)</code></pre>
@@ -779,11 +1172,10 @@ Idents(seuratPerivFb) &lt;- seuratPerivFb$diseaseCond
 levels(seuratPerivFb)</code></pre>
 <pre><code>[1] &quot;healthy&quot; &quot;explant&quot; &quot;visit1&quot;  &quot;visit2&quot;  &quot;visit3&quot; </code></pre>
 <pre class="r"><code>VlnPlot(object=seuratPerivFb, features = &quot;ENSG00000112175.BMP5&quot;, cols = coldiseaseCond) + theme(legend.position = &quot;none&quot;)</code></pre>
-<p><img src="figure/BMPTcell.Rmd/violin%20BMP4%20and%20BMP5-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/BMPTcell.Rmd/violin%20BMP5%20PerivFb-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="scatter-plot-bmp4-in-fb-vs-cd8-t-cell-numbers"
-class="section level2">
-<h2>Scatter plot BMP4 in Fb vs CD8 T cell numbers</h2>
+<div id="scatter-plot-bmp4-in-fb-vs-tcells" class="section level2">
+<h2>Scatter plot BMP4 in Fb vs Tcells</h2>
 <pre class="r"><code>###rel abundance CD8 Tcells
 datList &lt;- NULL
 for(con in unique(seuratM$patient_diseaseCond)){
@@ -915,6 +1307,43 @@ p &lt;- ggscatter(dat_all, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&q
                      size=2,)
 p</code></pre>
 <p><img src="figure/BMPTcell.Rmd/scatter%20BMP4vsTcells-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-scatter-BMP4vsTcells-1">
+Past versions of "scatter BMP4vsTcells-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-scatter-BMP4vsTcells-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/BMPTcell.Rmd/scatter BMP4vsTcells-1.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>## plot indiviual diseasecond
 dat_HH &lt;- dat_all %&gt;% filter(diseasecond == &quot;healthy&quot;) 
 
@@ -930,6 +1359,43 @@ p &lt;- ggscatter(dat_HH, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&qu
                      size=2,)
 p</code></pre>
 <p><img src="figure/BMPTcell.Rmd/scatter%20BMP4vsTcells-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-scatter-BMP4vsTcells-2">
+Past versions of "scatter BMP4vsTcells-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-scatter-BMP4vsTcells-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/BMPTcell.Rmd/scatter BMP4vsTcells-2.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>dat_expl &lt;- dat_all %&gt;% filter(diseasecond == &quot;explant&quot;) 
 
 p &lt;- ggscatter(dat_expl, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&quot;,
@@ -944,6 +1410,43 @@ p &lt;- ggscatter(dat_expl, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&
                      size=2,)
 p</code></pre>
 <p><img src="figure/BMPTcell.Rmd/scatter%20BMP4vsTcells-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-scatter-BMP4vsTcells-3">
+Past versions of "scatter BMP4vsTcells-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-scatter-BMP4vsTcells-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/BMPTcell.Rmd/scatter BMP4vsTcells-3.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>dat_v1to3 &lt;- dat_all %&gt;% filter(diseasecond %in% c(&quot;visit1&quot;, &quot;visit2&quot;, &quot;visit3&quot;))
 p &lt;- ggscatter(dat_v1to3, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&quot;,
                      label= &quot;patient&quot;,
@@ -957,6 +1460,43 @@ p &lt;- ggscatter(dat_v1to3, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4
                      size=2,)
 p</code></pre>
 <p><img src="figure/BMPTcell.Rmd/scatter%20BMP4vsTcells-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-scatter-BMP4vsTcells-4">
+Past versions of "scatter BMP4vsTcells-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-scatter-BMP4vsTcells-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/BMPTcell.Rmd/scatter BMP4vsTcells-4.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>dat_v1 &lt;- dat_all %&gt;% filter(diseasecond %in% c(&quot;visit1&quot;))
 p &lt;- ggscatter(dat_v1, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&quot;,
                      label= &quot;patient&quot;,
@@ -970,6 +1510,43 @@ p &lt;- ggscatter(dat_v1, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&qu
                      size=2,)
 p</code></pre>
 <p><img src="figure/BMPTcell.Rmd/scatter%20BMP4vsTcells-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-scatter-BMP4vsTcells-5">
+Past versions of "scatter BMP4vsTcells-5.png"
+</button>
+</p>
+<div id="fig-no-spaces-scatter-BMP4vsTcells-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/BMPTcell.Rmd/scatter BMP4vsTcells-5.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>dat_v2 &lt;- dat_all %&gt;% filter(diseasecond %in% c(&quot;visit2&quot;))
 p &lt;- ggscatter(dat_v2, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&quot;,
                      label= &quot;patient&quot;,
@@ -983,6 +1560,43 @@ p &lt;- ggscatter(dat_v2, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&qu
                      size=2,)
 p</code></pre>
 <p><img src="figure/BMPTcell.Rmd/scatter%20BMP4vsTcells-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-scatter-BMP4vsTcells-6">
+Past versions of "scatter BMP4vsTcells-6.png"
+</button>
+</p>
+<div id="fig-no-spaces-scatter-BMP4vsTcells-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/BMPTcell.Rmd/scatter BMP4vsTcells-6.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>dat_v3 &lt;- dat_all %&gt;% filter(diseasecond %in% c(&quot;visit3&quot;))
 p &lt;- ggscatter(dat_v3, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&quot;,
                      label= &quot;patient&quot;,
@@ -996,11 +1610,48 @@ p &lt;- ggscatter(dat_v3, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&qu
                      size=2,)
 p</code></pre>
 <p><img src="figure/BMPTcell.Rmd/scatter%20BMP4vsTcells-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-scatter-BMP4vsTcells-7">
+Past versions of "scatter BMP4vsTcells-7.png"
+</button>
+</p>
+<div id="fig-no-spaces-scatter-BMP4vsTcells-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/BMPTcell.Rmd/scatter BMP4vsTcells-7.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="session-info" class="section level2">
 <h2>session info</h2>
 <pre class="r"><code>date()</code></pre>
-<pre><code>[1] &quot;Thu Oct  3 10:14:31 2024&quot;</code></pre>
+<pre><code>[1] &quot;Thu Oct  3 12:28:50 2024&quot;</code></pre>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.4.0 (2024-04-24)
 Platform: x86_64-apple-darwin20
@@ -1092,35 +1743,36 @@ loaded via a namespace (and not attached):
 [154] memoise_2.0.1             rmarkdown_2.27            scales_1.3.0             
 [157] future_1.33.2             RANN_2.6.1                Cairo_1.6-2              
 [160] spatstat.data_3.1-2       rstudioapi_0.16.0         cluster_2.1.6            
-[163] mutoss_0.1-13             spatstat.utils_3.0-5      hms_1.1.3                
-[166] fitdistrplus_1.1-11       munsell_0.5.1             cowplot_1.1.3            
-[169] colorspace_2.1-0          rlang_1.1.4               DelayedMatrixStats_1.26.0
-[172] sparseMatrixStats_1.16.0  xts_0.14.0                dotCall64_1.1-1          
-[175] shinydashboard_0.7.2      ggforce_0.4.2             laeken_0.5.3             
-[178] mgcv_1.9-1                xfun_0.45                 e1071_1.7-14             
-[181] TH.data_1.1-2             iterators_1.0.14          abind_1.4-5              
-[184] GOSemSim_2.30.0           treeio_1.28.0             futile.options_1.0.1     
-[187] bitops_1.0-7              Rdpack_2.6                promises_1.3.0           
-[190] scatterpie_0.2.3          RSQLite_2.3.7             qvalue_2.36.0            
-[193] sandwich_3.1-0            fgsea_1.30.0              DelayedArray_0.30.1      
-[196] proxy_0.4-27              GO.db_3.19.1              compiler_4.4.0           
-[199] prettyunits_1.2.0         boot_1.3-30               beachmat_2.20.0          
-[202] listenv_0.9.1             Rcpp_1.0.13               edgeR_4.2.0              
-[205] workflowr_1.7.1           BiocSingular_1.20.0       tensor_1.5               
-[208] MASS_7.3-61               progress_1.2.3            BiocParallel_1.38.0      
-[211] babelgene_22.9            spatstat.random_3.2-3     R6_2.5.1                 
-[214] fastmap_1.2.0             multcomp_1.4-25           fastmatch_1.1-4          
-[217] rstatix_0.7.2             vipor_0.4.7               TTR_0.24.4               
-[220] ROCR_1.0-11               TFisher_0.2.0             rsvd_1.0.5               
-[223] vcd_1.4-12                nnet_7.3-19               gtable_0.3.5             
-[226] KernSmooth_2.23-24        miniUI_0.1.1.1            deldir_2.0-4             
-[229] htmltools_0.5.8.1         ggthemes_5.1.0            bit64_4.0.5              
-[232] spatstat.explore_3.2-7    lifecycle_1.0.4           blme_1.0-5               
-[235] nloptr_2.1.1              sass_0.4.9                vctrs_0.6.5              
-[238] robustbase_0.99-3         spatstat.geom_3.2-9       sn_2.1.1                 
-[241] ggfun_0.1.5               future.apply_1.11.2       bslib_0.7.0              
-[244] pillar_1.9.0              gplots_3.1.3.1            pcaMethods_1.96.0        
-[247] locfit_1.5-9.10           jsonlite_1.8.8            GetoptLong_1.0.5         </code></pre>
+[163] whisker_0.4.1             mutoss_0.1-13             spatstat.utils_3.0-5     
+[166] hms_1.1.3                 fitdistrplus_1.1-11       munsell_0.5.1            
+[169] cowplot_1.1.3             colorspace_2.1-0          rlang_1.1.4              
+[172] DelayedMatrixStats_1.26.0 sparseMatrixStats_1.16.0  xts_0.14.0               
+[175] dotCall64_1.1-1           shinydashboard_0.7.2      ggforce_0.4.2            
+[178] laeken_0.5.3              mgcv_1.9-1                xfun_0.45                
+[181] e1071_1.7-14              TH.data_1.1-2             iterators_1.0.14         
+[184] abind_1.4-5               GOSemSim_2.30.0           treeio_1.28.0            
+[187] futile.options_1.0.1      bitops_1.0-7              Rdpack_2.6               
+[190] promises_1.3.0            scatterpie_0.2.3          RSQLite_2.3.7            
+[193] qvalue_2.36.0             sandwich_3.1-0            fgsea_1.30.0             
+[196] DelayedArray_0.30.1       proxy_0.4-27              GO.db_3.19.1             
+[199] compiler_4.4.0            prettyunits_1.2.0         boot_1.3-30              
+[202] beachmat_2.20.0           listenv_0.9.1             Rcpp_1.0.13              
+[205] edgeR_4.2.0               workflowr_1.7.1           BiocSingular_1.20.0      
+[208] tensor_1.5                MASS_7.3-61               progress_1.2.3           
+[211] BiocParallel_1.38.0       babelgene_22.9            spatstat.random_3.2-3    
+[214] R6_2.5.1                  fastmap_1.2.0             multcomp_1.4-25          
+[217] fastmatch_1.1-4           rstatix_0.7.2             vipor_0.4.7              
+[220] TTR_0.24.4                ROCR_1.0-11               TFisher_0.2.0            
+[223] rsvd_1.0.5                vcd_1.4-12                nnet_7.3-19              
+[226] gtable_0.3.5              KernSmooth_2.23-24        miniUI_0.1.1.1           
+[229] deldir_2.0-4              htmltools_0.5.8.1         ggthemes_5.1.0           
+[232] bit64_4.0.5               spatstat.explore_3.2-7    lifecycle_1.0.4          
+[235] blme_1.0-5                nloptr_2.1.1              sass_0.4.9               
+[238] vctrs_0.6.5               robustbase_0.99-3         spatstat.geom_3.2-9      
+[241] sn_2.1.1                  ggfun_0.1.5               future.apply_1.11.2      
+[244] bslib_0.7.0               pillar_1.9.0              gplots_3.1.3.1           
+[247] pcaMethods_1.96.0         locfit_1.5-9.10           jsonlite_1.8.8           
+[250] GetoptLong_1.0.5         </code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1220,35 +1872,36 @@ loaded via a namespace (and not attached):
 [154] memoise_2.0.1             rmarkdown_2.27            scales_1.3.0             
 [157] future_1.33.2             RANN_2.6.1                Cairo_1.6-2              
 [160] spatstat.data_3.1-2       rstudioapi_0.16.0         cluster_2.1.6            
-[163] mutoss_0.1-13             spatstat.utils_3.0-5      hms_1.1.3                
-[166] fitdistrplus_1.1-11       munsell_0.5.1             cowplot_1.1.3            
-[169] colorspace_2.1-0          rlang_1.1.4               DelayedMatrixStats_1.26.0
-[172] sparseMatrixStats_1.16.0  xts_0.14.0                dotCall64_1.1-1          
-[175] shinydashboard_0.7.2      ggforce_0.4.2             laeken_0.5.3             
-[178] mgcv_1.9-1                xfun_0.45                 e1071_1.7-14             
-[181] TH.data_1.1-2             iterators_1.0.14          abind_1.4-5              
-[184] GOSemSim_2.30.0           treeio_1.28.0             futile.options_1.0.1     
-[187] bitops_1.0-7              Rdpack_2.6                promises_1.3.0           
-[190] scatterpie_0.2.3          RSQLite_2.3.7             qvalue_2.36.0            
-[193] sandwich_3.1-0            fgsea_1.30.0              DelayedArray_0.30.1      
-[196] proxy_0.4-27              GO.db_3.19.1              compiler_4.4.0           
-[199] prettyunits_1.2.0         boot_1.3-30               beachmat_2.20.0          
-[202] listenv_0.9.1             Rcpp_1.0.13               edgeR_4.2.0              
-[205] workflowr_1.7.1           BiocSingular_1.20.0       tensor_1.5               
-[208] MASS_7.3-61               progress_1.2.3            BiocParallel_1.38.0      
-[211] babelgene_22.9            spatstat.random_3.2-3     R6_2.5.1                 
-[214] fastmap_1.2.0             multcomp_1.4-25           fastmatch_1.1-4          
-[217] rstatix_0.7.2             vipor_0.4.7               TTR_0.24.4               
-[220] ROCR_1.0-11               TFisher_0.2.0             rsvd_1.0.5               
-[223] vcd_1.4-12                nnet_7.3-19               gtable_0.3.5             
-[226] KernSmooth_2.23-24        miniUI_0.1.1.1            deldir_2.0-4             
-[229] htmltools_0.5.8.1         ggthemes_5.1.0            bit64_4.0.5              
-[232] spatstat.explore_3.2-7    lifecycle_1.0.4           blme_1.0-5               
-[235] nloptr_2.1.1              sass_0.4.9                vctrs_0.6.5              
-[238] robustbase_0.99-3         spatstat.geom_3.2-9       sn_2.1.1                 
-[241] ggfun_0.1.5               future.apply_1.11.2       bslib_0.7.0              
-[244] pillar_1.9.0              gplots_3.1.3.1            pcaMethods_1.96.0        
-[247] locfit_1.5-9.10           jsonlite_1.8.8            GetoptLong_1.0.5         </code></pre>
+[163] whisker_0.4.1             mutoss_0.1-13             spatstat.utils_3.0-5     
+[166] hms_1.1.3                 fitdistrplus_1.1-11       munsell_0.5.1            
+[169] cowplot_1.1.3             colorspace_2.1-0          rlang_1.1.4              
+[172] DelayedMatrixStats_1.26.0 sparseMatrixStats_1.16.0  xts_0.14.0               
+[175] dotCall64_1.1-1           shinydashboard_0.7.2      ggforce_0.4.2            
+[178] laeken_0.5.3              mgcv_1.9-1                xfun_0.45                
+[181] e1071_1.7-14              TH.data_1.1-2             iterators_1.0.14         
+[184] abind_1.4-5               GOSemSim_2.30.0           treeio_1.28.0            
+[187] futile.options_1.0.1      bitops_1.0-7              Rdpack_2.6               
+[190] promises_1.3.0            scatterpie_0.2.3          RSQLite_2.3.7            
+[193] qvalue_2.36.0             sandwich_3.1-0            fgsea_1.30.0             
+[196] DelayedArray_0.30.1       proxy_0.4-27              GO.db_3.19.1             
+[199] compiler_4.4.0            prettyunits_1.2.0         boot_1.3-30              
+[202] beachmat_2.20.0           listenv_0.9.1             Rcpp_1.0.13              
+[205] edgeR_4.2.0               workflowr_1.7.1           BiocSingular_1.20.0      
+[208] tensor_1.5                MASS_7.3-61               progress_1.2.3           
+[211] BiocParallel_1.38.0       babelgene_22.9            spatstat.random_3.2-3    
+[214] R6_2.5.1                  fastmap_1.2.0             multcomp_1.4-25          
+[217] fastmatch_1.1-4           rstatix_0.7.2             vipor_0.4.7              
+[220] TTR_0.24.4                ROCR_1.0-11               TFisher_0.2.0            
+[223] rsvd_1.0.5                vcd_1.4-12                nnet_7.3-19              
+[226] gtable_0.3.5              KernSmooth_2.23-24        miniUI_0.1.1.1           
+[229] deldir_2.0-4              htmltools_0.5.8.1         ggthemes_5.1.0           
+[232] bit64_4.0.5               spatstat.explore_3.2-7    lifecycle_1.0.4          
+[235] blme_1.0-5                nloptr_2.1.1              sass_0.4.9               
+[238] vctrs_0.6.5               robustbase_0.99-3         spatstat.geom_3.2-9      
+[241] sn_2.1.1                  ggfun_0.1.5               future.apply_1.11.2      
+[244] bslib_0.7.0               pillar_1.9.0              gplots_3.1.3.1           
+[247] pcaMethods_1.96.0         locfit_1.5-9.10           jsonlite_1.8.8           
+[250] GetoptLong_1.0.5         </code></pre>
 </div>
 </div>
 </div>

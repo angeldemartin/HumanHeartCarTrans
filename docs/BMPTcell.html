@@ -542,15 +542,15 @@ data/Human_heart_allmerged_seurat.rds
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstreec844c5c41a3eab36997a5f7c647981db385ed759targetblankc844c5ca">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree2dd8d6d90dbb86d2b021fa80d366ce60d815ed0atargetblank2dd8d6da">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/c844c5c41a3eab36997a5f7c647981db385ed759" target="_blank">c844c5c</a>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/2dd8d6d90dbb86d2b021fa80d366ce60d815ed0a" target="_blank">2dd8d6d</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstreec844c5c41a3eab36997a5f7c647981db385ed759targetblankc844c5ca"
+id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree2dd8d6d90dbb86d2b021fa80d366ce60d815ed0atargetblank2dd8d6da"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -560,7 +560,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/c844c5c41a3eab36997a5f7c647981db385ed759" target="_blank">c844c5c</a>.
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/2dd8d6d90dbb86d2b021fa80d366ce60d815ed0a" target="_blank">2dd8d6d</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -581,9 +581,6 @@ Ignored files:
     Ignored:    analysis/.DS_Store
     Ignored:    analysis/.Rhistory
     Ignored:    data/seurat files/
-
-Untracked files:
-    Untracked:  analysis/IntCellChat.Rmd
 
 Unstaged changes:
     Modified:   analysis/BMPTcell.Rmd
@@ -631,6 +628,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/8707bbed341128668e6be6cde12c6486182aa1dd/analysis/BMPTcell.Rmd" target="_blank">8707bbe</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-09
+</td>
+<td>
+Oct9
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/angeldemartin/HumanHeartCarTrans/8707bbed341128668e6be6cde12c6486182aa1dd/docs/BMPTcell.html" target="_blank">8707bbe</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-09
+</td>
+<td>
+Oct9
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1285,8 +1316,8 @@ angeldemartin
 </div>
 </div>
 </div>
-<div id="scatter-plot-bmp4-in-fb-vs-tcells" class="section level2">
-<h2>Scatter plot BMP4 in Fb vs Tcells</h2>
+<div id="bmp-vs-tcells" class="section level2">
+<h2>BMP vs Tcells</h2>
 <pre class="r"><code>###rel abundance CD8 Tcells
 datList &lt;- NULL
 for(con in unique(seuratM$patient_diseaseCond)){
@@ -1403,10 +1434,11 @@ avg.BMP4t$patient_diseaseCond &lt;- rownames(avg.BMP4t)
 avg.BMP4t &lt;- avg.BMP4t %&gt;% mutate(patient_diseaseCond=gsub(&quot;\\.&quot;, &quot;_&quot;, patient_diseaseCond))
 
 dat_all &lt;- merge(datTcell, avg.BMP4t, by = &quot;patient_diseaseCond&quot;)
-dat_all &lt;- dat_all %&gt;% mutate(diseasecond=gsub(&quot;.*_&quot;,&quot;&quot;,patient_diseaseCond)) %&gt;% mutate(patient=gsub(&quot;_.*&quot;,&quot;&quot;,patient_diseaseCond))
-
-# scatterplot
-p &lt;- ggscatter(dat_all, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&quot;,
+dat_all &lt;- dat_all %&gt;% mutate(diseasecond=gsub(&quot;.*_&quot;,&quot;&quot;,patient_diseaseCond)) %&gt;% mutate(patient=gsub(&quot;_.*&quot;,&quot;&quot;,patient_diseaseCond))</code></pre>
+</div>
+<div id="scatter-bmp-vs-tcells-all" class="section level2">
+<h2>scatter BMP vs Tcells all</h2>
+<pre class="r"><code>p &lt;- ggscatter(dat_all, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&quot;,
                      label= &quot;patient_diseaseCond&quot;,
                      color = &quot;diseasecond&quot;,
                      palette = c(&quot;#dfc27d&quot;,&quot;#BE3144&quot;,&quot;#202547&quot;,&quot;#355C7D&quot;,&quot;#779d8d&quot;),
@@ -1420,13 +1452,32 @@ p &lt;- ggscatter(dat_all, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&q
   geom_smooth(method = &quot;lm&quot;, se = TRUE, color = &quot;black&quot;) + # Add regression line with confidence interval
   stat_cor(p.accuracy = 0.001, r.accuracy = 0.001, label.x = 0, label.y = -0.2)  # Add correlation stats
 p</code></pre>
-<p><img src="figure/BMPTcell.Rmd/scatter%20BMP4vsTcells-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/BMPTcell.Rmd/scatter%20BMP4vsTcells%20all-1.png" width="672" style="display: block; margin: auto;" />
+## scatter BMP vs Tcells individual</p>
+<pre class="r"><code>dat_HH &lt;- dat_all %&gt;% filter(diseasecond == &quot;healthy&quot;) 
+
+p &lt;- ggscatter(dat_HH, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&quot;,
+                     label= &quot;patient&quot;,
+                     color = &quot;diseasecond&quot;,
+                     palette = c(&quot;#dfc27d&quot;),
+                     repel = T,
+                     label.rectangle = F,
+                     xlab = &quot;TcellFreq&quot;,
+                     ylab = &quot;BMP4&quot;,
+                     font.label = c(&quot;10&quot;, &quot;plain&quot;,&quot;black&quot;),
+                     size=2,) +
+  geom_point(aes(color = diseasecond), alpha = 0.5, size = 3) +  # Customize point size and transparency
+  geom_smooth(method = &quot;lm&quot;, se = TRUE, color = &quot;black&quot;) + # Add regression line with confidence interval
+  stat_cor(p.accuracy = 0.001, r.accuracy = 0.001, label.x = 0.020, label.y = 1)  # Add correlation stats
+p</code></pre>
+<p><img src="figure/BMPTcell.Rmd/scatter%20BMP4vsTcells%20individual%20diseaecond-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-scatter-BMP4vsTcells-1">
-Past versions of "scatter BMP4vsTcells-1.png"
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-scatter-BMP4vsTcells-individual-diseaecond-1">
+Past versions of "scatter BMP4vsTcells individual diseaecond-1.png"
 </button>
 </p>
-<div id="fig-no-spaces-scatter-BMP4vsTcells-1" class="collapse">
+<div id="fig-no-spaces-scatter-BMP4vsTcells-individual-diseaecond-1"
+class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -1445,48 +1496,19 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/c844c5c41a3eab36997a5f7c647981db385ed759/docs/figure/BMPTcell.Rmd/scatter BMP4vsTcells-1.png" target="_blank">c844c5c</a>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/8707bbed341128668e6be6cde12c6486182aa1dd/docs/figure/BMPTcell.Rmd/scatter BMP4vsTcells individual diseaecond-1.png" target="_blank">8707bbe</a>
 </td>
 <td>
 angeldemartin
 </td>
 <td>
-2024-10-03
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/BMPTcell.Rmd/scatter BMP4vsTcells-1.png" target="_blank">5bf6503</a>
-</td>
-<td>
-angeldemartin
-</td>
-<td>
-2024-10-03
+2024-10-09
 </td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<pre class="r"><code>## plot indiviual diseasecond
-dat_HH &lt;- dat_all %&gt;% filter(diseasecond == &quot;healthy&quot;) 
-
-p &lt;- ggscatter(dat_HH, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&quot;,
-                     label= &quot;patient&quot;,
-                     color = &quot;diseasecond&quot;,
-                     palette = c(&quot;#dfc27d&quot;),
-                     repel = T,
-                     label.rectangle = F,
-                     xlab = &quot;TcellFreq&quot;,
-                     ylab = &quot;BMP4&quot;,
-                     font.label = c(&quot;10&quot;, &quot;plain&quot;,&quot;black&quot;),
-                     size=2,) +
-  geom_point(aes(color = diseasecond), alpha = 0.5, size = 3) +  # Customize point size and transparency
-  geom_smooth(method = &quot;lm&quot;, se = TRUE, color = &quot;black&quot;) + # Add regression line with confidence interval
-  stat_cor(p.accuracy = 0.001, r.accuracy = 0.001, label.x = 0.020, label.y = 1)  # Add correlation stats
-p</code></pre>
-<p><img src="figure/BMPTcell.Rmd/scatter%20BMP4vsTcells%20individual%20diseaecond-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>dat_expl &lt;- dat_all %&gt;% filter(diseasecond == &quot;explant&quot;) 
 
 p &lt;- ggscatter(dat_expl, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&quot;,
@@ -1504,6 +1526,44 @@ p &lt;- ggscatter(dat_expl, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&
   stat_cor(p.accuracy = 0.001, r.accuracy = 0.001, label.x = 0.05, label.y = 1.5)  # Add correlation stats
 p</code></pre>
 <p><img src="figure/BMPTcell.Rmd/scatter%20BMP4vsTcells%20individual%20diseaecond-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-scatter-BMP4vsTcells-individual-diseaecond-2">
+Past versions of "scatter BMP4vsTcells individual diseaecond-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-scatter-BMP4vsTcells-individual-diseaecond-2"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/8707bbed341128668e6be6cde12c6486182aa1dd/docs/figure/BMPTcell.Rmd/scatter BMP4vsTcells individual diseaecond-2.png" target="_blank">8707bbe</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>dat_v1to3 &lt;- dat_all %&gt;% filter(diseasecond %in% c(&quot;visit1&quot;, &quot;visit2&quot;, &quot;visit3&quot;))
 p &lt;- ggscatter(dat_v1to3, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&quot;,
                      label= &quot;patient&quot;,
@@ -1520,6 +1580,44 @@ p &lt;- ggscatter(dat_v1to3, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4
   stat_cor(p.accuracy = 0.001, r.accuracy = 0.001, label.x = 0.3, label.y = 0.75)  # Add correlation stats
 p</code></pre>
 <p><img src="figure/BMPTcell.Rmd/scatter%20BMP4vsTcells%20individual%20diseaecond-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-scatter-BMP4vsTcells-individual-diseaecond-3">
+Past versions of "scatter BMP4vsTcells individual diseaecond-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-scatter-BMP4vsTcells-individual-diseaecond-3"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/8707bbed341128668e6be6cde12c6486182aa1dd/docs/figure/BMPTcell.Rmd/scatter BMP4vsTcells individual diseaecond-3.png" target="_blank">8707bbe</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>dat_v1 &lt;- dat_all %&gt;% filter(diseasecond %in% c(&quot;visit1&quot;))
 p &lt;- ggscatter(dat_v1, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&quot;,
                      label= &quot;patient&quot;,
@@ -1536,6 +1634,44 @@ p &lt;- ggscatter(dat_v1, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&qu
   stat_cor(p.accuracy = 0.001, r.accuracy = 0.001, label.x = 0.3, label.y = 0.8)  # Add correlation stats
 p</code></pre>
 <p><img src="figure/BMPTcell.Rmd/scatter%20BMP4vsTcells%20individual%20diseaecond-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-scatter-BMP4vsTcells-individual-diseaecond-4">
+Past versions of "scatter BMP4vsTcells individual diseaecond-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-scatter-BMP4vsTcells-individual-diseaecond-4"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/8707bbed341128668e6be6cde12c6486182aa1dd/docs/figure/BMPTcell.Rmd/scatter BMP4vsTcells individual diseaecond-4.png" target="_blank">8707bbe</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>dat_v2 &lt;- dat_all %&gt;% filter(diseasecond %in% c(&quot;visit2&quot;))
 p &lt;- ggscatter(dat_v2, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&quot;,
                      label= &quot;patient&quot;,
@@ -1552,6 +1688,44 @@ p &lt;- ggscatter(dat_v2, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&qu
   stat_cor(p.accuracy = 0.001, r.accuracy = 0.001, label.x = 0.1, label.y = 0.1)  # Add correlation stats
 p</code></pre>
 <p><img src="figure/BMPTcell.Rmd/scatter%20BMP4vsTcells%20individual%20diseaecond-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-scatter-BMP4vsTcells-individual-diseaecond-5">
+Past versions of "scatter BMP4vsTcells individual diseaecond-5.png"
+</button>
+</p>
+<div id="fig-no-spaces-scatter-BMP4vsTcells-individual-diseaecond-5"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/8707bbed341128668e6be6cde12c6486182aa1dd/docs/figure/BMPTcell.Rmd/scatter BMP4vsTcells individual diseaecond-5.png" target="_blank">8707bbe</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>dat_v3 &lt;- dat_all %&gt;% filter(diseasecond %in% c(&quot;visit3&quot;))
 p &lt;- ggscatter(dat_v3, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&quot;,
                      label= &quot;patient&quot;,
@@ -1568,11 +1742,49 @@ p &lt;- ggscatter(dat_v3, x=&quot;percent&quot;, y=&quot;ENSG00000125378.BMP4&qu
   stat_cor(p.accuracy = 0.001, r.accuracy = 0.001, label.x = 0.1, label.y = 0.7)  # Add correlation stats
 p</code></pre>
 <p><img src="figure/BMPTcell.Rmd/scatter%20BMP4vsTcells%20individual%20diseaecond-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-scatter-BMP4vsTcells-individual-diseaecond-6">
+Past versions of "scatter BMP4vsTcells individual diseaecond-6.png"
+</button>
+</p>
+<div id="fig-no-spaces-scatter-BMP4vsTcells-individual-diseaecond-6"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/8707bbed341128668e6be6cde12c6486182aa1dd/docs/figure/BMPTcell.Rmd/scatter BMP4vsTcells individual diseaecond-6.png" target="_blank">8707bbe</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="session-info" class="section level2">
 <h2>session info</h2>
 <pre class="r"><code>date()</code></pre>
-<pre><code>[1] &quot;Wed Oct  9 17:58:03 2024&quot;</code></pre>
+<pre><code>[1] &quot;Wed Oct  9 18:22:09 2024&quot;</code></pre>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.4.0 (2024-04-24)
 Platform: x86_64-apple-darwin20

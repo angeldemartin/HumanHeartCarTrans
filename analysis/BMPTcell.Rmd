@@ -101,8 +101,8 @@ levels(seuratPerivFb)
 VlnPlot(object=seuratPerivFb, features = "ENSG00000112175.BMP5", cols = coldiseaseCond) + theme(legend.position = "none")
 ```
 
-## Scatter plot BMP4 in Fb vs Tcells
-```{r scatter BMP4vsTcells}
+## BMP vs Tcells
+```{r BMP4vsTcells}
 ###rel abundance CD8 Tcells
 datList <- NULL
 for(con in unique(seuratM$patient_diseaseCond)){
@@ -132,8 +132,9 @@ avg.BMP4t <- avg.BMP4t %>% mutate(patient_diseaseCond=gsub("\\.", "_", patient_d
 
 dat_all <- merge(datTcell, avg.BMP4t, by = "patient_diseaseCond")
 dat_all <- dat_all %>% mutate(diseasecond=gsub(".*_","",patient_diseaseCond)) %>% mutate(patient=gsub("_.*","",patient_diseaseCond))
-
-# scatterplot
+```
+## scatter BMP vs Tcells all
+```{r scatter BMP4vsTcells all}
 p <- ggscatter(dat_all, x="percent", y="ENSG00000125378.BMP4",
                      label= "patient_diseaseCond",
                      color = "diseasecond",
@@ -148,11 +149,9 @@ p <- ggscatter(dat_all, x="percent", y="ENSG00000125378.BMP4",
   geom_smooth(method = "lm", se = TRUE, color = "black") + # Add regression line with confidence interval
   stat_cor(p.accuracy = 0.001, r.accuracy = 0.001, label.x = 0, label.y = -0.2)  # Add correlation stats
 p
-
 ```
-
+## scatter BMP vs Tcells individual
 ```{r scatter BMP4vsTcells individual diseaecond}
-## plot indiviual diseasecond
 dat_HH <- dat_all %>% filter(diseasecond == "healthy") 
 
 p <- ggscatter(dat_HH, x="percent", y="ENSG00000125378.BMP4",

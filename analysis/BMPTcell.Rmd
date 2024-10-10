@@ -147,7 +147,7 @@ p <- ggscatter(dat_all, x="percent", y="ENSG00000125378.BMP4",
                      size=2,) +
   geom_point(aes(color = diseasecond), alpha = 0.5, size = 3) +  # Customize point size and transparency
   geom_smooth(method = "lm", se = TRUE, color = "black") + # Add regression line with confidence interval
-  stat_cor(p.accuracy = 0.001, r.accuracy = 0.001, label.x = 0, label.y = -0.2)  # Add correlation stats
+  stat_cor(aes(label = paste(..r.label.., ..rr.label.., ..p.label.., sep = "~`,`~")), label.x = 0, label.y = -0.2)  # Add correlation stats
 p
 ```
 ## scatter BMP vs Tcells individual
@@ -166,12 +166,11 @@ p <- ggscatter(dat_HH, x="percent", y="ENSG00000125378.BMP4",
                      size=2,) +
   geom_point(aes(color = diseasecond), alpha = 0.5, size = 3) +  # Customize point size and transparency
   geom_smooth(method = "lm", se = TRUE, color = "black") + # Add regression line with confidence interval
-  stat_cor(p.accuracy = 0.001, r.accuracy = 0.001, label.x = 0.020, label.y = 1)  # Add correlation stats
+  stat_cor(aes(label = paste(..r.label.., ..rr.label.., ..p.label.., sep = "~`,`~")), label.x = 0.020, label.y = 1)  # Add correlation stats
 p
 
 
 dat_expl <- dat_all %>% filter(diseasecond == "explant") 
-
 p <- ggscatter(dat_expl, x="percent", y="ENSG00000125378.BMP4",
                      label= "patient",
                      color = "diseasecond",
@@ -184,7 +183,7 @@ p <- ggscatter(dat_expl, x="percent", y="ENSG00000125378.BMP4",
                      size=2,) +
   geom_point(aes(color = diseasecond), alpha = 0.5, size = 3) +  # Customize point size and transparency
   geom_smooth(method = "lm", se = TRUE, color = "black") + # Add regression line with confidence interval
-  stat_cor(p.accuracy = 0.001, r.accuracy = 0.001, label.x = 0.05, label.y = 1.5)  # Add correlation stats
+  stat_cor(aes(label = paste(..r.label.., ..rr.label.., ..p.label.., sep = "~`,`~")), label.x = 0.04, label.y = 1.5)  # Add correlation stats
 p
 
 dat_v1to3 <- dat_all %>% filter(diseasecond %in% c("visit1", "visit2", "visit3"))
@@ -200,7 +199,7 @@ p <- ggscatter(dat_v1to3, x="percent", y="ENSG00000125378.BMP4",
                      size=2,) +
   geom_point(aes(color = diseasecond), alpha = 0.5, size = 3) +  # Customize point size and transparency
   geom_smooth(method = "lm", se = TRUE, color = "black") + # Add regression line with confidence interval
-  stat_cor(p.accuracy = 0.001, r.accuracy = 0.001, label.x = 0.3, label.y = 0.75)  # Add correlation stats
+  stat_cor(aes(label = paste(..r.label.., ..rr.label.., ..p.label.., sep = "~`,`~")), label.x = 0.2, label.y = 0.75)  # Add correlation stats
 p
 
 
@@ -217,7 +216,7 @@ p <- ggscatter(dat_v1, x="percent", y="ENSG00000125378.BMP4",
                      size=2,) +
   geom_point(aes(color = diseasecond), alpha = 0.5, size = 3) +  # Customize point size and transparency
   geom_smooth(method = "lm", se = TRUE, color = "black") + # Add regression line with confidence interval
-  stat_cor(p.accuracy = 0.001, r.accuracy = 0.001, label.x = 0.3, label.y = 0.8)  # Add correlation stats
+  stat_cor(aes(label = paste(..r.label.., ..rr.label.., ..p.label.., sep = "~`,`~")), label.x = 0.2, label.y = 0.8)  # Add correlation stats
 p
 
 
@@ -234,7 +233,7 @@ p <- ggscatter(dat_v2, x="percent", y="ENSG00000125378.BMP4",
                      size=2,) +
   geom_point(aes(color = diseasecond), alpha = 0.5, size = 3) +  # Customize point size and transparency
   geom_smooth(method = "lm", se = TRUE, color = "black") + # Add regression line with confidence interval
-  stat_cor(p.accuracy = 0.001, r.accuracy = 0.001, label.x = 0.1, label.y = 0.1)  # Add correlation stats
+  stat_cor(aes(label = paste(..r.label.., ..rr.label.., ..p.label.., sep = "~`,`~")), label.x = 0.1, label.y = 0.1)  # Add correlation stats
 p
 
 
@@ -251,7 +250,7 @@ p <- ggscatter(dat_v3, x="percent", y="ENSG00000125378.BMP4",
                      size=2,) +
   geom_point(aes(color = diseasecond), alpha = 0.5, size = 3) +  # Customize point size and transparency
   geom_smooth(method = "lm", se = TRUE, color = "black") + # Add regression line with confidence interval
-  stat_cor(p.accuracy = 0.001, r.accuracy = 0.001, label.x = 0.1, label.y = 0.7)  # Add correlation stats
+  stat_cor(aes(label = paste(..r.label.., ..rr.label.., ..p.label.., sep = "~`,`~")), label.x = 0.1, label.y = 0.7)  # Add correlation stats
 p
 ```
 

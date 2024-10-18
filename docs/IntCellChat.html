@@ -1,0 +1,3207 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="A.DeMartin" />
+
+<meta name="date" content="2024-10-04" />
+
+<title>IntCellChat</title>
+
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">HumanHeartCarTrans</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">IntCellChat</h1>
+<h4 class="author">A.DeMartin</h4>
+<h4 class="date">2024-10-04</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2024-10-18
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 5
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 2
+</p>
+<p>
+<strong>Knit directory:</strong> <code>HumanHeartCarTrans/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.1). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20240221code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20240221)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20240221code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20240221)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongabsolute">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>File paths:</strong> absolute </a>
+</p>
+</div>
+<div id="strongFilepathsstrongabsolute" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Using absolute paths to the files within your workflowr project makes it
+difficult for you and others to run your code on a different machine.
+Change the absolute path(s) below to the suggested relative path(s) to
+make your code more reproducible.
+</p>
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th style="text-align:left;">
+absolute
+</th>
+<th style="text-align:left;">
+relative
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/data/Human_heart_allmerged_seurat.rds
+</td>
+<td style="text-align:left;">
+data/Human_heart_allmerged_seurat.rds
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/Human_heart_allmerged_cellchat.rds
+</td>
+<td style="text-align:left;">
+Human_heart_allmerged_cellchat.rds
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/Human_heart_allmerged_cellchatH.rds
+</td>
+<td style="text-align:left;">
+Human_heart_allmerged_cellchatH.rds
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/data/Human_heart_allmerged_cellchat.rds
+</td>
+<td style="text-align:left;">
+data/Human_heart_allmerged_cellchat.rds
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/data/Human_heart_allmerged_cellchatH.rds
+</td>
+<td style="text-align:left;">
+data/Human_heart_allmerged_cellchatH.rds
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstreed3fa1251c70758645b6a1b05b5848657255d3e8dtargetblankd3fa125a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/d3fa1251c70758645b6a1b05b5848657255d3e8d" target="_blank">d3fa125</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstreed3fa1251c70758645b6a1b05b5848657255d3e8dtargetblankd3fa125a"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/d3fa1251c70758645b6a1b05b5848657255d3e8d" target="_blank">d3fa125</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    analysis/.DS_Store
+    Ignored:    analysis/.Rhistory
+    Ignored:    data/seurat files/
+
+Unstaged changes:
+    Deleted:    Human_heart_allmerged_cellchat.rds
+    Deleted:    Human_heart_allmerged_cellchatH.rds
+    Modified:   analysis/IntCellChat.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/IntCellChat.Rmd</code>) and HTML
+(<code>docs/IntCellChat.html</code>) files. If you’ve configured a
+remote Git repository (see <code>?wflow_git_remote</code>), click on the
+hyperlinks in the table below to view the files as they were in that
+past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/analysis/IntCellChat.Rmd" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+<td>
+Oct18
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/angeldemartin/HumanHeartCarTrans/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/IntCellChat.html" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+<td>
+Oct18
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/8707bbed341128668e6be6cde12c6486182aa1dd/analysis/IntCellChat.Rmd" target="_blank">8707bbe</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-09
+</td>
+<td>
+Oct9
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="load-packages" class="section level2">
+<h2>load packages</h2>
+<pre class="r"><code>library(Seurat)</code></pre>
+</div>
+<div id="load-packages-cellchat" class="section level2">
+<h2>load packages cellchat</h2>
+<pre class="r"><code>#devtools::install_github(&quot;sqjin/CellChat&quot;)
+library(CellChat)
+library(patchwork)
+options(stringsAsFactors = FALSE)</code></pre>
+</div>
+<div id="load-file" class="section level2">
+<h2>load file</h2>
+<pre class="r"><code>##load merged file 
+fileNam &lt;- &quot;/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/data/Human_heart_allmerged_seurat.rds&quot;
+seuratM &lt;- readRDS(fileNam)
+table(seuratM$orig.ident)</code></pre>
+</div>
+<div id="assign-clusters" class="section level2">
+<h2>assign clusters</h2>
+<pre class="r"><code>#### clusterName
+## to get this order: levels=c(&quot;CM&quot;,&quot;Fb&quot;,&quot;PerivFb&quot;,&quot;VSMC&quot;,&quot;Int&quot;,&quot;BEC1&quot;, &quot;BEC2&quot;,&quot;LEC&quot;,&quot;NC&quot;,&quot;AdipoC&quot;,&quot;Mph&quot;,&quot;Mph2&quot;,&quot;Tcell&quot;,&quot;Tcell2&quot;)
+seuratM$clusterName &lt;- &quot;clusterName&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;0&quot; )] &lt;- &quot;b_Fb&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;1&quot; )] &lt;- &quot;f_BEC1&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;2&quot; )] &lt;- &quot;c_PerivFb&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;3&quot; )] &lt;- &quot;k_Mph&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;4&quot; )] &lt;- &quot;a_CM&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;5&quot; )] &lt;- &quot;m_Tcell&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;6&quot; )] &lt;- &quot;d_VSMC&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;7&quot; )] &lt;- &quot;l_Mph2&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;8&quot; )] &lt;- &quot;g_BEC2&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;9&quot; )] &lt;- &quot;e_Int&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;10&quot; )] &lt;- &quot;i_NC&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;11&quot; )] &lt;- &quot;n_Tcell2&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;12&quot; )] &lt;- &quot;h_LEC&quot;
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% &quot;13&quot; )] &lt;- &quot;j_AdipoC&quot;
+table(seuratM$clusterName)
+table(seuratM$RNA_snn_res.0.25)</code></pre>
+<p>convert to sce to change rownames</p>
+<pre class="r"><code>sce &lt;- as.SingleCellExperiment(seuratM)
+#scecko &lt;- as.SingleCellExperiment(seuratcko)
+#scewt &lt;- as.SingleCellExperiment(seuratwt)
+#rownames(sce) = gsub(&quot;\\..*&quot;,&quot;&quot;,rownames(sce))
+rownames(sce) = gsub(&quot;^.*\\.&quot;,&quot;&quot;,rownames(sce))
+#rownames(scecko) = gsub(&quot;^.*\\.&quot;,&quot;&quot;,rownames(scecko))
+#rownames(scewt) = gsub(&quot;^.*\\.&quot;,&quot;&quot;,rownames(scewt))</code></pre>
+<p>create a CellChat object</p>
+<pre class="r"><code>cellchat &lt;- createCellChat(object = sce, group.by = &quot;clusterName&quot;)
+#cellchat &lt;- createCellChat(object = scecko, group.by = &quot;clusterLabelext&quot;)
+#cellchat &lt;- createCellChat(object = scewt, group.by = &quot;clusterLabelext&quot;)
+#&gt; Create a CellChat object from a data matrix
+#&gt; Set cell identities for the new CellChat object</code></pre>
+<p>set the ligand receptor interaction database</p>
+<pre class="r"><code>CellChatDB &lt;- CellChatDB.human # use CellChatDB.mouse if running on mouse data
+showDatabaseCategory(CellChatDB)
+# Show the structure of the database
+dplyr::glimpse(CellChatDB$interaction)
+
+# use a subset of CellChatDB for cell-cell communication analysis
+#CellChatDB.use &lt;- subsetDB(CellChatDB, search = &quot;Secreted Signaling&quot;) # use Secreted Signaling
+
+# use all CellChatDB for cell-cell communication analysis
+CellChatDB.use &lt;- CellChatDB # simply use the default CellChatDB
+
+# set the used database in the object
+cellchat@DB &lt;- CellChatDB.use</code></pre>
+<p>processing expression data for cellcell communication analysis</p>
+<pre class="r"><code># subset the expression data of signaling genes for saving computation cost
+cellchat &lt;- subsetData(cellchat) # This step is necessary even if using the whole database
+future::plan(&quot;multisession&quot;, workers = 4) # do parallel
+options(future.globals.maxSize = 1000 * 1024^2)
+#&gt; Warning: [ONE-TIME WARNING] Forked processing (&#39;multicore&#39;) is disabled
+#&gt; in future (&gt;= 1.13.0) when running R from RStudio, because it is
+#&gt; considered unstable. Because of this, plan(&quot;multicore&quot;) will fall
+#&gt; back to plan(&quot;sequential&quot;), and plan(&quot;multiprocess&quot;) will fall back to
+#&gt; plan(&quot;multisession&quot;) - not plan(&quot;multicore&quot;) as in the past. For more details,
+#&gt; how to control forked processing or not, and how to silence this warning in
+#&gt; future R sessions, see ?future::supportsMulticore
+cellchat &lt;- identifyOverExpressedGenes(cellchat)
+cellchat &lt;- identifyOverExpressedInteractions(cellchat)
+# project gene expression data onto PPI network (optional)
+#cellchat &lt;- projectData(cellchat, PPI.human)</code></pre>
+<p>Compute the communication probability and infer cellular
+communication network</p>
+<pre class="r"><code>cellchat &lt;- computeCommunProb(cellchat, type =  &quot;triMean&quot;)
+cellchatH &lt;- computeCommunProb(cellchat, type =  &quot;truncatedMean&quot;, trim= 0.1) #set truncated mean to 10% - average gene expression is zero if less than 10% of cell in one group express gene (default is 25%)
+# Filter out the cell-cell communication if there are only few number of cells in certain cell groups
+# cellchat &lt;- filterCommunication(cellchat, min.cells = 35)</code></pre>
+<p>Infer the cell-cell communication at a signaling pathway level
+CellChat computes the communication probability on signaling pathway
+level by summarizing the communication probabilities of all
+ligands-receptors interactions associated with each signaling
+pathway.</p>
+<pre class="r"><code>cellchat &lt;- computeCommunProbPathway(cellchat)
+cellchatH &lt;- computeCommunProbPathway(cellchatH)</code></pre>
+<pre class="r"><code>cellchat &lt;- aggregateNet(cellchat)
+cellchatH &lt;- aggregateNet(cellchatH)</code></pre>
+<p>Compute the network centrality scores</p>
+<pre class="r"><code>future.seed=TRUE
+cellchat &lt;- netAnalysis_computeCentrality(cellchat, slot.name = &quot;netP&quot;) # the slot &#39;netP&#39; means the inferred intercellular communication network of signaling pathways
+cellchatH &lt;- netAnalysis_computeCentrality(cellchatH, slot.name = &quot;netP&quot;) # the slot &#39;netP&#39; means the inferred intercellular communication network of signaling pathways</code></pre>
+<pre class="r"><code>saveRDS(cellchat, file = &quot;/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/Human_heart_allmerged_cellchat.rds&quot;)
+saveRDS(cellchatH, file = &quot;/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/Human_heart_allmerged_cellchatH.rds&quot;)</code></pre>
+<div id="end-pre-processing" class="section level61">
+<p class="heading">end pre-processing</p>
+<pre class="r"><code>cellchat &lt;- readRDS(&quot;/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/data/Human_heart_allmerged_cellchat.rds&quot;)
+cellchatH &lt;- readRDS(&quot;/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/data/Human_heart_allmerged_cellchatH.rds&quot;)</code></pre>
+<pre class="r"><code>colclusterName &lt;- c(&quot;#67001f&quot;, &quot;#D53E4F&quot;, &quot;#f4a582&quot;, &quot;#FEE08B&quot;, &quot;#003c30&quot;,&quot;#01665e&quot;,&quot;#66C2A5&quot;, &quot;#3288BD&quot;,&quot;#BEAED4&quot;, &quot;#c7eae5&quot;,&quot;#355C7D&quot;,&quot;#202547&quot;,&quot;#B45B5C&quot;,&quot;#8c510a&quot;)</code></pre>
+<p>Extract the inferred cellular communication network as a data frame
+We provide a function subsetCommunication to easily access the inferred
+cell-cell communications of interest</p>
+<pre class="r"><code>df.netH &lt;- subsetCommunication(cellchatH)
+df.net &lt;- subsetCommunication(cellchat) #returns a data frame consisting of all the inferred cell-cell communications at the level of ligands/receptors. Set slot.name = &quot;netP&quot; to access the the inferred communications at the level of signaling pathways
+
+#interactions immunecells to stroma only
+#df.net &lt;- subsetCommunication(cellchat.all) 
+#sources.use = c(1:11), targets.use = c(12:20)
+
+#df.net &lt;- subsetCommunication(cellchat, signaling = c(&quot;LAMININ&quot;)) #gives the inferred cell-cell communications mediated by signaling LAMININ</code></pre>
+<p>Calculate the aggregated cell-cell communication network We can
+calculate the aggregated cell-cell communication network by counting the
+number of links or summarizing the communication probability. USER can
+also calculate the aggregated network among a subset of cell groups by
+setting sources.use and targets.use.</p>
+<pre class="r"><code># Signaling role analysis on the aggregated cell-cell communication network from all signaling pathways
+gg1 &lt;- netAnalysis_signalingRole_scatter(cellchat, color.use = colclusterName)
+gg1</code></pre>
+<p><img src="figure/IntCellChat.Rmd/all%20signaing-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-all-signaing-1">
+Past versions of "all signaing-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-all-signaing-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/all signaing-1.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>gg1 &lt;- netAnalysis_signalingRole_scatter(cellchatH, color.use = colclusterName)
+gg1</code></pre>
+<p><img src="figure/IntCellChat.Rmd/all%20signaing-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-all-signaing-2">
+Past versions of "all signaing-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-all-signaing-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/all signaing-2.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code># Heatmap
+par(mfrow=c(1,1))
+netVisual_heatmap(cellchat, color.heatmap = &quot;GnBu&quot;, color.use = colclusterName, measure = &quot;count&quot;)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/all%20signaing%20heatmap-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-all-signaing-heatmap-1">
+Past versions of "all signaing heatmap-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-all-signaing-heatmap-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/all signaing heatmap-1.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>netVisual_heatmap(cellchat, color.heatmap = &quot;GnBu&quot;, color.use = colclusterName, measure = &quot;weight&quot;)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/all%20signaing%20heatmap-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-all-signaing-heatmap-2">
+Past versions of "all signaing heatmap-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-all-signaing-heatmap-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/all signaing heatmap-2.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>par(mfrow=c(1,1))
+netVisual_heatmap(cellchatH, color.heatmap = &quot;GnBu&quot;, color.use = colclusterName, measure = &quot;count&quot;)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/all%20signaing%20heatmap-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-all-signaing-heatmap-3">
+Past versions of "all signaing heatmap-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-all-signaing-heatmap-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/all signaing heatmap-3.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>netVisual_heatmap(cellchatH, color.heatmap = &quot;GnBu&quot;, color.use = colclusterName, measure = &quot;weight&quot;)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/all%20signaing%20heatmap-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-all-signaing-heatmap-4">
+Past versions of "all signaing heatmap-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-all-signaing-heatmap-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/all signaing heatmap-4.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>CellChat can also visualize the aggregated cell-cell communication
+network. For example, showing the number of interactions or the total
+interaction strength (weights) between any two cell groups using circle
+plot.</p>
+<pre class="r"><code>groupSize &lt;- as.numeric(table(cellchat@idents))
+par(mfrow = c(1,2), xpd=TRUE)
+netVisual_circle(cellchat@net$count, vertex.weight = groupSize, weight.scale = T, label.edge= F, title.name = &quot;Number of interactions&quot;)
+netVisual_circle(cellchat@net$weight, vertex.weight = groupSize, weight.scale = T, label.edge= F, title.name = &quot;Interaction weights/strength&quot;)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/number%20of%20int%20btw%20celltypes-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-number-of-int-btw-celltypes-1">
+Past versions of "number of int btw celltypes-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-number-of-int-btw-celltypes-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/number of int btw celltypes-1.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>groupSize &lt;- as.numeric(table(cellchatH@idents))
+netVisual_circle(cellchatH@net$count, vertex.weight = groupSize, weight.scale = T, label.edge= F, title.name = &quot;Number of interactions&quot;)
+netVisual_circle(cellchatH@net$weight, vertex.weight = groupSize, weight.scale = T, label.edge= F, title.name = &quot;Interaction weights/strength&quot;)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/number%20of%20int%20btw%20celltypes-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-number-of-int-btw-celltypes-2">
+Past versions of "number of int btw celltypes-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-number-of-int-btw-celltypes-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/number of int btw celltypes-2.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>mat &lt;- cellchat@net$weight
+par(mfrow = c(3,4), xpd=TRUE)
+for (i in 1:nrow(mat)) {
+  mat2 &lt;- matrix(0, nrow = nrow(mat), ncol = ncol(mat), dimnames = dimnames(mat))
+  mat2[i, ] &lt;- mat[i, ]
+  netVisual_circle(mat2, vertex.weight = groupSize, weight.scale = T, edge.weight.max = max(mat), title.name = rownames(mat)[i])
+}</code></pre>
+<p><img src="figure/IntCellChat.Rmd/number%20of%20int%20btw%20celltypes%20indiv-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-number-of-int-btw-celltypes-indiv-1">
+Past versions of "number of int btw celltypes indiv-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-number-of-int-btw-celltypes-indiv-1"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/number of int btw celltypes indiv-1.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>mat &lt;- cellchatH@net$weight
+par(mfrow = c(3,4), xpd=TRUE)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/number%20of%20int%20btw%20celltypes%20indiv-2.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-number-of-int-btw-celltypes-indiv-2">
+Past versions of "number of int btw celltypes indiv-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-number-of-int-btw-celltypes-indiv-2"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/number of int btw celltypes indiv-2.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>for (i in 1:nrow(mat)) {
+  mat2 &lt;- matrix(0, nrow = nrow(mat), ncol = ncol(mat), dimnames = dimnames(mat))
+  mat2[i, ] &lt;- mat[i, ]
+  netVisual_circle(mat2, vertex.weight = groupSize, weight.scale = T, edge.weight.max = max(mat), title.name = rownames(mat)[i])
+}</code></pre>
+<p><img src="figure/IntCellChat.Rmd/number%20of%20int%20btw%20celltypes%20indiv-3.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-number-of-int-btw-celltypes-indiv-3">
+Past versions of "number of int btw celltypes indiv-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-number-of-int-btw-celltypes-indiv-3"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/number of int btw celltypes indiv-3.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/IntCellChat.Rmd/number%20of%20int%20btw%20celltypes%20indiv-4.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-number-of-int-btw-celltypes-indiv-4">
+Past versions of "number of int btw celltypes indiv-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-number-of-int-btw-celltypes-indiv-4"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/number of int btw celltypes indiv-4.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>#&gt; Do heatmap based on a single object
+#Identify signals contributing most to outgoing or incoming signaling of certain cell groups
+#We can also answer the question on which signals contributing most to outgoing or incoming signaling of certain cell groups.
+# Signaling role analysis on the aggregated cell-cell communication network from all signaling pathways
+ht1 &lt;- netAnalysis_signalingRole_heatmap(cellchat, pattern = &quot;outgoing&quot;, color.use = colclusterName)
+ht2 &lt;- netAnalysis_signalingRole_heatmap(cellchat, pattern = &quot;incoming&quot;, color.use = colclusterName)
+ht1 + ht2</code></pre>
+<p><img src="figure/IntCellChat.Rmd/heatmap%20pathways-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-heatmap-pathways-1">
+Past versions of "heatmap pathways-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-heatmap-pathways-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/heatmap pathways-1.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>ht1 &lt;- netAnalysis_signalingRole_heatmap(cellchatH, pattern = &quot;outgoing&quot;, color.use = colclusterName, height = 15)
+ht2 &lt;- netAnalysis_signalingRole_heatmap(cellchatH, pattern = &quot;incoming&quot;, color.use = colclusterName, height = 15)
+ht1 + ht2</code></pre>
+<p><img src="figure/IntCellChat.Rmd/heatmap%20pathways-2.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-heatmap-pathways-2">
+Past versions of "heatmap pathways-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-heatmap-pathways-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/heatmap pathways-2.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code># Visualize the computed centrality scores using heatmap, allowing ready identification of major signaling roles of cell groups
+pathways.show &lt;- c(&quot;LAMININ&quot;)
+netAnalysis_signalingRole_network(cellchatH, signaling = pathways.show, width = 8, height = 2.5, font.size = 10, color.heatmap = &quot;Blues&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/sender/receiver-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-receiver-1">
+Past versions of receiver-1.png
+</button>
+</p>
+<div id="fig-receiver-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/sender/receiver-1.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>pathways.show &lt;- c(&quot;COLLAGEN&quot;)
+netAnalysis_signalingRole_network(cellchatH, signaling = pathways.show, width = 8, height = 2.5, font.size = 10, color.heatmap = &quot;Blues&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/sender/receiver-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-receiver-2">
+Past versions of receiver-2.png
+</button>
+</p>
+<div id="fig-receiver-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/sender/receiver-2.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>pathways.show &lt;- c(&quot;FN1&quot;)
+netAnalysis_signalingRole_network(cellchatH, signaling = pathways.show, width = 8, height = 2.5, font.size = 10, color.heatmap = &quot;Blues&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/sender/receiver-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-receiver-3">
+Past versions of receiver-3.png
+</button>
+</p>
+<div id="fig-receiver-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/sender/receiver-3.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>pathways.show &lt;- c(&quot;COLLAGEN&quot;)
+pairLR &lt;- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show &lt;- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20COLLAGEN-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-COLLAGEN-1">
+Past versions of "circle plot COLLAGEN-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-COLLAGEN-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot COLLAGEN-1.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>LR.show &lt;- pairLR[2,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20COLLAGEN-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-COLLAGEN-2">
+Past versions of "circle plot COLLAGEN-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-COLLAGEN-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot COLLAGEN-2.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>pathways.show &lt;- c(&quot;CXCL&quot;)
+pairLR &lt;- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show &lt;- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20CXCL-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-CXCL-1">
+Past versions of "circle plot CXCL-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-CXCL-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot CXCL-1.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>LR.show &lt;- pairLR[2,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20CXCL-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-CXCL-2">
+Past versions of "circle plot CXCL-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-CXCL-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot CXCL-2.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>pathways.show &lt;- c(&quot;CCL&quot;)
+pairLR &lt;- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show &lt;- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20CCL-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-CCL-1">
+Past versions of "circle plot CCL-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-CCL-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot CCL-1.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>LR.show &lt;- pairLR[2,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20CCL-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-CCL-2">
+Past versions of "circle plot CCL-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-CCL-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot CCL-2.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>pathways.show &lt;- c(&quot;FGF&quot;)
+
+pairLR &lt;- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show &lt;- pairLR[1,]
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20FGF-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-FGF-1">
+Past versions of "circle plot FGF-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-FGF-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot FGF-1.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>LR.show &lt;- pairLR[2,] 
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20FGF-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-FGF-2">
+Past versions of "circle plot FGF-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-FGF-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot FGF-2.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>pairLR &lt;- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show &lt;- pairLR[5,]
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20FGF-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-FGF-3">
+Past versions of "circle plot FGF-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-FGF-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot FGF-3.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>LR.show &lt;- pairLR[6,] 
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20FGF-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-FGF-4">
+Past versions of "circle plot FGF-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-FGF-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot FGF-4.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>pathways.show &lt;- c(&quot;NCAM&quot;)
+pairLR &lt;- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show &lt;- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20NCAM-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-NCAM-1">
+Past versions of "circle plot NCAM-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-NCAM-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot NCAM-1.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>LR.show &lt;- pairLR[2,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20NCAM-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-NCAM-2">
+Past versions of "circle plot NCAM-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-NCAM-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot NCAM-2.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>LR.show &lt;- pairLR[3,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20NCAM-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-NCAM-3">
+Past versions of "circle plot NCAM-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-NCAM-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot NCAM-3.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>pathways.show &lt;- c(&quot;BMP&quot;)
+pairLR &lt;- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show &lt;- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20BMP-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-BMP-1">
+Past versions of "circle plot BMP-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-BMP-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot BMP-1.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>LR.show &lt;- pairLR[2,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20BMP-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-BMP-2">
+Past versions of "circle plot BMP-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-BMP-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot BMP-2.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>LR.show &lt;- pairLR[3,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20BMP-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-BMP-3">
+Past versions of "circle plot BMP-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-BMP-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot BMP-3.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>pathways.show &lt;- c(&quot;SEMA5&quot;)
+pairLR &lt;- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show &lt;- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20SEMA5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-SEMA5-1">
+Past versions of "circle plot SEMA5-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-SEMA5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot SEMA5-1.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>LR.show &lt;- pairLR[2,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20SEMA5-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-SEMA5-2">
+Past versions of "circle plot SEMA5-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-SEMA5-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot SEMA5-2.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>LR.show &lt;- pairLR[3,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20SEMA5-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-SEMA5-3">
+Past versions of "circle plot SEMA5-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-SEMA5-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot SEMA5-3.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>LR.show &lt;- pairLR[4,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20SEMA5-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-SEMA5-4">
+Past versions of "circle plot SEMA5-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-SEMA5-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot SEMA5-4.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>pathways.show &lt;- c(&quot;TGFb&quot;)
+pairLR &lt;- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show &lt;- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20TGFB-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-TGFB-1">
+Past versions of "circle plot TGFB-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-TGFB-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot TGFB-1.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>LR.show &lt;- pairLR[2,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20TGFB-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-TGFB-2">
+Past versions of "circle plot TGFB-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-TGFB-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot TGFB-2.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>LR.show &lt;- pairLR[3,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20TGFB-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-TGFB-3">
+Past versions of "circle plot TGFB-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-TGFB-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot TGFB-3.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>LR.show &lt;- pairLR[4,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20TGFB-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-TGFB-4">
+Past versions of "circle plot TGFB-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-TGFB-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot TGFB-4.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>pathways.show &lt;- c(&quot;CDH&quot;)
+pairLR &lt;- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show &lt;- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20CDH-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-CDH-1">
+Past versions of "circle plot CDH-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-CDH-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot CDH-1.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>pathways.show &lt;- c(&quot;EGF&quot;)
+pairLR &lt;- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show &lt;- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20EGF-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-EGF-1">
+Past versions of "circle plot EGF-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-EGF-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot EGF-1.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>pathways.show &lt;- c(&quot;NEGR&quot;)
+pairLR &lt;- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show &lt;- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20NEGR-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-NEGR-1">
+Past versions of "circle plot NEGR-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-NEGR-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot NEGR-1.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>pathways.show &lt;- c(&quot;COMPLEMENT&quot;)
+pairLR &lt;- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show &lt;- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20COMPLEMENT-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-COMPLEMENT-1">
+Past versions of "circle plot COMPLEMENT-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-COMPLEMENT-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot COMPLEMENT-1.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>LR.show &lt;- pairLR[2,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20COMPLEMENT-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-COMPLEMENT-2">
+Past versions of "circle plot COMPLEMENT-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-COMPLEMENT-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot COMPLEMENT-2.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>LR.show &lt;- pairLR[3,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20COMPLEMENT-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-COMPLEMENT-3">
+Past versions of "circle plot COMPLEMENT-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-COMPLEMENT-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot COMPLEMENT-3.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>pathways.show &lt;- c(&quot;TENASCIN&quot;)
+pairLR &lt;- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show &lt;- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20TENASCIN-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-TENASCIN-1">
+Past versions of "circle plot TENASCIN-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-TENASCIN-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot TENASCIN-1.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>LR.show &lt;- pairLR[2,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20TENASCIN-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-TENASCIN-2">
+Past versions of "circle plot TENASCIN-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-TENASCIN-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot TENASCIN-2.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>LR.show &lt;- pairLR[3,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/IntCellChat.Rmd/circle%20plot%20TENASCIN-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-circle-plot-TENASCIN-3">
+Past versions of "circle plot TENASCIN-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-circle-plot-TENASCIN-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/d3fa1251c70758645b6a1b05b5848657255d3e8d/docs/figure/IntCellChat.Rmd/circle plot TENASCIN-3.png" target="_blank">d3fa125</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[[1]]</code></pre>
+</div>
+</div>
+<div id="session-info" class="section level2">
+<h2>session info</h2>
+<pre class="r"><code>date()</code></pre>
+<pre><code>[1] &quot;Fri Oct 18 13:44:51 2024&quot;</code></pre>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.4.0 (2024-04-24)
+Platform: x86_64-apple-darwin20
+Running under: macOS Ventura 13.6.9
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: Europe/Zurich
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] patchwork_1.3.0     CellChat_1.6.1      Biobase_2.64.0      BiocGenerics_0.50.0
+ [5] ggplot2_3.5.1       igraph_2.0.3        dplyr_1.1.4         Seurat_5.1.0       
+ [9] SeuratObject_5.0.2  sp_2.1-4           
+
+loaded via a namespace (and not attached):
+  [1] RcppAnnoy_0.0.22       splines_4.4.0          later_1.3.2            tibble_3.2.1          
+  [5] polyclip_1.10-7        ggnetwork_0.5.13       fastDummies_1.7.4      lifecycle_1.0.4       
+  [9] rstatix_0.7.2          doParallel_1.0.17      rprojroot_2.0.4        globals_0.16.3        
+ [13] lattice_0.22-6         MASS_7.3-61            backports_1.5.0        magrittr_2.0.3        
+ [17] plotly_4.10.4          sass_0.4.9             rmarkdown_2.28         jquerylib_0.1.4       
+ [21] yaml_2.3.10            httpuv_1.6.15          NMF_0.28               sctransform_0.4.1     
+ [25] spam_2.11-0            spatstat.sparse_3.1-0  reticulate_1.39.0      cowplot_1.1.3         
+ [29] pbapply_1.7-2          RColorBrewer_1.1-3     abind_1.4-8            Rtsne_0.17            
+ [33] purrr_1.0.2            git2r_0.33.0           circlize_0.4.16        IRanges_2.38.1        
+ [37] S4Vectors_0.42.1       ggrepel_0.9.6          irlba_2.3.5.1          listenv_0.9.1         
+ [41] spatstat.utils_3.1-0   goftest_1.2-3          RSpectra_0.16-2        spatstat.random_3.3-2 
+ [45] fitdistrplus_1.2-1     parallelly_1.38.0      svglite_2.1.3          leiden_0.4.3.1        
+ [49] codetools_0.2-20       tidyselect_1.2.1       shape_1.4.6.1          farver_2.1.2          
+ [53] matrixStats_1.4.1      stats4_4.4.0           spatstat.explore_3.3-2 jsonlite_1.8.9        
+ [57] GetoptLong_1.0.5       BiocNeighbors_1.22.0   Formula_1.2-5          progressr_0.14.0      
+ [61] ggridges_0.5.6         ggalluvial_0.12.5      survival_3.7-0         iterators_1.0.14      
+ [65] systemfonts_1.1.0      foreach_1.5.2          tools_4.4.0            sna_2.8               
+ [69] ica_1.0-3              Rcpp_1.0.13            glue_1.8.0             gridExtra_2.3         
+ [73] xfun_0.48              withr_3.0.1            BiocManager_1.30.25    fastmap_1.2.0         
+ [77] fansi_1.0.6            digest_0.6.37          R6_2.5.1               mime_0.12             
+ [81] colorspace_2.1-1       Cairo_1.6-2            scattermore_1.2        tensor_1.5            
+ [85] spatstat.data_3.1-2    utf8_1.2.4             tidyr_1.3.1            generics_0.1.3        
+ [89] data.table_1.16.0      FNN_1.1.4.1            httr_1.4.7             htmlwidgets_1.6.4     
+ [93] whisker_0.4.1          uwot_0.2.2             pkgconfig_2.0.3        gtable_0.3.5          
+ [97] registry_0.5-1         workflowr_1.7.1        ComplexHeatmap_2.20.0  lmtest_0.9-40         
+[101] htmltools_0.5.8.1      carData_3.0-5          dotCall64_1.1-1        clue_0.3-65           
+[105] scales_1.3.0           png_0.1-8              spatstat.univar_3.0-1  knitr_1.48            
+[109] rstudioapi_0.16.0      reshape2_1.4.4         rjson_0.2.23           coda_0.19-4.1         
+[113] statnet.common_4.9.0   nlme_3.1-166           cachem_1.1.0           zoo_1.8-12            
+[117] GlobalOptions_0.1.2    stringr_1.5.1          KernSmooth_2.23-24     parallel_4.4.0        
+[121] miniUI_0.1.1.1         pillar_1.9.0           grid_4.4.0             vctrs_0.6.5           
+[125] RANN_2.6.2             promises_1.3.0         ggpubr_0.6.0           car_3.1-3             
+[129] xtable_1.8-4           cluster_2.1.6          evaluate_1.0.0         cli_3.6.3             
+[133] compiler_4.4.0         rlang_1.1.4            crayon_1.5.3           rngtools_1.5.2        
+[137] future.apply_1.11.2    ggsignif_0.6.4         labeling_0.4.3         plyr_1.8.9            
+[141] fs_1.6.4               stringi_1.8.4          network_1.18.2         viridisLite_0.4.2     
+[145] deldir_2.0-4           gridBase_0.4-7         BiocParallel_1.38.0    munsell_0.5.1         
+[149] lazyeval_0.2.2         spatstat.geom_3.3-3    Matrix_1.7-0           RcppHNSW_0.6.0        
+[153] future_1.34.0          shiny_1.9.1            highr_0.11             ROCR_1.0-11           
+[157] broom_1.0.7            bslib_0.8.0           </code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.4.0 (2024-04-24)
+Platform: x86_64-apple-darwin20
+Running under: macOS Ventura 13.6.9
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: Europe/Zurich
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] patchwork_1.3.0     CellChat_1.6.1      Biobase_2.64.0      BiocGenerics_0.50.0
+ [5] ggplot2_3.5.1       igraph_2.0.3        dplyr_1.1.4         Seurat_5.1.0       
+ [9] SeuratObject_5.0.2  sp_2.1-4           
+
+loaded via a namespace (and not attached):
+  [1] RcppAnnoy_0.0.22       splines_4.4.0          later_1.3.2            tibble_3.2.1          
+  [5] polyclip_1.10-7        ggnetwork_0.5.13       fastDummies_1.7.4      lifecycle_1.0.4       
+  [9] rstatix_0.7.2          doParallel_1.0.17      rprojroot_2.0.4        globals_0.16.3        
+ [13] lattice_0.22-6         MASS_7.3-61            backports_1.5.0        magrittr_2.0.3        
+ [17] plotly_4.10.4          sass_0.4.9             rmarkdown_2.28         jquerylib_0.1.4       
+ [21] yaml_2.3.10            httpuv_1.6.15          NMF_0.28               sctransform_0.4.1     
+ [25] spam_2.11-0            spatstat.sparse_3.1-0  reticulate_1.39.0      cowplot_1.1.3         
+ [29] pbapply_1.7-2          RColorBrewer_1.1-3     abind_1.4-8            Rtsne_0.17            
+ [33] purrr_1.0.2            git2r_0.33.0           circlize_0.4.16        IRanges_2.38.1        
+ [37] S4Vectors_0.42.1       ggrepel_0.9.6          irlba_2.3.5.1          listenv_0.9.1         
+ [41] spatstat.utils_3.1-0   goftest_1.2-3          RSpectra_0.16-2        spatstat.random_3.3-2 
+ [45] fitdistrplus_1.2-1     parallelly_1.38.0      svglite_2.1.3          leiden_0.4.3.1        
+ [49] codetools_0.2-20       tidyselect_1.2.1       shape_1.4.6.1          farver_2.1.2          
+ [53] matrixStats_1.4.1      stats4_4.4.0           spatstat.explore_3.3-2 jsonlite_1.8.9        
+ [57] GetoptLong_1.0.5       BiocNeighbors_1.22.0   Formula_1.2-5          progressr_0.14.0      
+ [61] ggridges_0.5.6         ggalluvial_0.12.5      survival_3.7-0         iterators_1.0.14      
+ [65] systemfonts_1.1.0      foreach_1.5.2          tools_4.4.0            sna_2.8               
+ [69] ica_1.0-3              Rcpp_1.0.13            glue_1.8.0             gridExtra_2.3         
+ [73] xfun_0.48              withr_3.0.1            BiocManager_1.30.25    fastmap_1.2.0         
+ [77] fansi_1.0.6            digest_0.6.37          R6_2.5.1               mime_0.12             
+ [81] colorspace_2.1-1       Cairo_1.6-2            scattermore_1.2        tensor_1.5            
+ [85] spatstat.data_3.1-2    utf8_1.2.4             tidyr_1.3.1            generics_0.1.3        
+ [89] data.table_1.16.0      FNN_1.1.4.1            httr_1.4.7             htmlwidgets_1.6.4     
+ [93] whisker_0.4.1          uwot_0.2.2             pkgconfig_2.0.3        gtable_0.3.5          
+ [97] registry_0.5-1         workflowr_1.7.1        ComplexHeatmap_2.20.0  lmtest_0.9-40         
+[101] htmltools_0.5.8.1      carData_3.0-5          dotCall64_1.1-1        clue_0.3-65           
+[105] scales_1.3.0           png_0.1-8              spatstat.univar_3.0-1  knitr_1.48            
+[109] rstudioapi_0.16.0      reshape2_1.4.4         rjson_0.2.23           coda_0.19-4.1         
+[113] statnet.common_4.9.0   nlme_3.1-166           cachem_1.1.0           zoo_1.8-12            
+[117] GlobalOptions_0.1.2    stringr_1.5.1          KernSmooth_2.23-24     parallel_4.4.0        
+[121] miniUI_0.1.1.1         pillar_1.9.0           grid_4.4.0             vctrs_0.6.5           
+[125] RANN_2.6.2             promises_1.3.0         ggpubr_0.6.0           car_3.1-3             
+[129] xtable_1.8-4           cluster_2.1.6          evaluate_1.0.0         cli_3.6.3             
+[133] compiler_4.4.0         rlang_1.1.4            crayon_1.5.3           rngtools_1.5.2        
+[137] future.apply_1.11.2    ggsignif_0.6.4         labeling_0.4.3         plyr_1.8.9            
+[141] fs_1.6.4               stringi_1.8.4          network_1.18.2         viridisLite_0.4.2     
+[145] deldir_2.0-4           gridBase_0.4-7         BiocParallel_1.38.0    munsell_0.5.1         
+[149] lazyeval_0.2.2         spatstat.geom_3.3-3    Matrix_1.7-0           RcppHNSW_0.6.0        
+[153] future_1.34.0          shiny_1.9.1            highr_0.11             ROCR_1.0-11           
+[157] broom_1.0.7            bslib_0.8.0           </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

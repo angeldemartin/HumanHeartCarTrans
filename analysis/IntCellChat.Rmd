@@ -16,24 +16,417 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE, dev = c("png", "pdf"))
 seed <- 1234
 ```
 
+## load packages 
+```{r load packages}
+library(Seurat)
+```
+
+## load packages cellchat
+```{r load packages cellchat}
+#devtools::install_github("sqjin/CellChat")
+library(CellChat)
+library(patchwork)
+options(stringsAsFactors = FALSE)
+```
+
+## load file
+```{r load merged file, eval=FALSE, include=TRUE}
+##load merged file 
+fileNam <- "/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/data/Human_heart_allmerged_seurat.rds"
+seuratM <- readRDS(fileNam)
+table(seuratM$orig.ident)
+```
+
+## assign clusters
+```{r assign, eval=FALSE, include=TRUE}
+#### clusterName
+## to get this order: levels=c("CM","Fb","PerivFb","VSMC","Int","BEC1", "BEC2","LEC","NC","AdipoC","Mph","Mph2","Tcell","Tcell2")
+seuratM$clusterName <- "clusterName"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "0" )] <- "b_Fb"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "1" )] <- "f_BEC1"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "2" )] <- "c_PerivFb"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "3" )] <- "k_Mph"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "4" )] <- "a_CM"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "5" )] <- "m_Tcell"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "6" )] <- "d_VSMC"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "7" )] <- "l_Mph2"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "8" )] <- "g_BEC2"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "9" )] <- "e_Int"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "10" )] <- "i_NC"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "11" )] <- "n_Tcell2"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "12" )] <- "h_LEC"
+seuratM$clusterName[which(seuratM$RNA_snn_res.0.25 %in% "13" )] <- "j_AdipoC"
+table(seuratM$clusterName)
+table(seuratM$RNA_snn_res.0.25)
+```
+
+convert to sce to change rownames
+```{r make sce,  eval=FALSE, include=TRUE}
+sce <- as.SingleCellExperiment(seuratM)
+#scecko <- as.SingleCellExperiment(seuratcko)
+#scewt <- as.SingleCellExperiment(seuratwt)
+#rownames(sce) = gsub("\\..*","",rownames(sce))
+rownames(sce) = gsub("^.*\\.","",rownames(sce))
+#rownames(scecko) = gsub("^.*\\.","",rownames(scecko))
+#rownames(scewt) = gsub("^.*\\.","",rownames(scewt))
+```
+
+create a CellChat object
+```{r create CellChat object,  eval=FALSE, include=TRUE}
+cellchat <- createCellChat(object = sce, group.by = "clusterName")
+#cellchat <- createCellChat(object = scecko, group.by = "clusterLabelext")
+#cellchat <- createCellChat(object = scewt, group.by = "clusterLabelext")
+#> Create a CellChat object from a data matrix
+#> Set cell identities for the new CellChat object
+```
+
+set the ligand receptor interaction database
+```{r set database,  eval=FALSE, include=TRUE}
+CellChatDB <- CellChatDB.human # use CellChatDB.mouse if running on mouse data
+showDatabaseCategory(CellChatDB)
+# Show the structure of the database
+dplyr::glimpse(CellChatDB$interaction)
+
+# use a subset of CellChatDB for cell-cell communication analysis
+#CellChatDB.use <- subsetDB(CellChatDB, search = "Secreted Signaling") # use Secreted Signaling
+
+# use all CellChatDB for cell-cell communication analysis
+CellChatDB.use <- CellChatDB # simply use the default CellChatDB
+
+# set the used database in the object
+cellchat@DB <- CellChatDB.use
+```
+
+processing expression data for cellcell communication analysis
+```{r processing expression data,  eval=FALSE, include=TRUE}
+# subset the expression data of signaling genes for saving computation cost
+cellchat <- subsetData(cellchat) # This step is necessary even if using the whole database
+future::plan("multisession", workers = 4) # do parallel
+options(future.globals.maxSize = 1000 * 1024^2)
+#> Warning: [ONE-TIME WARNING] Forked processing ('multicore') is disabled
+#> in future (>= 1.13.0) when running R from RStudio, because it is
+#> considered unstable. Because of this, plan("multicore") will fall
+#> back to plan("sequential"), and plan("multiprocess") will fall back to
+#> plan("multisession") - not plan("multicore") as in the past. For more details,
+#> how to control forked processing or not, and how to silence this warning in
+#> future R sessions, see ?future::supportsMulticore
+cellchat <- identifyOverExpressedGenes(cellchat)
+cellchat <- identifyOverExpressedInteractions(cellchat)
+# project gene expression data onto PPI network (optional)
+#cellchat <- projectData(cellchat, PPI.human)
+```
+
+Compute the communication probability and infer cellular communication network
+```{r compute communication probability, eval=FALSE, include=TRUE}
+cellchat <- computeCommunProb(cellchat, type =  "triMean")
+cellchatH <- computeCommunProb(cellchat, type =  "truncatedMean", trim= 0.1) #set truncated mean to 10% - average gene expression is zero if less than 10% of cell in one group express gene (default is 25%)
+# Filter out the cell-cell communication if there are only few number of cells in certain cell groups
+# cellchat <- filterCommunication(cellchat, min.cells = 35)
+```
+
+Infer the cell-cell communication at a signaling pathway level
+CellChat computes the communication probability on signaling pathway level by summarizing the communication probabilities of all ligands-receptors interactions associated with each signaling pathway.
+```{r CommunProbPathwqy, eval=FALSE, include=TRUE}
+cellchat <- computeCommunProbPathway(cellchat)
+cellchatH <- computeCommunProbPathway(cellchatH)
+```
+
+```{r aggregateNet, eval=FALSE, include=TRUE}
+cellchat <- aggregateNet(cellchat)
+cellchatH <- aggregateNet(cellchatH)
+```
+
+Compute the network centrality scores
+```{r computeCentrality, eval=FALSE, include=TRUE}
+future.seed=TRUE
+cellchat <- netAnalysis_computeCentrality(cellchat, slot.name = "netP") # the slot 'netP' means the inferred intercellular communication network of signaling pathways
+cellchatH <- netAnalysis_computeCentrality(cellchatH, slot.name = "netP") # the slot 'netP' means the inferred intercellular communication network of signaling pathways
+```
 
 
+```{r save CellChat object, eval=FALSE, include=TRUE}
+saveRDS(cellchat, file = "/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/Human_heart_allmerged_cellchat.rds")
+saveRDS(cellchatH, file = "/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/Human_heart_allmerged_cellchatH.rds")
+```
+
+############################################################# end pre-processing ########################################################
+
+```{r load cellchat object}
+cellchat <- readRDS("/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/data/Human_heart_allmerged_cellchat.rds")
+cellchatH <- readRDS("/Users/immbio/Desktop/Project/Angelina/HumanHeartCarTrans/data/Human_heart_allmerged_cellchatH.rds")
+```
+
+```{r setcolor vector}
+colclusterName <- c("#67001f", "#D53E4F", "#f4a582", "#FEE08B", "#003c30","#01665e","#66C2A5", "#3288BD","#BEAED4", "#c7eae5","#355C7D","#202547","#B45B5C","#8c510a")
+```
+
+Extract the inferred cellular communication network as a data frame
+We provide a function subsetCommunication to easily access the inferred cell-cell communications of interest
+```{r extract interacitons}
+df.netH <- subsetCommunication(cellchatH)
+df.net <- subsetCommunication(cellchat) #returns a data frame consisting of all the inferred cell-cell communications at the level of ligands/receptors. Set slot.name = "netP" to access the the inferred communications at the level of signaling pathways
+
+#interactions immunecells to stroma only
+#df.net <- subsetCommunication(cellchat.all) 
+#sources.use = c(1:11), targets.use = c(12:20)
+
+#df.net <- subsetCommunication(cellchat, signaling = c("LAMININ")) #gives the inferred cell-cell communications mediated by signaling LAMININ
+```
+
+Calculate the aggregated cell-cell communication network
+We can calculate the aggregated cell-cell communication network by counting the number of links or summarizing the communication probability. USER can also calculate the aggregated network among a subset of cell groups by setting sources.use and targets.use.
+```{r all signaing}
+# Signaling role analysis on the aggregated cell-cell communication network from all signaling pathways
+gg1 <- netAnalysis_signalingRole_scatter(cellchat, color.use = colclusterName)
+gg1
+gg1 <- netAnalysis_signalingRole_scatter(cellchatH, color.use = colclusterName)
+gg1
+```
 
 
+```{r all signaing heatmap}
+# Heatmap
+par(mfrow=c(1,1))
+netVisual_heatmap(cellchat, color.heatmap = "GnBu", color.use = colclusterName, measure = "count")
+netVisual_heatmap(cellchat, color.heatmap = "GnBu", color.use = colclusterName, measure = "weight")
 
+par(mfrow=c(1,1))
+netVisual_heatmap(cellchatH, color.heatmap = "GnBu", color.use = colclusterName, measure = "count")
+netVisual_heatmap(cellchatH, color.heatmap = "GnBu", color.use = colclusterName, measure = "weight")
+```
+CellChat can also visualize the aggregated cell-cell communication network. For example, showing the number of interactions or the total interaction strength (weights) between any two cell groups using circle plot.
+```{r number of int btw celltypes}
 
+groupSize <- as.numeric(table(cellchat@idents))
+par(mfrow = c(1,2), xpd=TRUE)
+netVisual_circle(cellchat@net$count, vertex.weight = groupSize, weight.scale = T, label.edge= F, title.name = "Number of interactions")
+netVisual_circle(cellchat@net$weight, vertex.weight = groupSize, weight.scale = T, label.edge= F, title.name = "Interaction weights/strength")
 
+groupSize <- as.numeric(table(cellchatH@idents))
+netVisual_circle(cellchatH@net$count, vertex.weight = groupSize, weight.scale = T, label.edge= F, title.name = "Number of interactions")
+netVisual_circle(cellchatH@net$weight, vertex.weight = groupSize, weight.scale = T, label.edge= F, title.name = "Interaction weights/strength")
+```
 
+```{r number of int btw celltypes indiv, fig.height=10, fig.width=10}
+mat <- cellchat@net$weight
+par(mfrow = c(3,4), xpd=TRUE)
+for (i in 1:nrow(mat)) {
+  mat2 <- matrix(0, nrow = nrow(mat), ncol = ncol(mat), dimnames = dimnames(mat))
+  mat2[i, ] <- mat[i, ]
+  netVisual_circle(mat2, vertex.weight = groupSize, weight.scale = T, edge.weight.max = max(mat), title.name = rownames(mat)[i])
+}
 
+mat <- cellchatH@net$weight
+par(mfrow = c(3,4), xpd=TRUE)
+for (i in 1:nrow(mat)) {
+  mat2 <- matrix(0, nrow = nrow(mat), ncol = ncol(mat), dimnames = dimnames(mat))
+  mat2[i, ] <- mat[i, ]
+  netVisual_circle(mat2, vertex.weight = groupSize, weight.scale = T, edge.weight.max = max(mat), title.name = rownames(mat)[i])
+}
+```
 
+```{r heatmap pathways, fig.height= 10, fig.width= 10}
+#> Do heatmap based on a single object
+#Identify signals contributing most to outgoing or incoming signaling of certain cell groups
+#We can also answer the question on which signals contributing most to outgoing or incoming signaling of certain cell groups.
+# Signaling role analysis on the aggregated cell-cell communication network from all signaling pathways
+ht1 <- netAnalysis_signalingRole_heatmap(cellchat, pattern = "outgoing", color.use = colclusterName)
+ht2 <- netAnalysis_signalingRole_heatmap(cellchat, pattern = "incoming", color.use = colclusterName)
+ht1 + ht2
 
+ht1 <- netAnalysis_signalingRole_heatmap(cellchatH, pattern = "outgoing", color.use = colclusterName, height = 15)
+ht2 <- netAnalysis_signalingRole_heatmap(cellchatH, pattern = "incoming", color.use = colclusterName, height = 15)
+ht1 + ht2
+```
 
+```{r sender/receiver}
+# Visualize the computed centrality scores using heatmap, allowing ready identification of major signaling roles of cell groups
+pathways.show <- c("LAMININ")
+netAnalysis_signalingRole_network(cellchatH, signaling = pathways.show, width = 8, height = 2.5, font.size = 10, color.heatmap = "Blues", color.use = colclusterName)
 
+pathways.show <- c("COLLAGEN")
+netAnalysis_signalingRole_network(cellchatH, signaling = pathways.show, width = 8, height = 2.5, font.size = 10, color.heatmap = "Blues", color.use = colclusterName)
 
+pathways.show <- c("FN1")
+netAnalysis_signalingRole_network(cellchatH, signaling = pathways.show, width = 8, height = 2.5, font.size = 10, color.heatmap = "Blues", color.use = colclusterName)
+```
 
+```{r circle plot COLLAGEN}
+pathways.show <- c("COLLAGEN")
+pairLR <- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show <- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
 
+LR.show <- pairLR[2,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+```
+```{r circle plot CXCL}
+pathways.show <- c("CXCL")
+pairLR <- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show <- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
 
+LR.show <- pairLR[2,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+```
+```{r circle plot CCL}
+pathways.show <- c("CCL")
+pairLR <- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show <- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
 
+LR.show <- pairLR[2,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+```
+
+```{r circle plot FGF}
+pathways.show <- c("FGF")
+
+pairLR <- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show <- pairLR[1,]
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+
+LR.show <- pairLR[2,] 
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+
+pairLR <- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show <- pairLR[5,]
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+
+LR.show <- pairLR[6,] 
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+```
+
+```{r circle plot NCAM}
+pathways.show <- c("NCAM")
+pairLR <- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show <- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+
+LR.show <- pairLR[2,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+
+LR.show <- pairLR[3,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+```
+```{r circle plot BMP}
+pathways.show <- c("BMP")
+pairLR <- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show <- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+
+LR.show <- pairLR[2,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+
+LR.show <- pairLR[3,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+```
+```{r circle plot SEMA5}
+pathways.show <- c("SEMA5")
+pairLR <- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show <- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+
+LR.show <- pairLR[2,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+
+LR.show <- pairLR[3,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+
+LR.show <- pairLR[4,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+```
+```{r circle plot TGFB}
+pathways.show <- c("TGFb")
+pairLR <- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show <- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+
+LR.show <- pairLR[2,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+
+LR.show <- pairLR[3,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+
+LR.show <- pairLR[4,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+```
+
+```{r circle plot CDH}
+pathways.show <- c("CDH")
+pairLR <- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show <- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+```
+```{r circle plot EGF}
+pathways.show <- c("EGF")
+pairLR <- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show <- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+```
+```{r circle plot NEGR}
+pathways.show <- c("NEGR")
+pairLR <- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show <- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+```
+```{r circle plot COMPLEMENT}
+pathways.show <- c("COMPLEMENT")
+pairLR <- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show <- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+
+LR.show <- pairLR[2,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+
+LR.show <- pairLR[3,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+```
+```{r circle plot TENASCIN}
+pathways.show <- c("TENASCIN")
+pairLR <- extractEnrichedLR(cellchatH, signaling = pathways.show, geneLR.return = FALSE)
+LR.show <- pairLR[1,] # first in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+
+LR.show <- pairLR[2,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+
+LR.show <- pairLR[3,] # second in list shown
+## Circle plot
+netVisual_individual(cellchatH, signaling = pathways.show, pairLR.use = LR.show,layout = "circle", color.use = colclusterName, weight.scale = T)
+```
 
 ## session info
 ```{r date and session info}

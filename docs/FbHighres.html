@@ -15,7 +15,7 @@
 
 <title>FbHighres</title>
 
-<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -382,7 +382,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-10-02
+<strong>Last updated:</strong> 2024-10-15
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -550,15 +550,15 @@ data/Human_heart_AllFb.rds
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree6397a5e809c4ced4f594bd73907a741b7a20035etargetblank6397a5ea">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree429014d0a6b140a8f1b148a06e679203de7a627ctargetblank429014da">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/6397a5e809c4ced4f594bd73907a741b7a20035e" target="_blank">6397a5e</a>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/429014d0a6b140a8f1b148a06e679203de7a627c" target="_blank">429014d</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree6397a5e809c4ced4f594bd73907a741b7a20035etargetblank6397a5ea"
+id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree429014d0a6b140a8f1b148a06e679203de7a627ctargetblank429014da"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -568,7 +568,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/6397a5e809c4ced4f594bd73907a741b7a20035e" target="_blank">6397a5e</a>.
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/429014d0a6b140a8f1b148a06e679203de7a627c" target="_blank">429014d</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -591,12 +591,13 @@ Ignored files:
     Ignored:    data/seurat files/
 
 Untracked files:
-    Untracked:  analysis/BMPTcell.Rmd
-    Untracked:  analysis/BMPTcellsFbHighres.Rmd
+    Untracked:  Human_heart_allmerged_cellchat.rds
+    Untracked:  Human_heart_allmerged_cellchatH.rds
 
 Unstaged changes:
     Modified:   analysis/FbHighres.Rmd
-    Modified:   analysis/index.Rmd
+    Modified:   analysis/IntCellChat.Rmd
+    Modified:   analysis/MarkerGenes.Rmd
 
 </code></pre>
 <p>
@@ -641,6 +642,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/analysis/FbHighres.Rmd" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+<td>
+Oct24
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/angeldemartin/HumanHeartCarTrans/5bf6503e89f0251b3eaf131c688f07153582623f/docs/FbHighres.html" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+<td>
+Oct24
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1385,7 +1420,162 @@ angeldemartin
 </table>
 </div>
 </div>
-<p>avg heatmaps</p>
+</div>
+<div id="fractions-according-to-patientsdisease-cond"
+class="section level2">
+<h2>fractions according to patients&amp;disease cond</h2>
+<pre class="r"><code>##set order
+seuratAllFb$diseaseCond &lt;- factor(seuratAllFb$diseaseCond, levels=c(&quot;healthy&quot;, &quot;explant&quot;, &quot;visit1&quot;, &quot;visit2&quot;, &quot;visit3&quot;))
+
+## 1. create data.frame with cluster counts per patient
+## change &quot;RNA_snn_res.0.25&quot; to subset/cluster you&#39;re interested in ...
+datFrac &lt;- data.frame(table(seuratAllFb$patient_diseaseCond, seuratAllFb$clusterNameAllFb))
+colnames(datFrac) &lt;- c(&quot;patient_diseaseCond&quot;, &quot;subset&quot;, &quot;cnt&quot;)
+
+## 2. get total counts per patient to compute relative abundances from
+## I added cond here as grouping variable for the plotting later ...
+datSumPat &lt;- data.frame(table(seuratAllFb$patient_diseaseCond, seuratAllFb$diseaseCond)) %&gt;% 
+  filter(Freq &gt;0)
+colnames(datSumPat) &lt;- c(&quot;patient_diseaseCond&quot;, &quot;diseaseCond&quot;, &quot;cntPatTot&quot;)
+
+## 3. join data.frames to compute rel abundances per patient
+datFracSum &lt;- datFrac %&gt;% left_join(., datSumPat, by = &quot;patient_diseaseCond&quot;) %&gt;% 
+  mutate(relCnt = cnt/cntPatTot)
+
+## plot barplot with abundances for each subset grouped by cond
+ggbarplot(datFracSum, x = &quot;subset&quot;, y = &quot;relCnt&quot;,
+          fill = &quot;diseaseCond&quot;, color = &quot;diseaseCond&quot;,
+          palette = coldiseaseCond,
+          add = c(&quot;mean_se&quot;, &quot;dotplot&quot;),
+          add.params = list(color=&quot;black&quot;, fill=&quot;diseaseCond&quot;, size=0.2),
+          position = position_dodge(0.9),
+          xlab = &quot;subset&quot;,
+          ylab = &quot;relative abundance&quot;,
+          legend = &quot;right&quot;,
+          legend.title = &quot;&quot;) +
+  rotate_x_text(angle = 90) </code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-1.png" width="960" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>## plot barplot with abundances for individual subsets
+clusterVec &lt;- levels(seuratAllFb)
+createClusterPlot &lt;- function(cluster) {
+  datFracSumC &lt;- datFracSum %&gt;% filter(subset == cluster)
+
+  ggbarplot(datFracSumC, x = &quot;diseaseCond&quot;, y = &quot;relCnt&quot;,
+            fill = &quot;diseaseCond&quot;, color = &quot;diseaseCond&quot;,
+            palette = coldiseaseCond,
+            add = c(&quot;mean_se&quot;, &quot;dotplot&quot;),
+            size = 0,
+            add.params = list(color = &quot;black&quot;, fill = &quot;diseaseCond&quot;),
+            position = position_dodge(0.9),
+            xlab = cluster,
+            ylab = &quot;relative abundance&quot;,
+            legend = &quot;right&quot;,
+            legend.title = &quot;&quot;) +
+    stat_compare_means(method = &quot;kruskal.test&quot;, label.y = 0.0)
+}
+lapply(clusterVec, createClusterPlot)</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-2.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-3.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-4.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[4]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-5.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[5]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-6.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[6]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-7.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[7]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-8.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[8]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-9.png" width="960" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>## plot barplot with abundances for individual subsets
+clusterVec &lt;- levels(seuratAllFb)
+createClusterPlot &lt;- function(cluster) {
+  datFracSumC &lt;- datFracSum %&gt;% filter(subset == cluster)
+
+  ggbarplot(datFracSumC, x = &quot;diseaseCond&quot;, y = &quot;relCnt&quot;,
+            fill = &quot;diseaseCond&quot;, color = &quot;diseaseCond&quot;,
+            palette = coldiseaseCond,
+            add = c(&quot;mean_se&quot;, &quot;jitter&quot;),
+            add.params = list(color = &quot;black&quot;, fill = &quot;diseaseCond&quot;,size = 2),
+            size = 5,
+            position = position_dodge(0.9),
+            xlab = cluster,
+            ylab = &quot;relative abundance&quot;,
+            legend = &quot;right&quot;,
+            legend.title = &quot;&quot;) +
+    stat_compare_means(method = &quot;kruskal.test&quot;, label.y = 0.0)
+}
+lapply(clusterVec, createClusterPlot)</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-10.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-11.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-12.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[4]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-13.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[5]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-14.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[6]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-15.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[7]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-16.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[8]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-17.png" width="960" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>## plot boxplot with abundances for individual subsets
+clusterVec &lt;- levels(seuratAllFb)
+createClusterPlot &lt;- function(cluster) {
+  datFracSumC &lt;- datFracSum %&gt;% filter(subset == cluster)
+  ggboxplot(datFracSumC, x = &quot;diseaseCond&quot;, y = &quot;relCnt&quot;, color = &quot;diseaseCond&quot;, palette = coldiseaseCond ,add = &quot;jitter&quot;, 
+            add.params = list(shape = 21,        # Use shape 21 for fill + outline control
+                            color = &quot;black&quot;,   # Black outline for points
+                            fill = &quot;diseaseCond&quot;, # Fill based on diseaseCond
+                            size = 4)) +
+    ggtitle(cluster) +
+    stat_compare_means(method = &quot;kruskal.test&quot;, label.y = 0.0)
+}
+lapply(clusterVec, createClusterPlot)</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-18.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-19.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-20.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[4]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-21.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[5]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-22.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[6]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-23.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[7]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-24.png" width="960" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[8]]</code></pre>
+<p><img src="figure/FbHighres.Rmd/fractions-25.png" width="960" style="display: block; margin: auto;" />
+avg heatmaps</p>
 <pre class="r"><code>Idents(seuratAllFb) &lt;- seuratAllFb$clusterNameAllFb
 levels(seuratAllFb)</code></pre>
 <pre><code>[1] &quot;Fb1&quot;      &quot;Fb2&quot;      &quot;Fb3&quot;      &quot;Fb4&quot;      &quot;PerivFb1&quot; &quot;PerivFb2&quot; &quot;PerivFb3&quot; &quot;VSMC&quot;    </code></pre>
@@ -2320,8 +2510,82 @@ sceSub$sign2[which(sceSub$sign &gt; 0.8)] &lt;- 0.8
 plotUMAP(sceSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20BMP%20signaling%20pathway-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-BMP-signaling-pathway-1">
+Past versions of "umap BMP signaling pathway-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-BMP-signaling-pathway-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/FbHighres.Rmd/umap BMP signaling pathway-1.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(sceSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20BMP%20signaling%20pathway-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-BMP-signaling-pathway-2">
+Past versions of "umap BMP signaling pathway-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-BMP-signaling-pathway-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/FbHighres.Rmd/umap BMP signaling pathway-2.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##GSEA Fb4
 DEGenesFb4 &lt;- DEGenesFb1to4adj %&gt;% filter(cluster == &quot;Fb4&quot;)
 egoFb4 &lt;- enrichGO(gene = unique(DEGenesFb4$EnsID),
@@ -2480,29 +2744,333 @@ levels(seuratFb2)</code></pre>
 <pre><code>[1] &quot;Fb2&quot;</code></pre>
 <pre class="r"><code>DimPlot(seuratFb2, reduction = &quot;umap&quot;, cols = colAllFb, pt.size = 0.5)</code></pre>
 <p><img src="figure/FbHighres.Rmd/subset%20Fb4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-subset-Fb4-1">
+Past versions of "subset Fb4-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-subset-Fb4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/FbHighres.Rmd/subset Fb4-1.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>seuratFb2$diseaseCond &lt;- factor(seuratFb2$diseaseCond, levels=c(&quot;healthy&quot;, &quot;explant&quot;, &quot;visit1&quot;, &quot;visit2&quot;, &quot;visit3&quot;))
 Idents(seuratFb2) &lt;- seuratFb2$diseaseCond
 levels(seuratFb2)</code></pre>
 <pre><code>[1] &quot;healthy&quot; &quot;explant&quot; &quot;visit1&quot;  &quot;visit2&quot;  &quot;visit3&quot; </code></pre>
 <pre class="r"><code>VlnPlot(object=seuratFb2, features = &quot;ENSG00000172724.CCL19&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/FbHighres.Rmd/violin%20plots%20Fb2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-violin-plots-Fb2-1">
+Past versions of "violin plots Fb2-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-violin-plots-Fb2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/FbHighres.Rmd/violin plots Fb2-1.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratFb2, features = &quot;ENSG00000108691.CCL2&quot;, pt.size = 0, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/FbHighres.Rmd/violin%20plots%20Fb2-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-violin-plots-Fb2-2">
+Past versions of "violin plots Fb2-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-violin-plots-Fb2-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/FbHighres.Rmd/violin plots Fb2-2.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratFb2, features = &quot;ENSG00000172156.CCL11&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/FbHighres.Rmd/violin%20plots%20Fb2-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-violin-plots-Fb2-3">
+Past versions of "violin plots Fb2-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-violin-plots-Fb2-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/FbHighres.Rmd/violin plots Fb2-3.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratFb2, features = &quot;ENSG00000125347.IRF1&quot;, pt.size = 0, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/FbHighres.Rmd/violin%20plots%20Fb2-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-violin-plots-Fb2-4">
+Past versions of "violin plots Fb2-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-violin-plots-Fb2-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/FbHighres.Rmd/violin plots Fb2-4.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratFb2, features = &quot;ENSG00000115415.STAT1&quot;, pt.size = 0, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/FbHighres.Rmd/violin%20plots%20Fb2-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-violin-plots-Fb2-5">
+Past versions of "violin plots Fb2-5.png"
+</button>
+</p>
+<div id="fig-no-spaces-violin-plots-Fb2-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/FbHighres.Rmd/violin plots Fb2-5.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratFb2, features = &quot;ENSG00000169245.CXCL10&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/FbHighres.Rmd/violin%20plots%20Fb2-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-violin-plots-Fb2-6">
+Past versions of "violin plots Fb2-6.png"
+</button>
+</p>
+<div id="fig-no-spaces-violin-plots-Fb2-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/FbHighres.Rmd/violin plots Fb2-6.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(object=seuratFb2, features = &quot;ENSG00000163739.CXCL1&quot;, pt.size = 1, cols = coldiseaseCond)</code></pre>
 <p><img src="figure/FbHighres.Rmd/violin%20plots%20Fb2-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-violin-plots-Fb2-7">
+Past versions of "violin plots Fb2-7.png"
+</button>
+</p>
+<div id="fig-no-spaces-violin-plots-Fb2-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/5bf6503e89f0251b3eaf131c688f07153582623f/docs/figure/FbHighres.Rmd/violin plots Fb2-7.png" target="_blank">5bf6503</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="feature-plots" class="section level2">
+<h2>feature plots</h2>
+<pre class="r"><code>FeaturePlot(seuratAllFb, features = &quot;ENSG00000108821.COL1A1&quot;, pt.size = 0.5, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;))</code></pre>
+<p><img src="figure/FbHighres.Rmd/feature%20plot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>Idents(seuratAllFb) &lt;- seuratAllFb$clusterNameAllFb
+VlnPlot(object=seuratAllFb, features = &quot;ENSG00000108821.COL1A1&quot;, pt.size = 0, cols = colAllFb)</code></pre>
+<p><img src="figure/FbHighres.Rmd/violin%20plots%20AllFb-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="session-info" class="section level2">
 <h2>session info</h2>
 <pre class="r"><code>date()</code></pre>
-<pre><code>[1] &quot;Wed Oct  2 16:32:46 2024&quot;</code></pre>
+<pre><code>[1] &quot;Tue Oct 15 16:13:06 2024&quot;</code></pre>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.4.0 (2024-04-24)
 Platform: x86_64-apple-darwin20
@@ -2523,10 +3091,10 @@ attached base packages:
 
 other attached packages:
  [1] NCmisc_1.2.0                VennDiagram_1.7.3           futile.logger_1.4.3        
- [4] ggupset_0.4.0               gridExtra_2.3               DOSE_3.30.1                
- [7] enrichplot_1.24.0           msigdbr_7.5.1               org.Hs.eg.db_3.19.1        
-[10] AnnotationDbi_1.66.0        clusterProfiler_4.12.0      multtest_2.60.0            
-[13] metap_1.11                  scater_1.32.0               scuttle_1.14.0             
+ [4] ggupset_0.4.0               gridExtra_2.3               DOSE_3.30.5                
+ [7] enrichplot_1.24.4           msigdbr_7.5.1               org.Hs.eg.db_3.19.1        
+[10] AnnotationDbi_1.66.0        clusterProfiler_4.12.6      multtest_2.60.0            
+[13] metap_1.11                  scater_1.32.1               scuttle_1.14.0             
 [16] destiny_3.18.0              circlize_0.4.16             muscat_1.18.0              
 [19] viridis_0.6.5               viridisLite_0.4.2           lubridate_1.9.3            
 [22] forcats_1.0.0               stringr_1.5.1               purrr_1.0.2                
@@ -2534,96 +3102,98 @@ other attached packages:
 [28] tidyverse_2.0.0             dplyr_1.1.4                 SingleCellExperiment_1.26.0
 [31] SummarizedExperiment_1.34.0 Biobase_2.64.0              GenomicRanges_1.56.1       
 [34] GenomeInfoDb_1.40.1         IRanges_2.38.1              S4Vectors_0.42.1           
-[37] BiocGenerics_0.50.0         MatrixGenerics_1.16.0       matrixStats_1.3.0          
+[37] BiocGenerics_0.50.0         MatrixGenerics_1.16.0       matrixStats_1.4.1          
 [40] pheatmap_1.0.12             ggpubr_0.6.0                ggplot2_3.5.1              
 [43] Seurat_5.1.0                SeuratObject_5.0.2          sp_2.1-4                   
 [46] runSeurat3_0.1.0            ExploreSCdataSeurat3_0.1.0 
 
 loaded via a namespace (and not attached):
   [1] igraph_2.0.3              ica_1.0-3                 plotly_4.10.4            
-  [4] zlibbioc_1.50.0           tidyselect_1.2.1          bit_4.0.5                
-  [7] doParallel_1.0.17         clue_0.3-65               lattice_0.22-6           
- [10] rjson_0.2.21              blob_1.2.4                S4Arrays_1.4.1           
- [13] pbkrtest_0.5.3            parallel_4.4.0            png_0.1-8                
- [16] plotrix_3.8-4             cli_3.6.3                 ggplotify_0.1.2          
- [19] goftest_1.2-3             VIM_6.2.2                 variancePartition_1.34.0 
- [22] BiocNeighbors_1.22.0      uwot_0.2.2                shadowtext_0.1.3         
- [25] curl_5.2.1                mime_0.12                 evaluate_0.24.0          
- [28] tidytree_0.4.6            leiden_0.4.3.1            ComplexHeatmap_2.20.0    
- [31] stringi_1.8.4             backports_1.5.0           lmerTest_3.1-3           
- [34] qqconf_1.3.2              httpuv_1.6.15             magrittr_2.0.3           
- [37] splines_4.4.0             ggraph_2.2.1              sctransform_0.4.1        
- [40] ggbeeswarm_0.7.2          DBI_1.2.3                 jquerylib_0.1.4          
- [43] smoother_1.3              withr_3.0.1               git2r_0.33.0             
- [46] corpcor_1.6.10            class_7.3-22              rprojroot_2.0.4          
- [49] lmtest_0.9-40             tidygraph_1.3.1           formatR_1.14             
- [52] colourpicker_1.3.0        htmlwidgets_1.6.4         fs_1.6.4                 
- [55] ggrepel_0.9.5             labeling_0.4.3            fANCOVA_0.6-1            
- [58] SparseArray_1.4.8         DESeq2_1.44.0             ranger_0.16.0            
- [61] DEoptimR_1.1-3            reticulate_1.38.0         hexbin_1.28.3            
- [64] zoo_1.8-12                XVector_0.44.0            knitr_1.48               
- [67] ggplot.multistats_1.0.0   UCSC.utils_1.0.0          RhpcBLASctl_0.23-42      
- [70] timechange_0.3.0          foreach_1.5.2             fansi_1.0.6              
- [73] patchwork_1.2.0           caTools_1.18.2            data.table_1.16.0        
- [76] ggtree_3.12.0             RSpectra_0.16-1           irlba_2.3.5.1            
- [79] ggrastr_1.0.2             fastDummies_1.7.3         gridGraphics_0.5-1       
- [82] lazyeval_0.2.2            yaml_2.3.9                survival_3.7-0           
- [85] scattermore_1.2           crayon_1.5.3              RcppAnnoy_0.0.22         
- [88] RColorBrewer_1.1-3        progressr_0.14.0          tweenr_2.0.3             
- [91] later_1.3.2               ggridges_0.5.6            codetools_0.2-20         
- [94] GlobalOptions_0.1.2       aod_1.3.3                 KEGGREST_1.44.1          
- [97] Rtsne_0.17                shape_1.4.6.1             limma_3.60.3             
-[100] pkgconfig_2.0.3           TMB_1.9.14                mathjaxr_1.6-0           
-[103] EnvStats_2.8.1            aplot_0.2.3               scatterplot3d_0.3-44     
-[106] spatstat.sparse_3.1-0     ape_5.8                   xtable_1.8-4             
-[109] car_3.1-2                 highr_0.11                plyr_1.8.9               
-[112] httr_1.4.7                rbibutils_2.2.16          tools_4.4.0              
-[115] globals_0.16.3            beeswarm_0.4.0            broom_1.0.6              
-[118] nlme_3.1-165              lambda.r_1.2.4            HDO.db_0.99.1            
-[121] lme4_1.1-35.5             digest_0.6.36             numDeriv_2016.8-1.1      
-[124] Matrix_1.7-0              farver_2.1.2              tzdb_0.4.0               
-[127] remaCor_0.0.18            reshape2_1.4.4            yulab.utils_0.1.4        
-[130] glue_1.7.0                cachem_1.1.0              polyclip_1.10-6          
-[133] generics_0.1.3            Biostrings_2.72.1         mvtnorm_1.2-5            
-[136] presto_1.0.0              parallelly_1.37.1         mnormt_2.1.1             
-[139] statmod_1.5.0             RcppHNSW_0.6.0            ScaledMatrix_1.12.0      
-[142] carData_3.0-5             minqa_1.2.7               pbapply_1.7-2            
-[145] spam_2.10-0               gson_0.1.0                utf8_1.2.4               
-[148] graphlayouts_1.1.1        gtools_3.9.5              ggsignif_0.6.4           
-[151] RcppEigen_0.3.4.0.0       shiny_1.8.1.1             GenomeInfoDbData_1.2.12  
-[154] glmmTMB_1.1.9             memoise_2.0.1             rmarkdown_2.27           
-[157] scales_1.3.0              future_1.33.2             RANN_2.6.1               
-[160] Cairo_1.6-2               spatstat.data_3.1-2       rstudioapi_0.16.0        
-[163] cluster_2.1.6             whisker_0.4.1             mutoss_0.1-13            
-[166] spatstat.utils_3.0-5      hms_1.1.3                 fitdistrplus_1.1-11      
-[169] munsell_0.5.1             cowplot_1.1.3             colorspace_2.1-0         
-[172] rlang_1.1.4               DelayedMatrixStats_1.26.0 sparseMatrixStats_1.16.0 
-[175] xts_0.14.0                dotCall64_1.1-1           shinydashboard_0.7.2     
-[178] ggforce_0.4.2             laeken_0.5.3              mgcv_1.9-1               
-[181] xfun_0.45                 e1071_1.7-14              TH.data_1.1-2            
-[184] iterators_1.0.14          abind_1.4-5               GOSemSim_2.30.0          
-[187] treeio_1.28.0             futile.options_1.0.1      bitops_1.0-7             
-[190] Rdpack_2.6                promises_1.3.0            scatterpie_0.2.3         
-[193] RSQLite_2.3.7             qvalue_2.36.0             sandwich_3.1-0           
-[196] fgsea_1.30.0              DelayedArray_0.30.1       proxy_0.4-27             
-[199] GO.db_3.19.1              compiler_4.4.0            prettyunits_1.2.0        
-[202] boot_1.3-30               beachmat_2.20.0           listenv_0.9.1            
-[205] Rcpp_1.0.13               edgeR_4.2.0               workflowr_1.7.1          
-[208] BiocSingular_1.20.0       tensor_1.5                MASS_7.3-61              
-[211] progress_1.2.3            BiocParallel_1.38.0       babelgene_22.9           
-[214] spatstat.random_3.2-3     R6_2.5.1                  fastmap_1.2.0            
-[217] multcomp_1.4-25           fastmatch_1.1-4           rstatix_0.7.2            
-[220] vipor_0.4.7               TTR_0.24.4                ROCR_1.0-11              
-[223] TFisher_0.2.0             rsvd_1.0.5                vcd_1.4-12               
-[226] nnet_7.3-19               gtable_0.3.5              KernSmooth_2.23-24       
-[229] miniUI_0.1.1.1            deldir_2.0-4              htmltools_0.5.8.1        
-[232] ggthemes_5.1.0            bit64_4.0.5               spatstat.explore_3.2-7   
-[235] lifecycle_1.0.4           blme_1.0-5                nloptr_2.1.1             
-[238] sass_0.4.9                vctrs_0.6.5               robustbase_0.99-3        
-[241] spatstat.geom_3.2-9       sn_2.1.1                  ggfun_0.1.5              
-[244] future.apply_1.11.2       bslib_0.7.0               pillar_1.9.0             
-[247] gplots_3.1.3.1            pcaMethods_1.96.0         locfit_1.5-9.10          
-[250] jsonlite_1.8.8            GetoptLong_1.0.5         </code></pre>
+  [4] Formula_1.2-5             zlibbioc_1.50.0           tidyselect_1.2.1         
+  [7] bit_4.5.0                 doParallel_1.0.17         clue_0.3-65              
+ [10] lattice_0.22-6            rjson_0.2.23              blob_1.2.4               
+ [13] S4Arrays_1.4.1            pbkrtest_0.5.3            parallel_4.4.0           
+ [16] png_0.1-8                 plotrix_3.8-4             ggplotify_0.1.2          
+ [19] cli_3.6.3                 goftest_1.2-3             VIM_6.2.2                
+ [22] variancePartition_1.34.0  BiocNeighbors_1.22.0      shadowtext_0.1.4         
+ [25] uwot_0.2.2                curl_5.2.3                tidytree_0.4.6           
+ [28] mime_0.12                 evaluate_1.0.0            leiden_0.4.3.1           
+ [31] ComplexHeatmap_2.20.0     stringi_1.8.4             backports_1.5.0          
+ [34] lmerTest_3.1-3            qqconf_1.3.2              httpuv_1.6.15            
+ [37] magrittr_2.0.3            rappdirs_0.3.3            splines_4.4.0            
+ [40] ggraph_2.2.1              sctransform_0.4.1         ggbeeswarm_0.7.2         
+ [43] DBI_1.2.3                 jquerylib_0.1.4           smoother_1.3             
+ [46] withr_3.0.1               git2r_0.33.0              corpcor_1.6.10           
+ [49] reformulas_0.3.0          class_7.3-22              rprojroot_2.0.4          
+ [52] lmtest_0.9-40             tidygraph_1.3.1           formatR_1.14             
+ [55] colourpicker_1.3.0        htmlwidgets_1.6.4         fs_1.6.4                 
+ [58] ggrepel_0.9.6             labeling_0.4.3            fANCOVA_0.6-1            
+ [61] SparseArray_1.4.8         DESeq2_1.44.0             ranger_0.16.0            
+ [64] DEoptimR_1.1-3            reticulate_1.39.0         hexbin_1.28.4            
+ [67] zoo_1.8-12                XVector_0.44.0            knitr_1.48               
+ [70] ggplot.multistats_1.0.1   UCSC.utils_1.0.0          RhpcBLASctl_0.23-42      
+ [73] timechange_0.3.0          foreach_1.5.2             fansi_1.0.6              
+ [76] patchwork_1.3.0           caTools_1.18.3            ggtree_3.12.0            
+ [79] data.table_1.16.0         R.oo_1.26.0               RSpectra_0.16-2          
+ [82] irlba_2.3.5.1             ggrastr_1.0.2             gridGraphics_0.5-1       
+ [85] fastDummies_1.7.4         lazyeval_0.2.2            yaml_2.3.10              
+ [88] survival_3.7-0            scattermore_1.2           crayon_1.5.3             
+ [91] RcppAnnoy_0.0.22          RColorBrewer_1.1-3        progressr_0.14.0         
+ [94] tweenr_2.0.3              later_1.3.2               ggridges_0.5.6           
+ [97] codetools_0.2-20          GlobalOptions_0.1.2       aod_1.3.3                
+[100] KEGGREST_1.44.1           Rtsne_0.17                shape_1.4.6.1            
+[103] limma_3.60.5              pkgconfig_2.0.3           TMB_1.9.15               
+[106] spatstat.univar_3.0-1     mathjaxr_1.6-0            EnvStats_3.0.0           
+[109] aplot_0.2.3               scatterplot3d_0.3-44      ape_5.8                  
+[112] spatstat.sparse_3.1-0     xtable_1.8-4              car_3.1-3                
+[115] highr_0.11                plyr_1.8.9                httr_1.4.7               
+[118] rbibutils_2.3             tools_4.4.0               globals_0.16.3           
+[121] beeswarm_0.4.0            broom_1.0.7               nlme_3.1-166             
+[124] lambda.r_1.2.4            lme4_1.1-35.5             digest_0.6.37            
+[127] numDeriv_2016.8-1.1       Matrix_1.7-0              farver_2.1.2             
+[130] tzdb_0.4.0                remaCor_0.0.18            reshape2_1.4.4           
+[133] yulab.utils_0.1.7         glue_1.8.0                cachem_1.1.0             
+[136] polyclip_1.10-7           generics_0.1.3            Biostrings_2.72.1        
+[139] mvtnorm_1.3-1             presto_1.0.0              parallelly_1.38.0        
+[142] mnormt_2.1.1              statmod_1.5.0             RcppHNSW_0.6.0           
+[145] ScaledMatrix_1.12.0       carData_3.0-5             minqa_1.2.8              
+[148] pbapply_1.7-2             httr2_1.0.5               spam_2.11-0              
+[151] gson_0.1.0                utf8_1.2.4                graphlayouts_1.2.0       
+[154] gtools_3.9.5              ggsignif_0.6.4            RcppEigen_0.3.4.0.2      
+[157] shiny_1.9.1               GenomeInfoDbData_1.2.12   glmmTMB_1.1.10           
+[160] R.utils_2.12.3            memoise_2.0.1             rmarkdown_2.28           
+[163] scales_1.3.0              R.methodsS3_1.8.2         future_1.34.0            
+[166] RANN_2.6.2                Cairo_1.6-2               spatstat.data_3.1-2      
+[169] rstudioapi_0.16.0         cluster_2.1.6             whisker_0.4.1            
+[172] mutoss_0.1-13             spatstat.utils_3.1-0      hms_1.1.3                
+[175] fitdistrplus_1.2-1        munsell_0.5.1             cowplot_1.1.3            
+[178] colorspace_2.1-1          rlang_1.1.4               DelayedMatrixStats_1.26.0
+[181] sparseMatrixStats_1.16.0  xts_0.14.0                dotCall64_1.1-1          
+[184] shinydashboard_0.7.2      ggforce_0.4.2             laeken_0.5.3             
+[187] mgcv_1.9-1                xfun_0.48                 e1071_1.7-16             
+[190] TH.data_1.1-2             iterators_1.0.14          abind_1.4-8              
+[193] GOSemSim_2.30.2           treeio_1.28.0             futile.options_1.0.1     
+[196] bitops_1.0-9              Rdpack_2.6.1              promises_1.3.0           
+[199] scatterpie_0.2.4          RSQLite_2.3.7             qvalue_2.36.0            
+[202] sandwich_3.1-1            fgsea_1.30.0              DelayedArray_0.30.1      
+[205] proxy_0.4-27              GO.db_3.19.1              compiler_4.4.0           
+[208] prettyunits_1.2.0         boot_1.3-31               beachmat_2.20.0          
+[211] listenv_0.9.1             Rcpp_1.0.13               edgeR_4.2.1              
+[214] workflowr_1.7.1           BiocSingular_1.20.0       tensor_1.5               
+[217] MASS_7.3-61               progress_1.2.3            BiocParallel_1.38.0      
+[220] babelgene_22.9            spatstat.random_3.3-2     R6_2.5.1                 
+[223] fastmap_1.2.0             multcomp_1.4-26           fastmatch_1.1-4          
+[226] rstatix_0.7.2             vipor_0.4.7               TTR_0.24.4               
+[229] ROCR_1.0-11               TFisher_0.2.0             rsvd_1.0.5               
+[232] vcd_1.4-13                nnet_7.3-19               gtable_0.3.5             
+[235] KernSmooth_2.23-24        miniUI_0.1.1.1            deldir_2.0-4             
+[238] htmltools_0.5.8.1         ggthemes_5.1.0            bit64_4.5.2              
+[241] spatstat.explore_3.3-2    lifecycle_1.0.4           blme_1.0-6               
+[244] nloptr_2.1.1              sass_0.4.9                vctrs_0.6.5              
+[247] robustbase_0.99-4-1       spatstat.geom_3.3-3       sn_2.1.1                 
+[250] ggfun_0.1.6               future.apply_1.11.2       bslib_0.8.0              
+[253] pillar_1.9.0              gplots_3.1.3.1            pcaMethods_1.96.0        
+[256] locfit_1.5-9.10           jsonlite_1.8.9            GetoptLong_1.0.5         </code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -2652,10 +3222,10 @@ attached base packages:
 
 other attached packages:
  [1] NCmisc_1.2.0                VennDiagram_1.7.3           futile.logger_1.4.3        
- [4] ggupset_0.4.0               gridExtra_2.3               DOSE_3.30.1                
- [7] enrichplot_1.24.0           msigdbr_7.5.1               org.Hs.eg.db_3.19.1        
-[10] AnnotationDbi_1.66.0        clusterProfiler_4.12.0      multtest_2.60.0            
-[13] metap_1.11                  scater_1.32.0               scuttle_1.14.0             
+ [4] ggupset_0.4.0               gridExtra_2.3               DOSE_3.30.5                
+ [7] enrichplot_1.24.4           msigdbr_7.5.1               org.Hs.eg.db_3.19.1        
+[10] AnnotationDbi_1.66.0        clusterProfiler_4.12.6      multtest_2.60.0            
+[13] metap_1.11                  scater_1.32.1               scuttle_1.14.0             
 [16] destiny_3.18.0              circlize_0.4.16             muscat_1.18.0              
 [19] viridis_0.6.5               viridisLite_0.4.2           lubridate_1.9.3            
 [22] forcats_1.0.0               stringr_1.5.1               purrr_1.0.2                
@@ -2663,96 +3233,98 @@ other attached packages:
 [28] tidyverse_2.0.0             dplyr_1.1.4                 SingleCellExperiment_1.26.0
 [31] SummarizedExperiment_1.34.0 Biobase_2.64.0              GenomicRanges_1.56.1       
 [34] GenomeInfoDb_1.40.1         IRanges_2.38.1              S4Vectors_0.42.1           
-[37] BiocGenerics_0.50.0         MatrixGenerics_1.16.0       matrixStats_1.3.0          
+[37] BiocGenerics_0.50.0         MatrixGenerics_1.16.0       matrixStats_1.4.1          
 [40] pheatmap_1.0.12             ggpubr_0.6.0                ggplot2_3.5.1              
 [43] Seurat_5.1.0                SeuratObject_5.0.2          sp_2.1-4                   
 [46] runSeurat3_0.1.0            ExploreSCdataSeurat3_0.1.0 
 
 loaded via a namespace (and not attached):
   [1] igraph_2.0.3              ica_1.0-3                 plotly_4.10.4            
-  [4] zlibbioc_1.50.0           tidyselect_1.2.1          bit_4.0.5                
-  [7] doParallel_1.0.17         clue_0.3-65               lattice_0.22-6           
- [10] rjson_0.2.21              blob_1.2.4                S4Arrays_1.4.1           
- [13] pbkrtest_0.5.3            parallel_4.4.0            png_0.1-8                
- [16] plotrix_3.8-4             cli_3.6.3                 ggplotify_0.1.2          
- [19] goftest_1.2-3             VIM_6.2.2                 variancePartition_1.34.0 
- [22] BiocNeighbors_1.22.0      uwot_0.2.2                shadowtext_0.1.3         
- [25] curl_5.2.1                mime_0.12                 evaluate_0.24.0          
- [28] tidytree_0.4.6            leiden_0.4.3.1            ComplexHeatmap_2.20.0    
- [31] stringi_1.8.4             backports_1.5.0           lmerTest_3.1-3           
- [34] qqconf_1.3.2              httpuv_1.6.15             magrittr_2.0.3           
- [37] splines_4.4.0             ggraph_2.2.1              sctransform_0.4.1        
- [40] ggbeeswarm_0.7.2          DBI_1.2.3                 jquerylib_0.1.4          
- [43] smoother_1.3              withr_3.0.1               git2r_0.33.0             
- [46] corpcor_1.6.10            class_7.3-22              rprojroot_2.0.4          
- [49] lmtest_0.9-40             tidygraph_1.3.1           formatR_1.14             
- [52] colourpicker_1.3.0        htmlwidgets_1.6.4         fs_1.6.4                 
- [55] ggrepel_0.9.5             labeling_0.4.3            fANCOVA_0.6-1            
- [58] SparseArray_1.4.8         DESeq2_1.44.0             ranger_0.16.0            
- [61] DEoptimR_1.1-3            reticulate_1.38.0         hexbin_1.28.3            
- [64] zoo_1.8-12                XVector_0.44.0            knitr_1.48               
- [67] ggplot.multistats_1.0.0   UCSC.utils_1.0.0          RhpcBLASctl_0.23-42      
- [70] timechange_0.3.0          foreach_1.5.2             fansi_1.0.6              
- [73] patchwork_1.2.0           caTools_1.18.2            data.table_1.16.0        
- [76] ggtree_3.12.0             RSpectra_0.16-1           irlba_2.3.5.1            
- [79] ggrastr_1.0.2             fastDummies_1.7.3         gridGraphics_0.5-1       
- [82] lazyeval_0.2.2            yaml_2.3.9                survival_3.7-0           
- [85] scattermore_1.2           crayon_1.5.3              RcppAnnoy_0.0.22         
- [88] RColorBrewer_1.1-3        progressr_0.14.0          tweenr_2.0.3             
- [91] later_1.3.2               ggridges_0.5.6            codetools_0.2-20         
- [94] GlobalOptions_0.1.2       aod_1.3.3                 KEGGREST_1.44.1          
- [97] Rtsne_0.17                shape_1.4.6.1             limma_3.60.3             
-[100] pkgconfig_2.0.3           TMB_1.9.14                mathjaxr_1.6-0           
-[103] EnvStats_2.8.1            aplot_0.2.3               scatterplot3d_0.3-44     
-[106] spatstat.sparse_3.1-0     ape_5.8                   xtable_1.8-4             
-[109] car_3.1-2                 highr_0.11                plyr_1.8.9               
-[112] httr_1.4.7                rbibutils_2.2.16          tools_4.4.0              
-[115] globals_0.16.3            beeswarm_0.4.0            broom_1.0.6              
-[118] nlme_3.1-165              lambda.r_1.2.4            HDO.db_0.99.1            
-[121] lme4_1.1-35.5             digest_0.6.36             numDeriv_2016.8-1.1      
-[124] Matrix_1.7-0              farver_2.1.2              tzdb_0.4.0               
-[127] remaCor_0.0.18            reshape2_1.4.4            yulab.utils_0.1.4        
-[130] glue_1.7.0                cachem_1.1.0              polyclip_1.10-6          
-[133] generics_0.1.3            Biostrings_2.72.1         mvtnorm_1.2-5            
-[136] presto_1.0.0              parallelly_1.37.1         mnormt_2.1.1             
-[139] statmod_1.5.0             RcppHNSW_0.6.0            ScaledMatrix_1.12.0      
-[142] carData_3.0-5             minqa_1.2.7               pbapply_1.7-2            
-[145] spam_2.10-0               gson_0.1.0                utf8_1.2.4               
-[148] graphlayouts_1.1.1        gtools_3.9.5              ggsignif_0.6.4           
-[151] RcppEigen_0.3.4.0.0       shiny_1.8.1.1             GenomeInfoDbData_1.2.12  
-[154] glmmTMB_1.1.9             memoise_2.0.1             rmarkdown_2.27           
-[157] scales_1.3.0              future_1.33.2             RANN_2.6.1               
-[160] Cairo_1.6-2               spatstat.data_3.1-2       rstudioapi_0.16.0        
-[163] cluster_2.1.6             whisker_0.4.1             mutoss_0.1-13            
-[166] spatstat.utils_3.0-5      hms_1.1.3                 fitdistrplus_1.1-11      
-[169] munsell_0.5.1             cowplot_1.1.3             colorspace_2.1-0         
-[172] rlang_1.1.4               DelayedMatrixStats_1.26.0 sparseMatrixStats_1.16.0 
-[175] xts_0.14.0                dotCall64_1.1-1           shinydashboard_0.7.2     
-[178] ggforce_0.4.2             laeken_0.5.3              mgcv_1.9-1               
-[181] xfun_0.45                 e1071_1.7-14              TH.data_1.1-2            
-[184] iterators_1.0.14          abind_1.4-5               GOSemSim_2.30.0          
-[187] treeio_1.28.0             futile.options_1.0.1      bitops_1.0-7             
-[190] Rdpack_2.6                promises_1.3.0            scatterpie_0.2.3         
-[193] RSQLite_2.3.7             qvalue_2.36.0             sandwich_3.1-0           
-[196] fgsea_1.30.0              DelayedArray_0.30.1       proxy_0.4-27             
-[199] GO.db_3.19.1              compiler_4.4.0            prettyunits_1.2.0        
-[202] boot_1.3-30               beachmat_2.20.0           listenv_0.9.1            
-[205] Rcpp_1.0.13               edgeR_4.2.0               workflowr_1.7.1          
-[208] BiocSingular_1.20.0       tensor_1.5                MASS_7.3-61              
-[211] progress_1.2.3            BiocParallel_1.38.0       babelgene_22.9           
-[214] spatstat.random_3.2-3     R6_2.5.1                  fastmap_1.2.0            
-[217] multcomp_1.4-25           fastmatch_1.1-4           rstatix_0.7.2            
-[220] vipor_0.4.7               TTR_0.24.4                ROCR_1.0-11              
-[223] TFisher_0.2.0             rsvd_1.0.5                vcd_1.4-12               
-[226] nnet_7.3-19               gtable_0.3.5              KernSmooth_2.23-24       
-[229] miniUI_0.1.1.1            deldir_2.0-4              htmltools_0.5.8.1        
-[232] ggthemes_5.1.0            bit64_4.0.5               spatstat.explore_3.2-7   
-[235] lifecycle_1.0.4           blme_1.0-5                nloptr_2.1.1             
-[238] sass_0.4.9                vctrs_0.6.5               robustbase_0.99-3        
-[241] spatstat.geom_3.2-9       sn_2.1.1                  ggfun_0.1.5              
-[244] future.apply_1.11.2       bslib_0.7.0               pillar_1.9.0             
-[247] gplots_3.1.3.1            pcaMethods_1.96.0         locfit_1.5-9.10          
-[250] jsonlite_1.8.8            GetoptLong_1.0.5         </code></pre>
+  [4] Formula_1.2-5             zlibbioc_1.50.0           tidyselect_1.2.1         
+  [7] bit_4.5.0                 doParallel_1.0.17         clue_0.3-65              
+ [10] lattice_0.22-6            rjson_0.2.23              blob_1.2.4               
+ [13] S4Arrays_1.4.1            pbkrtest_0.5.3            parallel_4.4.0           
+ [16] png_0.1-8                 plotrix_3.8-4             ggplotify_0.1.2          
+ [19] cli_3.6.3                 goftest_1.2-3             VIM_6.2.2                
+ [22] variancePartition_1.34.0  BiocNeighbors_1.22.0      shadowtext_0.1.4         
+ [25] uwot_0.2.2                curl_5.2.3                tidytree_0.4.6           
+ [28] mime_0.12                 evaluate_1.0.0            leiden_0.4.3.1           
+ [31] ComplexHeatmap_2.20.0     stringi_1.8.4             backports_1.5.0          
+ [34] lmerTest_3.1-3            qqconf_1.3.2              httpuv_1.6.15            
+ [37] magrittr_2.0.3            rappdirs_0.3.3            splines_4.4.0            
+ [40] ggraph_2.2.1              sctransform_0.4.1         ggbeeswarm_0.7.2         
+ [43] DBI_1.2.3                 jquerylib_0.1.4           smoother_1.3             
+ [46] withr_3.0.1               git2r_0.33.0              corpcor_1.6.10           
+ [49] reformulas_0.3.0          class_7.3-22              rprojroot_2.0.4          
+ [52] lmtest_0.9-40             tidygraph_1.3.1           formatR_1.14             
+ [55] colourpicker_1.3.0        htmlwidgets_1.6.4         fs_1.6.4                 
+ [58] ggrepel_0.9.6             labeling_0.4.3            fANCOVA_0.6-1            
+ [61] SparseArray_1.4.8         DESeq2_1.44.0             ranger_0.16.0            
+ [64] DEoptimR_1.1-3            reticulate_1.39.0         hexbin_1.28.4            
+ [67] zoo_1.8-12                XVector_0.44.0            knitr_1.48               
+ [70] ggplot.multistats_1.0.1   UCSC.utils_1.0.0          RhpcBLASctl_0.23-42      
+ [73] timechange_0.3.0          foreach_1.5.2             fansi_1.0.6              
+ [76] patchwork_1.3.0           caTools_1.18.3            ggtree_3.12.0            
+ [79] data.table_1.16.0         R.oo_1.26.0               RSpectra_0.16-2          
+ [82] irlba_2.3.5.1             ggrastr_1.0.2             gridGraphics_0.5-1       
+ [85] fastDummies_1.7.4         lazyeval_0.2.2            yaml_2.3.10              
+ [88] survival_3.7-0            scattermore_1.2           crayon_1.5.3             
+ [91] RcppAnnoy_0.0.22          RColorBrewer_1.1-3        progressr_0.14.0         
+ [94] tweenr_2.0.3              later_1.3.2               ggridges_0.5.6           
+ [97] codetools_0.2-20          GlobalOptions_0.1.2       aod_1.3.3                
+[100] KEGGREST_1.44.1           Rtsne_0.17                shape_1.4.6.1            
+[103] limma_3.60.5              pkgconfig_2.0.3           TMB_1.9.15               
+[106] spatstat.univar_3.0-1     mathjaxr_1.6-0            EnvStats_3.0.0           
+[109] aplot_0.2.3               scatterplot3d_0.3-44      ape_5.8                  
+[112] spatstat.sparse_3.1-0     xtable_1.8-4              car_3.1-3                
+[115] highr_0.11                plyr_1.8.9                httr_1.4.7               
+[118] rbibutils_2.3             tools_4.4.0               globals_0.16.3           
+[121] beeswarm_0.4.0            broom_1.0.7               nlme_3.1-166             
+[124] lambda.r_1.2.4            lme4_1.1-35.5             digest_0.6.37            
+[127] numDeriv_2016.8-1.1       Matrix_1.7-0              farver_2.1.2             
+[130] tzdb_0.4.0                remaCor_0.0.18            reshape2_1.4.4           
+[133] yulab.utils_0.1.7         glue_1.8.0                cachem_1.1.0             
+[136] polyclip_1.10-7           generics_0.1.3            Biostrings_2.72.1        
+[139] mvtnorm_1.3-1             presto_1.0.0              parallelly_1.38.0        
+[142] mnormt_2.1.1              statmod_1.5.0             RcppHNSW_0.6.0           
+[145] ScaledMatrix_1.12.0       carData_3.0-5             minqa_1.2.8              
+[148] pbapply_1.7-2             httr2_1.0.5               spam_2.11-0              
+[151] gson_0.1.0                utf8_1.2.4                graphlayouts_1.2.0       
+[154] gtools_3.9.5              ggsignif_0.6.4            RcppEigen_0.3.4.0.2      
+[157] shiny_1.9.1               GenomeInfoDbData_1.2.12   glmmTMB_1.1.10           
+[160] R.utils_2.12.3            memoise_2.0.1             rmarkdown_2.28           
+[163] scales_1.3.0              R.methodsS3_1.8.2         future_1.34.0            
+[166] RANN_2.6.2                Cairo_1.6-2               spatstat.data_3.1-2      
+[169] rstudioapi_0.16.0         cluster_2.1.6             whisker_0.4.1            
+[172] mutoss_0.1-13             spatstat.utils_3.1-0      hms_1.1.3                
+[175] fitdistrplus_1.2-1        munsell_0.5.1             cowplot_1.1.3            
+[178] colorspace_2.1-1          rlang_1.1.4               DelayedMatrixStats_1.26.0
+[181] sparseMatrixStats_1.16.0  xts_0.14.0                dotCall64_1.1-1          
+[184] shinydashboard_0.7.2      ggforce_0.4.2             laeken_0.5.3             
+[187] mgcv_1.9-1                xfun_0.48                 e1071_1.7-16             
+[190] TH.data_1.1-2             iterators_1.0.14          abind_1.4-8              
+[193] GOSemSim_2.30.2           treeio_1.28.0             futile.options_1.0.1     
+[196] bitops_1.0-9              Rdpack_2.6.1              promises_1.3.0           
+[199] scatterpie_0.2.4          RSQLite_2.3.7             qvalue_2.36.0            
+[202] sandwich_3.1-1            fgsea_1.30.0              DelayedArray_0.30.1      
+[205] proxy_0.4-27              GO.db_3.19.1              compiler_4.4.0           
+[208] prettyunits_1.2.0         boot_1.3-31               beachmat_2.20.0          
+[211] listenv_0.9.1             Rcpp_1.0.13               edgeR_4.2.1              
+[214] workflowr_1.7.1           BiocSingular_1.20.0       tensor_1.5               
+[217] MASS_7.3-61               progress_1.2.3            BiocParallel_1.38.0      
+[220] babelgene_22.9            spatstat.random_3.3-2     R6_2.5.1                 
+[223] fastmap_1.2.0             multcomp_1.4-26           fastmatch_1.1-4          
+[226] rstatix_0.7.2             vipor_0.4.7               TTR_0.24.4               
+[229] ROCR_1.0-11               TFisher_0.2.0             rsvd_1.0.5               
+[232] vcd_1.4-13                nnet_7.3-19               gtable_0.3.5             
+[235] KernSmooth_2.23-24        miniUI_0.1.1.1            deldir_2.0-4             
+[238] htmltools_0.5.8.1         ggthemes_5.1.0            bit64_4.5.2              
+[241] spatstat.explore_3.3-2    lifecycle_1.0.4           blme_1.0-6               
+[244] nloptr_2.1.1              sass_0.4.9                vctrs_0.6.5              
+[247] robustbase_0.99-4-1       spatstat.geom_3.3-3       sn_2.1.1                 
+[250] ggfun_0.1.6               future.apply_1.11.2       bslib_0.8.0              
+[253] pillar_1.9.0              gplots_3.1.3.1            pcaMethods_1.96.0        
+[256] locfit_1.5-9.10           jsonlite_1.8.9            GetoptLong_1.0.5         </code></pre>
 </div>
 </div>
 </div>

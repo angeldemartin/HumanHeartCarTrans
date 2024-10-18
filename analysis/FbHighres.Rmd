@@ -154,6 +154,7 @@ Idents(seuratAllFb) <- seuratAllFb$clusterNameAllFb
 markerGenes <- FindAllMarkers(seuratAllFb, only.pos=T, logfc.threshold = 0.2) %>% 
   dplyr::filter(p_val_adj < 0.01)
 ```
+
 ## order datasets
 ```{r order, include=FALSE}
 orddatasets <- c("o28576_1_08-8_20220525_Hu_nucseq_Graz_8_HH_GEM","o28576_1_10-10_20220525_Hu_nucseq_Graz_10_HH_GEM","o28576_1_11-11_20220525_Hu_nucseq_Graz_11_HH_GEM","o28576_1_12-12_20220525_Hu_nucseq_Graz_12_HH_GEM","o292731_1-1_20220818_Hu_nucseq_Graz_9_HH_GEM","o292731_2-2_20220818_Hu_nucseq_Graz_13_HH_GEM","o294781_01-1_20220912_Hu_nucseq_Graz_21_HH_GEM","o294781_02-2_20220912_Hu_nucseq_Graz_22_HH_GEM","o294781_03-3_20220912_Hu_nucseq_Graz_23_HH_GEM","o294781_04-4_20220912_Hu_nucseq_Graz_24_HH_GEM",
@@ -237,6 +238,96 @@ dat_all <- do.call("rbind", datList)
 
 ## plot abundance
 ggbarplot(dat_all, x= "diseaseCond", y= "percent", fill = "Var1", palette = colAllFb, legend = "right", legend.titel = "cluster", ylab = "frequency")  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + scale_x_discrete(limits=orddiseaseCond)
+```
+
+
+## fractions according to patients&disease cond
+```{r fractions, fig.height=8, fig.width=10}
+##set order
+seuratAllFb$diseaseCond <- factor(seuratAllFb$diseaseCond, levels=c("healthy", "explant", "visit1", "visit2", "visit3"))
+
+## 1. create data.frame with cluster counts per patient
+## change "RNA_snn_res.0.25" to subset/cluster you're interested in ...
+datFrac <- data.frame(table(seuratAllFb$patient_diseaseCond, seuratAllFb$clusterNameAllFb))
+colnames(datFrac) <- c("patient_diseaseCond", "subset", "cnt")
+
+## 2. get total counts per patient to compute relative abundances from
+## I added cond here as grouping variable for the plotting later ...
+datSumPat <- data.frame(table(seuratAllFb$patient_diseaseCond, seuratAllFb$diseaseCond)) %>% 
+  filter(Freq >0)
+colnames(datSumPat) <- c("patient_diseaseCond", "diseaseCond", "cntPatTot")
+
+## 3. join data.frames to compute rel abundances per patient
+datFracSum <- datFrac %>% left_join(., datSumPat, by = "patient_diseaseCond") %>% 
+  mutate(relCnt = cnt/cntPatTot)
+
+## plot barplot with abundances for each subset grouped by cond
+ggbarplot(datFracSum, x = "subset", y = "relCnt",
+          fill = "diseaseCond", color = "diseaseCond",
+          palette = coldiseaseCond,
+          add = c("mean_se", "dotplot"),
+          add.params = list(color="black", fill="diseaseCond", size=0.2),
+          position = position_dodge(0.9),
+          xlab = "subset",
+          ylab = "relative abundance",
+          legend = "right",
+          legend.title = "") +
+  rotate_x_text(angle = 90) 
+
+## plot barplot with abundances for individual subsets
+clusterVec <- levels(seuratAllFb)
+createClusterPlot <- function(cluster) {
+  datFracSumC <- datFracSum %>% filter(subset == cluster)
+
+  ggbarplot(datFracSumC, x = "diseaseCond", y = "relCnt",
+            fill = "diseaseCond", color = "diseaseCond",
+            palette = coldiseaseCond,
+            add = c("mean_se", "dotplot"),
+            size = 0,
+            add.params = list(color = "black", fill = "diseaseCond"),
+            position = position_dodge(0.9),
+            xlab = cluster,
+            ylab = "relative abundance",
+            legend = "right",
+            legend.title = "") +
+    stat_compare_means(method = "kruskal.test", label.y = 0.0)
+}
+lapply(clusterVec, createClusterPlot)
+
+## plot barplot with abundances for individual subsets
+clusterVec <- levels(seuratAllFb)
+createClusterPlot <- function(cluster) {
+  datFracSumC <- datFracSum %>% filter(subset == cluster)
+
+  ggbarplot(datFracSumC, x = "diseaseCond", y = "relCnt",
+            fill = "diseaseCond", color = "diseaseCond",
+            palette = coldiseaseCond,
+            add = c("mean_se", "jitter"),
+            add.params = list(color = "black", fill = "diseaseCond",size = 2),
+            size = 5,
+            position = position_dodge(0.9),
+            xlab = cluster,
+            ylab = "relative abundance",
+            legend = "right",
+            legend.title = "") +
+    stat_compare_means(method = "kruskal.test", label.y = 0.0)
+}
+lapply(clusterVec, createClusterPlot)
+
+
+## plot boxplot with abundances for individual subsets
+clusterVec <- levels(seuratAllFb)
+createClusterPlot <- function(cluster) {
+  datFracSumC <- datFracSum %>% filter(subset == cluster)
+  ggboxplot(datFracSumC, x = "diseaseCond", y = "relCnt", color = "diseaseCond", palette = coldiseaseCond ,add = "jitter", 
+            add.params = list(shape = 21,        # Use shape 21 for fill + outline control
+                            color = "black",   # Black outline for points
+                            fill = "diseaseCond", # Fill based on diseaseCond
+                            size = 4)) +
+    ggtitle(cluster) +
+    stat_compare_means(method = "kruskal.test", label.y = 0.0)
+}
+lapply(clusterVec, createClusterPlot)
 ```
 avg heatmaps
 ```{r heatmap top genes Fb1-4, fig.height=10, fig.width=8}
@@ -661,6 +752,7 @@ seuratFb2 <- subset(seuratAllFb, clusterNameAllFb %in% c("Fb2"))
 levels(seuratFb2)
 DimPlot(seuratFb2, reduction = "umap", cols = colAllFb, pt.size = 0.5)
 ```
+
 ```{r violin plots Fb2}
 seuratFb2$diseaseCond <- factor(seuratFb2$diseaseCond, levels=c("healthy", "explant", "visit1", "visit2", "visit3"))
 Idents(seuratFb2) <- seuratFb2$diseaseCond
@@ -675,6 +767,14 @@ VlnPlot(object=seuratFb2, features = "ENSG00000169245.CXCL10", pt.size = 1, cols
 VlnPlot(object=seuratFb2, features = "ENSG00000163739.CXCL1", pt.size = 1, cols = coldiseaseCond)
 ```
 
+## feature plots
+```{r feature plot}
+FeaturePlot(seuratAllFb, features = "ENSG00000108821.COL1A1", pt.size = 0.5, cols = c("lightgrey", "#BE3144"))
+```
+```{r violin plots AllFb}
+Idents(seuratAllFb) <- seuratAllFb$clusterNameAllFb
+VlnPlot(object=seuratAllFb, features = "ENSG00000108821.COL1A1", pt.size = 0, cols = colAllFb)
+```
 
 ## session info
 ```{r date and session info}

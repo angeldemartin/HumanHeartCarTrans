@@ -95,6 +95,7 @@ ordpatient_diseasecond <- c("HH1_healthy","HH10_healthy","HH2_healthy","HH3_heal
 "CarTransPat1_visit1","CarTransPat1_visit2","CarTransPat1_visit3","CarTransPat2_visit1","CarTransPat2_visit2","CarTransPat2_visit3","CarTransPat3_visit1","CarTransPat3_visit2","CarTransPat3_visit3","CarTransPat4_visit1","CarTransPat4_visit2","CarTransPat4_visit3","CarTransPat5_visit1","CarTransPat5_visit2","CarTransPat5_visit3","CarTransPat6_visit1","CarTransPat6_visit2","CarTransPat6_visit3","CarTransPat7_visit1","CarTransPat7_visit2","CarTransPat7_visit3","CarTransPat8_visit1","CarTransPat8_visit2","CarTransPat8_visit3","CarTransPat10_visit1","CarTransPat10_visit2","CarTransPat10_visit3","CarTransPat11_visit1","CarTransPat11_visit2","CarTransPat11_visit3","CarTransPat12_visit1","CarTransPat12_visit2","CarTransPat12_visit3","CarTransPat13_visit1","CarTransPat13_visit2","CarTransPat13_visit3","CarTransPat14_visit1","CarTransPat14_visit2", "CarTransPat14_visit3","CarTransPat15_visit1","CarTransPat15_visit2", "CarTransPat15_visit3","CarTransPat16_visit1","CarTransPat16_visit2", "CarTransPat16_visit3")
 
 orddiseaseCond <- c("healthy", "explant", "visit1", "visit2" ,"visit3")
+orddiseaseCond2 <- c("healthy", "explant")
 ```
 
 ## abundance plots
@@ -144,6 +145,24 @@ dat_all <- do.call("rbind", datList)
 
 ## plot abundance
 ggbarplot(dat_all, x= "diseaseCond", y= "percent", fill = "Var1", palette = colclusterName, legend = "right", legend.titel = "cluster", ylab = "frequency")  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + scale_x_discrete(limits=orddiseaseCond)
+```
+```{r abundance diseaseCond heal and expl, fig.height=8, fig.width=10}
+###subset healthy and explant
+seuratMhealexpl <- subset(seuratM, diseaseCond %in% c("healthy", "explant"))
+table(seuratMhealexpl$diseaseCond)
+###diseaseCond
+datList <- NULL
+for(con in unique(seuratMhealexpl$diseaseCond)){
+  seuratSub <- subset(seuratMhealexpl, diseaseCond==con)
+  print(dim(seuratSub))
+  dat_con <- as.data.frame(table(seuratSub$clusterName)) %>%
+  mutate(percent=Freq/ncol(seuratSub)) %>% mutate(diseaseCond=con)
+  datList[[con]] <- dat_con
+}
+dat_all <- do.call("rbind", datList)
+
+## plot abundance
+ggbarplot(dat_all, x= "diseaseCond", y= "percent", fill = "Var1", palette = colclusterName, legend = "right", legend.titel = "cluster", ylab = "frequency")  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + scale_x_discrete(limits=orddiseaseCond2)
 ```
 
 ## fractions according to patients&disease cond

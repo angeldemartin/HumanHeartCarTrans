@@ -382,7 +382,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-10-15
+<strong>Last updated:</strong> 2024-11-17
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -550,15 +550,15 @@ data/Human_heart_AllFb.rds
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree429014d0a6b140a8f1b148a06e679203de7a627ctargetblank429014da">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstreef7bd86bcfe8b24c088b7827e1091a1822af78b91targetblankf7bd86ba">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/429014d0a6b140a8f1b148a06e679203de7a627c" target="_blank">429014d</a>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/f7bd86bcfe8b24c088b7827e1091a1822af78b91" target="_blank">f7bd86b</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree429014d0a6b140a8f1b148a06e679203de7a627ctargetblank429014da"
+id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstreef7bd86bcfe8b24c088b7827e1091a1822af78b91targetblankf7bd86ba"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -568,7 +568,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/429014d0a6b140a8f1b148a06e679203de7a627c" target="_blank">429014d</a>.
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/f7bd86bcfe8b24c088b7827e1091a1822af78b91" target="_blank">f7bd86b</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -590,14 +590,9 @@ Ignored files:
     Ignored:    analysis/.Rhistory
     Ignored:    data/seurat files/
 
-Untracked files:
-    Untracked:  Human_heart_allmerged_cellchat.rds
-    Untracked:  Human_heart_allmerged_cellchatH.rds
-
 Unstaged changes:
     Modified:   analysis/FbHighres.Rmd
-    Modified:   analysis/IntCellChat.Rmd
-    Modified:   analysis/MarkerGenes.Rmd
+    Modified:   analysis/RelativeAbundances.Rmd
 
 </code></pre>
 <p>
@@ -642,6 +637,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/analysis/FbHighres.Rmd" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+<td>
+Oct18-3
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/angeldemartin/HumanHeartCarTrans/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/FbHighres.html" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+<td>
+Oct18-3
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1420,6 +1449,28 @@ angeldemartin
 </table>
 </div>
 </div>
+<pre class="r"><code>###subset healthy and eyplant
+seuratAllFbhealexpl &lt;- subset(seuratAllFb, diseaseCond %in% c(&quot;healthy&quot;, &quot;explant&quot;))
+table(seuratAllFbhealexpl$diseaseCond)</code></pre>
+<pre><code>
+explant healthy 
+  45689   17271 </code></pre>
+<pre class="r"><code>###diseaseCond
+datList &lt;- NULL
+for(con in unique(seuratAllFbhealexpl$diseaseCond)){
+  seuratSub &lt;- subset(seuratAllFbhealexpl, diseaseCond==con)
+  print(dim(seuratSub))
+  dat_con &lt;- as.data.frame(table(seuratSub$clusterNameAllFb)) %&gt;%
+  mutate(percent=Freq/ncol(seuratSub)) %&gt;% mutate(diseaseCond=con)
+  datList[[con]] &lt;- dat_con
+}</code></pre>
+<pre><code>[1] 39836 45689
+[1] 39836 17271</code></pre>
+<pre class="r"><code>dat_all &lt;- do.call(&quot;rbind&quot;, datList)
+
+## plot abundance
+ggbarplot(dat_all, x= &quot;diseaseCond&quot;, y= &quot;percent&quot;, fill = &quot;Var1&quot;, palette = colAllFb, legend = &quot;right&quot;, legend.titel = &quot;cluster&quot;, ylab = &quot;frequency&quot;)  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + scale_x_discrete(limits=orddiseaseCond2)</code></pre>
+<p><img src="figure/FbHighres.Rmd/abundance%20diseaseCond%20heal%20and%20expl-1.png" width="960" style="display: block; margin: auto;" /></p>
 </div>
 <div id="fractions-according-to-patientsdisease-cond"
 class="section level2">
@@ -1455,6 +1506,43 @@ ggbarplot(datFracSum, x = &quot;subset&quot;, y = &quot;relCnt&quot;,
           legend.title = &quot;&quot;) +
   rotate_x_text(angle = 90) </code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-1">
+Past versions of fractions-1.png
+</button>
+</p>
+<div id="fig-fractions-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-1.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>## plot barplot with abundances for individual subsets
 clusterVec &lt;- levels(seuratAllFb)
 createClusterPlot &lt;- function(cluster) {
@@ -1476,27 +1564,323 @@ createClusterPlot &lt;- function(cluster) {
 lapply(clusterVec, createClusterPlot)</code></pre>
 <pre><code>[[1]]</code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-2.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-2">
+Past versions of fractions-2.png
+</button>
+</p>
+<div id="fig-fractions-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-2.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[2]]</code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-3.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-3">
+Past versions of fractions-3.png
+</button>
+</p>
+<div id="fig-fractions-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-3.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[3]]</code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-4.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-4">
+Past versions of fractions-4.png
+</button>
+</p>
+<div id="fig-fractions-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-4.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[4]]</code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-5.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-5">
+Past versions of fractions-5.png
+</button>
+</p>
+<div id="fig-fractions-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-5.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[5]]</code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-6.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-6">
+Past versions of fractions-6.png
+</button>
+</p>
+<div id="fig-fractions-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-6.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[6]]</code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-7.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-7">
+Past versions of fractions-7.png
+</button>
+</p>
+<div id="fig-fractions-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-7.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[7]]</code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-8.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-8">
+Past versions of fractions-8.png
+</button>
+</p>
+<div id="fig-fractions-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-8.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[8]]</code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-9.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-9">
+Past versions of fractions-9.png
+</button>
+</p>
+<div id="fig-fractions-9" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-9.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>## plot barplot with abundances for individual subsets
 clusterVec &lt;- levels(seuratAllFb)
 createClusterPlot &lt;- function(cluster) {
@@ -1518,27 +1902,323 @@ createClusterPlot &lt;- function(cluster) {
 lapply(clusterVec, createClusterPlot)</code></pre>
 <pre><code>[[1]]</code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-10.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-10">
+Past versions of fractions-10.png
+</button>
+</p>
+<div id="fig-fractions-10" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-10.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[2]]</code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-11.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-11">
+Past versions of fractions-11.png
+</button>
+</p>
+<div id="fig-fractions-11" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-11.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[3]]</code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-12.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-12">
+Past versions of fractions-12.png
+</button>
+</p>
+<div id="fig-fractions-12" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-12.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[4]]</code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-13.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-13">
+Past versions of fractions-13.png
+</button>
+</p>
+<div id="fig-fractions-13" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-13.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[5]]</code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-14.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-14">
+Past versions of fractions-14.png
+</button>
+</p>
+<div id="fig-fractions-14" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-14.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[6]]</code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-15.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-15">
+Past versions of fractions-15.png
+</button>
+</p>
+<div id="fig-fractions-15" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-15.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[7]]</code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-16.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-16">
+Past versions of fractions-16.png
+</button>
+</p>
+<div id="fig-fractions-16" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-16.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[8]]</code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-17.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-17">
+Past versions of fractions-17.png
+</button>
+</p>
+<div id="fig-fractions-17" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-17.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>## plot boxplot with abundances for individual subsets
 clusterVec &lt;- levels(seuratAllFb)
 createClusterPlot &lt;- function(cluster) {
@@ -1554,28 +2234,324 @@ createClusterPlot &lt;- function(cluster) {
 lapply(clusterVec, createClusterPlot)</code></pre>
 <pre><code>[[1]]</code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-18.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-18">
+Past versions of fractions-18.png
+</button>
+</p>
+<div id="fig-fractions-18" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-18.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[2]]</code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-19.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-19">
+Past versions of fractions-19.png
+</button>
+</p>
+<div id="fig-fractions-19" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-19.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[3]]</code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-20.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-20">
+Past versions of fractions-20.png
+</button>
+</p>
+<div id="fig-fractions-20" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-20.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[4]]</code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-21.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-21">
+Past versions of fractions-21.png
+</button>
+</p>
+<div id="fig-fractions-21" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-21.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[5]]</code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-22.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-22">
+Past versions of fractions-22.png
+</button>
+</p>
+<div id="fig-fractions-22" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-22.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[6]]</code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-23.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-23">
+Past versions of fractions-23.png
+</button>
+</p>
+<div id="fig-fractions-23" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-23.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[7]]</code></pre>
 <p><img src="figure/FbHighres.Rmd/fractions-24.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-24">
+Past versions of fractions-24.png
+</button>
+</p>
+<div id="fig-fractions-24" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-24.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[8]]</code></pre>
-<p><img src="figure/FbHighres.Rmd/fractions-25.png" width="960" style="display: block; margin: auto;" />
-avg heatmaps</p>
+<p><img src="figure/FbHighres.Rmd/fractions-25.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fractions-25">
+Past versions of fractions-25.png
+</button>
+</p>
+<div id="fig-fractions-25" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/fractions-25.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>avg heatmaps</p>
 <pre class="r"><code>Idents(seuratAllFb) &lt;- seuratAllFb$clusterNameAllFb
 levels(seuratAllFb)</code></pre>
 <pre><code>[1] &quot;Fb1&quot;      &quot;Fb2&quot;      &quot;Fb3&quot;      &quot;Fb4&quot;      &quot;PerivFb1&quot; &quot;PerivFb2&quot; &quot;PerivFb3&quot; &quot;VSMC&quot;    </code></pre>
@@ -1807,6 +2783,84 @@ angeldemartin
 </table>
 </div>
 </div>
+<pre class="r"><code>Idents(seuratAllFb) &lt;- seuratAllFb$clusterNameAllFb
+levels(seuratAllFb)</code></pre>
+<pre><code>[1] &quot;Fb1&quot;      &quot;Fb2&quot;      &quot;Fb3&quot;      &quot;Fb4&quot;      &quot;PerivFb1&quot; &quot;PerivFb2&quot; &quot;PerivFb3&quot; &quot;VSMC&quot;    </code></pre>
+<pre class="r"><code>seurat &lt;- seuratAllFb
+
+avgHeatmap &lt;- function(seurat, selGenes, colVecIdent, colVecCond=NULL,
+                       ordVec=NULL, gapVecR=NULL, gapVecC=NULL,cc=FALSE,
+                       cr=FALSE, condCol=FALSE){
+  selGenes &lt;- selGenes$gene
+  ## assay data
+  clusterAssigned &lt;- as.data.frame(Idents(seurat)) %&gt;%
+  dplyr::mutate(cell=rownames(.))
+  colnames(clusterAssigned)[1] &lt;- &quot;ident&quot;
+  seuratDat &lt;- GetAssayData(seurat)
+  
+  ## genes of interest
+  genes &lt;- data.frame(gene=rownames(seurat)) %&gt;% 
+    mutate(geneID=gsub(&quot;^.*\\.&quot;, &quot;&quot;, gene)) %&gt;% filter(geneID %in% selGenes)
+
+  ## matrix with averaged cnts per ident
+  logNormExpres &lt;- as.data.frame(t(as.matrix(
+    seuratDat[which(rownames(seuratDat) %in% genes$gene),])))
+  logNormExpres &lt;- logNormExpres %&gt;% dplyr::mutate(cell=rownames(.)) %&gt;%
+    dplyr::left_join(.,clusterAssigned, by=c(&quot;cell&quot;)) %&gt;%
+    dplyr::select(-cell) %&gt;% dplyr::group_by(ident) %&gt;%
+    dplyr::summarise_all(mean)
+  logNormExpresMa &lt;- logNormExpres %&gt;% dplyr::select(-ident) %&gt;% as.matrix()
+  rownames(logNormExpresMa) &lt;- logNormExpres$ident
+  logNormExpresMa &lt;- t(logNormExpresMa)
+  rownames(logNormExpresMa) &lt;- gsub(&quot;^.*?\\.&quot;,&quot;&quot;,rownames(logNormExpresMa))
+  
+  ## remove genes if they are all the same in all groups
+  ind &lt;- apply(logNormExpresMa, 1, sd) == 0
+  logNormExpresMa &lt;- logNormExpresMa[!ind,]
+  genes &lt;- genes[!ind,]
+
+  ## color columns according to cluster
+  annotation_col &lt;- as.data.frame(gsub(&quot;(^.*?_)&quot;,&quot;&quot;,
+                                       colnames(logNormExpresMa)))%&gt;%
+    dplyr::mutate(celltype=gsub(&quot;(_.*$)&quot;,&quot;&quot;,colnames(logNormExpresMa)))
+  colnames(annotation_col)[1] &lt;- &quot;col1&quot;
+  annotation_col &lt;- annotation_col %&gt;%
+    dplyr::mutate(cond = gsub(&quot;(^[0-9]_?)&quot;,&quot;&quot;,col1)) %&gt;%
+    dplyr::select(cond, celltype)
+  rownames(annotation_col) &lt;- colnames(logNormExpresMa) 
+
+  ann_colors = list(
+      celltype=colVec)
+  if(is.null(ann_colors$cond)){
+    annotation_col$cond &lt;- NULL
+  }
+  
+  ## adjust order
+  logNormExpresMa &lt;- logNormExpresMa[selGenes,]
+  if(is.null(ordVec)){
+  ordVec &lt;- levels(seurat)
+  ordVec &lt;-c(&quot;Fb1&quot;, &quot;Fb2&quot;, &quot;Fb3&quot;, &quot;Fb4&quot;, &quot;PerivFb1&quot;, &quot;PerivFb2&quot;, &quot;PerivFb3&quot;, &quot;VSMC&quot;)
+  }
+  logNormExpresMa &lt;- logNormExpresMa[,ordVec]
+
+  ## scaled row-wise
+  pheatmap(logNormExpresMa, scale=&quot;row&quot; ,treeheight_row = 0,cluster_rows = cr, 
+         cluster_cols = cc, color = colorRampPalette(c(&quot;#2166AC&quot;, &quot;#F7F7F7&quot;, &quot;#B2182B&quot;))(50),
+         annotation_col = annotation_col, cellwidth=15, cellheight=10,
+         annotation_colors = ann_colors, gaps_row = gapVecR, gaps_col = gapVecC)
+}
+
+genesPlot &lt;- data.frame(gene=c(&quot;CCL2&quot;,&quot;CCL11&quot; ,&quot;CCL19&quot;, &quot;CCL21&quot;, &quot;CXCL14&quot;, &quot;CXCL10&quot;, &quot;CXCL1&quot;, &quot;CXCL9&quot;, &quot;CXCL12&quot;, &quot;CXCL2&quot;, &quot;IL6R&quot;, &quot;IL32&quot;, &quot;IL15RA&quot;,&quot;IL4R&quot;,&quot;IL10RA&quot;, &quot;IL15&quot;, &quot;IL1R1&quot;, &quot;IL11RA&quot;,&quot;IL16&quot;,&quot;IL33&quot;, &quot;IL27RA&quot;, &quot;IL17D&quot;, &quot;IL6&quot;, &quot;IL1RL1&quot;))
+
+levels(seurat)</code></pre>
+<pre><code>[1] &quot;Fb1&quot;      &quot;Fb2&quot;      &quot;Fb3&quot;      &quot;Fb4&quot;      &quot;PerivFb1&quot; &quot;PerivFb2&quot; &quot;PerivFb3&quot; &quot;VSMC&quot;    </code></pre>
+<pre class="r"><code>colVec &lt;- colAllFb
+
+# colVec &lt;- c(colPal, colPal, colPal)
+# colVec &lt;- c(&quot;blue&quot;, &quot;red&quot;)
+
+avgHeatmap(seurat, selGenes = genesPlot, colVecIdent = colVec)</code></pre>
+<p><img src="figure/FbHighres.Rmd/heatmap%20chemkines%20cytokine-1.png" width="768" style="display: block; margin: auto;" /></p>
 </div>
 <div id="calculate-de-genes-in-fb-1-4" class="section level2">
 <h2>calculate DE genes in Fb 1-4</h2>
@@ -1889,7 +2943,47 @@ angeldemartin
 <pre class="r"><code>##convert seurat object to sce object
 sce &lt;- as.SingleCellExperiment(seuratAllFb)
 genes &lt;- data.frame(geneID=rownames(sce)) %&gt;% mutate(gene=gsub(&quot;.*\\.&quot;, &quot;&quot;, geneID))
-pal = colorRampPalette(c(&quot;#053061&quot;, &quot;#2166ac&quot;, &quot;#f7f7f7&quot;, &quot;#f4a582&quot;, &quot;#b2183c&quot;, &quot;#85122d&quot;))</code></pre>
+pal = colorRampPalette(c(&quot;#053061&quot;, &quot;#2166ac&quot;, &quot;#f7f7f7&quot;, &quot;#f4a582&quot;, &quot;#b2183c&quot;, &quot;#85122d&quot;))
+
+## subset healthy and convert seurat object to sce object
+seuratAllFbheal &lt;- subset(seuratAllFb, diseaseCond == &quot;healthy&quot;)
+table(seuratAllFbheal$diseaseCond)</code></pre>
+<pre><code>
+healthy explant  visit1  visit2  visit3 
+  17271       0       0       0       0 </code></pre>
+<pre class="r"><code>sceheal &lt;- as.SingleCellExperiment(seuratAllFbheal)
+
+## subset visit1 and convert seurat object to sce object
+seuratAllFbvisit1 &lt;- subset(seuratAllFb, diseaseCond == &quot;visit1&quot;)
+table(seuratAllFbvisit1$diseaseCond)</code></pre>
+<pre><code>
+healthy explant  visit1  visit2  visit3 
+      0       0    4575       0       0 </code></pre>
+<pre class="r"><code>scevisit1 &lt;- as.SingleCellExperiment(seuratAllFbvisit1)
+
+## subset visit2 and convert seurat object to sce object
+seuratAllFbvisit2 &lt;- subset(seuratAllFb, diseaseCond == &quot;visit2&quot;)
+table(seuratAllFbvisit2$diseaseCond)</code></pre>
+<pre><code>
+healthy explant  visit1  visit2  visit3 
+      0       0       0    4650       0 </code></pre>
+<pre class="r"><code>scevisit2 &lt;- as.SingleCellExperiment(seuratAllFbvisit2)
+
+## subset visit3 and convert seurat object to sce object
+seuratAllFbvisit3 &lt;- subset(seuratAllFb, diseaseCond == &quot;visit3&quot;)
+table(seuratAllFbvisit3$diseaseCond)</code></pre>
+<pre><code>
+healthy explant  visit1  visit2  visit3 
+      0       0       0       0    4259 </code></pre>
+<pre class="r"><code>scevisit3 &lt;- as.SingleCellExperiment(seuratAllFbvisit3)
+
+## subset explant and convert seurat object to sce object
+seuratAllFbexplant &lt;- subset(seuratAllFb, diseaseCond == &quot;explant&quot;)
+table(seuratAllFbexplant$diseaseCond)</code></pre>
+<pre><code>
+healthy explant  visit1  visit2  visit3 
+      0   45689       0       0       0 </code></pre>
+<pre class="r"><code>sceexplant &lt;- as.SingleCellExperiment(seuratAllFbexplant)</code></pre>
 <pre class="r"><code>ego1 &lt;- dplyr::filter(egoFb1@result,egoFb1@result$Description==&quot;extracellular matrix organization&quot;)
 g1 &lt;- ego1$geneID
 Str &lt;-(g1)
@@ -1988,6 +3082,81 @@ angeldemartin
 </table>
 </div>
 </div>
+<pre class="r"><code>##healthy only
+scehealSub &lt;- sceheal[which(rownames(sceheal) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scehealSub@assays@data$logcounts)))/nrow(signGenes)
+scehealSub$sign &lt;- cntMat
+scehealSub$sign2 &lt;- scehealSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 2))
+scehealSub$sign2[which(scehealSub$sign &gt; 2)] &lt;- 2
+plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20ECM%20organization-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20ECM%20organization-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##visit1 only
+scevisit1Sub &lt;- scevisit1[which(rownames(scevisit1) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scevisit1Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit1Sub$sign &lt;- cntMat
+scevisit1Sub$sign2 &lt;- scevisit1Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 2))
+scevisit1Sub$sign2[which(scevisit1Sub$sign &gt; 2)] &lt;- 2
+plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20ECM%20organization-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20ECM%20organization-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##visit2 only
+scevisit2Sub &lt;- scevisit2[which(rownames(scevisit2) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scevisit2Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit2Sub$sign &lt;- cntMat
+scevisit2Sub$sign2 &lt;- scevisit2Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 2))
+scevisit2Sub$sign2[which(scevisit2Sub$sign &gt; 2)] &lt;- 2
+plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20ECM%20organization-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20ECM%20organization-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##visit3 only
+scevisit3Sub &lt;- scevisit3[which(rownames(scevisit3) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scevisit3Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit3Sub$sign &lt;- cntMat
+scevisit3Sub$sign2 &lt;- scevisit3Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 2))
+scevisit3Sub$sign2[which(scevisit3Sub$sign &gt; 2)] &lt;- 2
+plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20ECM%20organization-9.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20ECM%20organization-10.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##explant only
+sceexplantSub &lt;- sceexplant[which(rownames(sceexplant) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    sceexplantSub@assays@data$logcounts)))/nrow(signGenes)
+sceexplantSub$sign &lt;- cntMat
+sceexplantSub$sign2 &lt;- sceexplantSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 2))
+sceexplantSub$sign2[which(sceexplantSub$sign &gt; 2)] &lt;- 2
+plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20ECM%20organization-11.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20ECM%20organization-12.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>##GSEA Fb2
 DEGenesFb2 &lt;- DEGenesFb1to4adj %&gt;% filter(cluster == &quot;Fb2&quot;)
 egoFb2 &lt;- enrichGO(gene = unique(DEGenesFb2$EnsID),
@@ -2137,6 +3306,81 @@ angeldemartin
 </table>
 </div>
 </div>
+<pre class="r"><code>##healthy only
+scehealSub &lt;- sceheal[which(rownames(sceheal) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scehealSub@assays@data$logcounts)))/nrow(signGenes)
+scehealSub$sign &lt;- cntMat
+scehealSub$sign2 &lt;- scehealSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.5))
+scehealSub$sign2[which(scehealSub$sign &gt; 0.5)] &lt;- 0.5
+plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20muscle%20cell%20differentiation-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20muscle%20cell%20differentiation-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##visit1 only
+scevisit1Sub &lt;- scevisit1[which(rownames(scevisit1) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scevisit1Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit1Sub$sign &lt;- cntMat
+scevisit1Sub$sign2 &lt;- scevisit1Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.5))
+scevisit1Sub$sign2[which(scevisit1Sub$sign &gt; 0.5)] &lt;- 0.5
+plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20muscle%20cell%20differentiation-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20muscle%20cell%20differentiation-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##visit2 only
+scevisit2Sub &lt;- scevisit2[which(rownames(scevisit2) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scevisit2Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit2Sub$sign &lt;- cntMat
+scevisit2Sub$sign2 &lt;- scevisit2Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.5))
+scevisit2Sub$sign2[which(scevisit2Sub$sign &gt; 0.5)] &lt;- 0.5
+plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20muscle%20cell%20differentiation-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20muscle%20cell%20differentiation-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##visit3 only
+scevisit3Sub &lt;- scevisit3[which(rownames(scevisit3) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scevisit3Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit3Sub$sign &lt;- cntMat
+scevisit3Sub$sign2 &lt;- scevisit3Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.5))
+scevisit3Sub$sign2[which(scevisit3Sub$sign &gt; 0.5)] &lt;- 0.5
+plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20muscle%20cell%20differentiation-9.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20muscle%20cell%20differentiation-10.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##explant only
+sceexplantSub &lt;- sceexplant[which(rownames(sceexplant) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    sceexplantSub@assays@data$logcounts)))/nrow(signGenes)
+sceexplantSub$sign &lt;- cntMat
+sceexplantSub$sign2 &lt;- sceexplantSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.5))
+sceexplantSub$sign2[which(sceexplantSub$sign &gt; 0.5)] &lt;- 0.5
+plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20muscle%20cell%20differentiation-11.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20muscle%20cell%20differentiation-12.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ego1 &lt;- dplyr::filter(egoFb2@result,egoFb2@result$Description==&quot;response to type II interferon&quot;)
 g1 &lt;- ego1$geneID
 Str &lt;-(g1)
@@ -2237,6 +3481,81 @@ angeldemartin
 </table>
 </div>
 </div>
+<pre class="r"><code>##healthy only
+scehealSub &lt;- sceheal[which(rownames(sceheal) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scehealSub@assays@data$logcounts)))/nrow(signGenes)
+scehealSub$sign &lt;- cntMat
+scehealSub$sign2 &lt;- scehealSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 1))
+scehealSub$sign2[which(scehealSub$sign &gt; 1)] &lt;- 1
+plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20response%20to%20type%20II%20interferon-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20response%20to%20type%20II%20interferon-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##visit1 only
+scevisit1Sub &lt;- scevisit1[which(rownames(scevisit1) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scevisit1Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit1Sub$sign &lt;- cntMat
+scevisit1Sub$sign2 &lt;- scevisit1Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 1))
+scevisit1Sub$sign2[which(scevisit1Sub$sign &gt; 1)] &lt;- 1
+plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20response%20to%20type%20II%20interferon-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20response%20to%20type%20II%20interferon-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##visit2 only
+scevisit2Sub &lt;- scevisit2[which(rownames(scevisit2) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scevisit2Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit2Sub$sign &lt;- cntMat
+scevisit2Sub$sign2 &lt;- scevisit2Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 1))
+scevisit2Sub$sign2[which(scevisit2Sub$sign &gt; 1)] &lt;- 1
+plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20response%20to%20type%20II%20interferon-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20response%20to%20type%20II%20interferon-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##visit3 only
+scevisit3Sub &lt;- scevisit3[which(rownames(scevisit3) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scevisit3Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit3Sub$sign &lt;- cntMat
+scevisit3Sub$sign2 &lt;- scevisit3Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 1))
+scevisit3Sub$sign2[which(scevisit3Sub$sign &gt; 1)] &lt;- 1
+plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20response%20to%20type%20II%20interferon-9.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20response%20to%20type%20II%20interferon-10.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##explant only
+sceexplantSub &lt;- sceexplant[which(rownames(sceexplant) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    sceexplantSub@assays@data$logcounts)))/nrow(signGenes)
+sceexplantSub$sign &lt;- cntMat
+sceexplantSub$sign2 &lt;- sceexplantSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 1))
+sceexplantSub$sign2[which(sceexplantSub$sign &gt; 1)] &lt;- 1
+plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20response%20to%20type%20II%20interferon-11.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20response%20to%20type%20II%20interferon-12.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>##GSEA Fb3
 DEGenesFb3 &lt;- DEGenesFb1to4adj %&gt;% filter(cluster == &quot;Fb3&quot;)
 egoFb3 &lt;- enrichGO(gene = unique(DEGenesFb3$EnsID),
@@ -2384,6 +3703,81 @@ angeldemartin
 </table>
 </div>
 </div>
+<pre class="r"><code>##healthy only
+scehealSub &lt;- sceheal[which(rownames(sceheal) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scehealSub@assays@data$logcounts)))/nrow(signGenes)
+scehealSub$sign &lt;- cntMat
+scehealSub$sign2 &lt;- scehealSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.5))
+scehealSub$sign2[which(scehealSub$sign &gt; 0.5)] &lt;- 0.5
+plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20Wnt%20signaling%20pathway-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20Wnt%20signaling%20pathway-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##visit1 only
+scevisit1Sub &lt;- scevisit1[which(rownames(scevisit1) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scevisit1Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit1Sub$sign &lt;- cntMat
+scevisit1Sub$sign2 &lt;- scevisit1Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.5))
+scevisit1Sub$sign2[which(scevisit1Sub$sign &gt; 0.5)] &lt;- 0.5
+plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20Wnt%20signaling%20pathway-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20Wnt%20signaling%20pathway-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##visit2 only
+scevisit2Sub &lt;- scevisit2[which(rownames(scevisit2) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scevisit2Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit2Sub$sign &lt;- cntMat
+scevisit2Sub$sign2 &lt;- scevisit2Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.5))
+scevisit2Sub$sign2[which(scevisit2Sub$sign &gt; 0.5)] &lt;- 0.5
+plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20Wnt%20signaling%20pathway-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20Wnt%20signaling%20pathway-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##visit3 only
+scevisit3Sub &lt;- scevisit3[which(rownames(scevisit3) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scevisit3Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit3Sub$sign &lt;- cntMat
+scevisit3Sub$sign2 &lt;- scevisit3Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.5))
+scevisit3Sub$sign2[which(scevisit3Sub$sign &gt; 0.5)] &lt;- 0.5
+plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20Wnt%20signaling%20pathway-9.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20Wnt%20signaling%20pathway-10.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##explant only
+sceexplantSub &lt;- sceexplant[which(rownames(sceexplant) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    sceexplantSub@assays@data$logcounts)))/nrow(signGenes)
+sceexplantSub$sign &lt;- cntMat
+sceexplantSub$sign2 &lt;- sceexplantSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.5))
+sceexplantSub$sign2[which(sceexplantSub$sign &gt; 0.5)] &lt;- 0.5
+plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20Wnt%20signaling%20pathway-11.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20Wnt%20signaling%20pathway-12.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ego1 &lt;- dplyr::filter(egoFb3@result,egoFb3@result$Description==&quot;transforming growth factor beta receptor signaling pathway&quot;)
 g1 &lt;- ego1$geneID
 Str &lt;-(g1)
@@ -2488,6 +3882,81 @@ angeldemartin
 </table>
 </div>
 </div>
+<pre class="r"><code>##healthy only
+scehealSub &lt;- sceheal[which(rownames(sceheal) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scehealSub@assays@data$logcounts)))/nrow(signGenes)
+scehealSub$sign &lt;- cntMat
+scehealSub$sign2 &lt;- scehealSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.8))
+scehealSub$sign2[which(scehealSub$sign &gt; 0.8)] &lt;- 0.8
+plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20transforming%20growth%20factor%20beta%20receptor%20signaling%20pathway-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20transforming%20growth%20factor%20beta%20receptor%20signaling%20pathway-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##visit1 only
+scevisit1Sub &lt;- scevisit1[which(rownames(scevisit1) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scevisit1Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit1Sub$sign &lt;- cntMat
+scevisit1Sub$sign2 &lt;- scevisit1Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.8))
+scevisit1Sub$sign2[which(scevisit1Sub$sign &gt; 0.8)] &lt;- 0.8
+plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20transforming%20growth%20factor%20beta%20receptor%20signaling%20pathway-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20transforming%20growth%20factor%20beta%20receptor%20signaling%20pathway-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##visit2 only
+scevisit2Sub &lt;- scevisit2[which(rownames(scevisit2) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scevisit2Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit2Sub$sign &lt;- cntMat
+scevisit2Sub$sign2 &lt;- scevisit2Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.8))
+scevisit2Sub$sign2[which(scevisit2Sub$sign &gt; 0.8)] &lt;- 0.8
+plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20transforming%20growth%20factor%20beta%20receptor%20signaling%20pathway-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20transforming%20growth%20factor%20beta%20receptor%20signaling%20pathway-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##visit3 only
+scevisit3Sub &lt;- scevisit3[which(rownames(scevisit3) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scevisit3Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit3Sub$sign &lt;- cntMat
+scevisit3Sub$sign2 &lt;- scevisit3Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.8))
+scevisit3Sub$sign2[which(scevisit3Sub$sign &gt; 0.8)] &lt;- 0.8
+plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20transforming%20growth%20factor%20beta%20receptor%20signaling%20pathway-9.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20transforming%20growth%20factor%20beta%20receptor%20signaling%20pathway-10.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##explant only
+sceexplantSub &lt;- sceexplant[which(rownames(sceexplant) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    sceexplantSub@assays@data$logcounts)))/nrow(signGenes)
+sceexplantSub$sign &lt;- cntMat
+sceexplantSub$sign2 &lt;- sceexplantSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.8))
+sceexplantSub$sign2[which(sceexplantSub$sign &gt; 0.8)] &lt;- 0.8
+plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20transforming%20growth%20factor%20beta%20receptor%20signaling%20pathway-11.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20transforming%20growth%20factor%20beta%20receptor%20signaling%20pathway-12.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ego1 &lt;- dplyr::filter(egoFb3@result,egoFb3@result$Description==&quot;BMP signaling pathway&quot;)
 g1 &lt;- ego1$geneID
 Str &lt;-(g1)
@@ -2586,6 +4055,81 @@ angeldemartin
 </table>
 </div>
 </div>
+<pre class="r"><code>##healthy only
+scehealSub &lt;- sceheal[which(rownames(sceheal) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scehealSub@assays@data$logcounts)))/nrow(signGenes)
+scehealSub$sign &lt;- cntMat
+scehealSub$sign2 &lt;- scehealSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.8))
+scehealSub$sign2[which(scehealSub$sign &gt; 0.8)] &lt;- 0.8
+plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20BMP%20signaling%20pathway-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20BMP%20signaling%20pathway-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##visit1 only
+scevisit1Sub &lt;- scevisit1[which(rownames(scevisit1) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scevisit1Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit1Sub$sign &lt;- cntMat
+scevisit1Sub$sign2 &lt;- scevisit1Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.8))
+scevisit1Sub$sign2[which(scevisit1Sub$sign &gt; 0.8)] &lt;- 0.8
+plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20BMP%20signaling%20pathway-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20BMP%20signaling%20pathway-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##visit2 only
+scevisit2Sub &lt;- scevisit2[which(rownames(scevisit2) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scevisit2Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit2Sub$sign &lt;- cntMat
+scevisit2Sub$sign2 &lt;- scevisit2Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.8))
+scevisit2Sub$sign2[which(scevisit2Sub$sign &gt; 0.8)] &lt;- 0.8
+plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20BMP%20signaling%20pathway-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20BMP%20signaling%20pathway-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##visit3 only
+scevisit3Sub &lt;- scevisit3[which(rownames(scevisit3) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scevisit3Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit3Sub$sign &lt;- cntMat
+scevisit3Sub$sign2 &lt;- scevisit3Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.8))
+scevisit3Sub$sign2[which(scevisit3Sub$sign &gt; 0.8)] &lt;- 0.8
+plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20BMP%20signaling%20pathway-9.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20BMP%20signaling%20pathway-10.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##explant only
+sceexplantSub &lt;- sceexplant[which(rownames(sceexplant) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    sceexplantSub@assays@data$logcounts)))/nrow(signGenes)
+sceexplantSub$sign &lt;- cntMat
+sceexplantSub$sign2 &lt;- sceexplantSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.8))
+sceexplantSub$sign2[which(sceexplantSub$sign &gt; 0.8)] &lt;- 0.8
+plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20BMP%20signaling%20pathway-11.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20BMP%20signaling%20pathway-12.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>##GSEA Fb4
 DEGenesFb4 &lt;- DEGenesFb1to4adj %&gt;% filter(cluster == &quot;Fb4&quot;)
 egoFb4 &lt;- enrichGO(gene = unique(DEGenesFb4$EnsID),
@@ -2735,6 +4279,81 @@ angeldemartin
 </table>
 </div>
 </div>
+<pre class="r"><code>##healthy only
+scehealSub &lt;- sceheal[which(rownames(sceheal) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scehealSub@assays@data$logcounts)))/nrow(signGenes)
+scehealSub$sign &lt;- cntMat
+scehealSub$sign2 &lt;- scehealSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 1))
+scehealSub$sign2[which(scehealSub$sign &gt; 1)] &lt;- 1
+plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20response%20to%20steroid%20hormone-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20response%20to%20steroid%20hormone-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##visit1 only
+scevisit1Sub &lt;- scevisit1[which(rownames(scevisit1) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scevisit1Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit1Sub$sign &lt;- cntMat
+scevisit1Sub$sign2 &lt;- scevisit1Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 1))
+scevisit1Sub$sign2[which(scevisit1Sub$sign &gt; 1)] &lt;- 1
+plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20response%20to%20steroid%20hormone-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20response%20to%20steroid%20hormone-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##visit2 only
+scevisit2Sub &lt;- scevisit2[which(rownames(scevisit2) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scevisit2Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit2Sub$sign &lt;- cntMat
+scevisit2Sub$sign2 &lt;- scevisit2Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 1))
+scevisit2Sub$sign2[which(scevisit2Sub$sign &gt; 1)] &lt;- 1
+plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20response%20to%20steroid%20hormone-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20response%20to%20steroid%20hormone-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##visit3 only
+scevisit3Sub &lt;- scevisit3[which(rownames(scevisit3) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    scevisit3Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit3Sub$sign &lt;- cntMat
+scevisit3Sub$sign2 &lt;- scevisit3Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 1))
+scevisit3Sub$sign2[which(scevisit3Sub$sign &gt; 1)] &lt;- 1
+plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20response%20to%20steroid%20hormone-9.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20response%20to%20steroid%20hormone-10.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##explant only
+sceexplantSub &lt;- sceexplant[which(rownames(sceexplant) %in% signGenes$geneID),]
+cntMat &lt;- rowSums(t(as.matrix(
+    sceexplantSub@assays@data$logcounts)))/nrow(signGenes)
+sceexplantSub$sign &lt;- cntMat
+sceexplantSub$sign2 &lt;- sceexplantSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc &lt;- scale_colour_gradientn(colours = pal(100), limits=c(0, 1))
+sceexplantSub$sign2[which(sceexplantSub$sign &gt; 1)] &lt;- 1
+plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20response%20to%20steroid%20hormone-11.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
+<p><img src="figure/FbHighres.Rmd/umap%20response%20to%20steroid%20hormone-12.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="subset-fb4" class="section level2">
 <h2>subset Fb4</h2>
@@ -3063,18 +4682,92 @@ angeldemartin
 <h2>feature plots</h2>
 <pre class="r"><code>FeaturePlot(seuratAllFb, features = &quot;ENSG00000108821.COL1A1&quot;, pt.size = 0.5, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;))</code></pre>
 <p><img src="figure/FbHighres.Rmd/feature%20plot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plot-1">
+Past versions of "feature plot-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plot-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/feature plot-1.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>Idents(seuratAllFb) &lt;- seuratAllFb$clusterNameAllFb
 VlnPlot(object=seuratAllFb, features = &quot;ENSG00000108821.COL1A1&quot;, pt.size = 0, cols = colAllFb)</code></pre>
 <p><img src="figure/FbHighres.Rmd/violin%20plots%20AllFb-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-violin-plots-AllFb-1">
+Past versions of "violin plots AllFb-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-violin-plots-AllFb-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/f7bd86bcfe8b24c088b7827e1091a1822af78b91/docs/figure/FbHighres.Rmd/violin plots AllFb-1.png" target="_blank">f7bd86b</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-10-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="session-info" class="section level2">
 <h2>session info</h2>
 <pre class="r"><code>date()</code></pre>
-<pre><code>[1] &quot;Tue Oct 15 16:13:06 2024&quot;</code></pre>
+<pre><code>[1] &quot;Sun Nov 17 22:44:35 2024&quot;</code></pre>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.4.0 (2024-04-24)
 Platform: x86_64-apple-darwin20
-Running under: macOS Ventura 13.6.9
+Running under: macOS Ventura 13.7.1
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRblas.0.dylib 
@@ -3100,7 +4793,7 @@ other attached packages:
 [22] forcats_1.0.0               stringr_1.5.1               purrr_1.0.2                
 [25] readr_2.1.5                 tidyr_1.3.1                 tibble_3.2.1               
 [28] tidyverse_2.0.0             dplyr_1.1.4                 SingleCellExperiment_1.26.0
-[31] SummarizedExperiment_1.34.0 Biobase_2.64.0              GenomicRanges_1.56.1       
+[31] SummarizedExperiment_1.34.0 Biobase_2.64.0              GenomicRanges_1.56.2       
 [34] GenomeInfoDb_1.40.1         IRanges_2.38.1              S4Vectors_0.42.1           
 [37] BiocGenerics_0.50.0         MatrixGenerics_1.16.0       matrixStats_1.4.1          
 [40] pheatmap_1.0.12             ggpubr_0.6.0                ggplot2_3.5.1              
@@ -3108,7 +4801,7 @@ other attached packages:
 [46] runSeurat3_0.1.0            ExploreSCdataSeurat3_0.1.0 
 
 loaded via a namespace (and not attached):
-  [1] igraph_2.0.3              ica_1.0-3                 plotly_4.10.4            
+  [1] igraph_2.1.1              ica_1.0-3                 plotly_4.10.4            
   [4] Formula_1.2-5             zlibbioc_1.50.0           tidyselect_1.2.1         
   [7] bit_4.5.0                 doParallel_1.0.17         clue_0.3-65              
  [10] lattice_0.22-6            rjson_0.2.23              blob_1.2.4               
@@ -3117,13 +4810,13 @@ loaded via a namespace (and not attached):
  [19] cli_3.6.3                 goftest_1.2-3             VIM_6.2.2                
  [22] variancePartition_1.34.0  BiocNeighbors_1.22.0      shadowtext_0.1.4         
  [25] uwot_0.2.2                curl_5.2.3                tidytree_0.4.6           
- [28] mime_0.12                 evaluate_1.0.0            leiden_0.4.3.1           
+ [28] mime_0.12                 evaluate_1.0.1            leiden_0.4.3.1           
  [31] ComplexHeatmap_2.20.0     stringi_1.8.4             backports_1.5.0          
  [34] lmerTest_3.1-3            qqconf_1.3.2              httpuv_1.6.15            
  [37] magrittr_2.0.3            rappdirs_0.3.3            splines_4.4.0            
  [40] ggraph_2.2.1              sctransform_0.4.1         ggbeeswarm_0.7.2         
  [43] DBI_1.2.3                 jquerylib_0.1.4           smoother_1.3             
- [46] withr_3.0.1               git2r_0.33.0              corpcor_1.6.10           
+ [46] withr_3.0.1               git2r_0.35.0              corpcor_1.6.10           
  [49] reformulas_0.3.0          class_7.3-22              rprojroot_2.0.4          
  [52] lmtest_0.9-40             tidygraph_1.3.1           formatR_1.14             
  [55] colourpicker_1.3.0        htmlwidgets_1.6.4         fs_1.6.4                 
@@ -3134,7 +4827,7 @@ loaded via a namespace (and not attached):
  [70] ggplot.multistats_1.0.1   UCSC.utils_1.0.0          RhpcBLASctl_0.23-42      
  [73] timechange_0.3.0          foreach_1.5.2             fansi_1.0.6              
  [76] patchwork_1.3.0           caTools_1.18.3            ggtree_3.12.0            
- [79] data.table_1.16.0         R.oo_1.26.0               RSpectra_0.16-2          
+ [79] data.table_1.16.2         R.oo_1.26.0               RSpectra_0.16-2          
  [82] irlba_2.3.5.1             ggrastr_1.0.2             gridGraphics_0.5-1       
  [85] fastDummies_1.7.4         lazyeval_0.2.2            yaml_2.3.10              
  [88] survival_3.7-0            scattermore_1.2           crayon_1.5.3             
@@ -3142,7 +4835,7 @@ loaded via a namespace (and not attached):
  [94] tweenr_2.0.3              later_1.3.2               ggridges_0.5.6           
  [97] codetools_0.2-20          GlobalOptions_0.1.2       aod_1.3.3                
 [100] KEGGREST_1.44.1           Rtsne_0.17                shape_1.4.6.1            
-[103] limma_3.60.5              pkgconfig_2.0.3           TMB_1.9.15               
+[103] limma_3.60.6              pkgconfig_2.0.3           TMB_1.9.15               
 [106] spatstat.univar_3.0-1     mathjaxr_1.6-0            EnvStats_3.0.0           
 [109] aplot_0.2.3               scatterplot3d_0.3-44      ape_5.8                  
 [112] spatstat.sparse_3.1-0     xtable_1.8-4              car_3.1-3                
@@ -3150,7 +4843,7 @@ loaded via a namespace (and not attached):
 [118] rbibutils_2.3             tools_4.4.0               globals_0.16.3           
 [121] beeswarm_0.4.0            broom_1.0.7               nlme_3.1-166             
 [124] lambda.r_1.2.4            lme4_1.1-35.5             digest_0.6.37            
-[127] numDeriv_2016.8-1.1       Matrix_1.7-0              farver_2.1.2             
+[127] numDeriv_2016.8-1.1       Matrix_1.7-1              farver_2.1.2             
 [130] tzdb_0.4.0                remaCor_0.0.18            reshape2_1.4.4           
 [133] yulab.utils_0.1.7         glue_1.8.0                cachem_1.1.0             
 [136] polyclip_1.10-7           generics_0.1.3            Biostrings_2.72.1        
@@ -3164,11 +4857,11 @@ loaded via a namespace (and not attached):
 [160] R.utils_2.12.3            memoise_2.0.1             rmarkdown_2.28           
 [163] scales_1.3.0              R.methodsS3_1.8.2         future_1.34.0            
 [166] RANN_2.6.2                Cairo_1.6-2               spatstat.data_3.1-2      
-[169] rstudioapi_0.16.0         cluster_2.1.6             whisker_0.4.1            
+[169] rstudioapi_0.17.1         cluster_2.1.6             whisker_0.4.1            
 [172] mutoss_0.1-13             spatstat.utils_3.1-0      hms_1.1.3                
 [175] fitdistrplus_1.2-1        munsell_0.5.1             cowplot_1.1.3            
 [178] colorspace_2.1-1          rlang_1.1.4               DelayedMatrixStats_1.26.0
-[181] sparseMatrixStats_1.16.0  xts_0.14.0                dotCall64_1.1-1          
+[181] sparseMatrixStats_1.16.0  xts_0.14.1                dotCall64_1.2            
 [184] shinydashboard_0.7.2      ggforce_0.4.2             laeken_0.5.3             
 [187] mgcv_1.9-1                xfun_0.48                 e1071_1.7-16             
 [190] TH.data_1.1-2             iterators_1.0.14          abind_1.4-8              
@@ -3178,7 +4871,7 @@ loaded via a namespace (and not attached):
 [202] sandwich_3.1-1            fgsea_1.30.0              DelayedArray_0.30.1      
 [205] proxy_0.4-27              GO.db_3.19.1              compiler_4.4.0           
 [208] prettyunits_1.2.0         boot_1.3-31               beachmat_2.20.0          
-[211] listenv_0.9.1             Rcpp_1.0.13               edgeR_4.2.1              
+[211] listenv_0.9.1             Rcpp_1.0.13               edgeR_4.2.2              
 [214] workflowr_1.7.1           BiocSingular_1.20.0       tensor_1.5               
 [217] MASS_7.3-61               progress_1.2.3            BiocParallel_1.38.0      
 [220] babelgene_22.9            spatstat.random_3.3-2     R6_2.5.1                 
@@ -3188,11 +4881,11 @@ loaded via a namespace (and not attached):
 [232] vcd_1.4-13                nnet_7.3-19               gtable_0.3.5             
 [235] KernSmooth_2.23-24        miniUI_0.1.1.1            deldir_2.0-4             
 [238] htmltools_0.5.8.1         ggthemes_5.1.0            bit64_4.5.2              
-[241] spatstat.explore_3.3-2    lifecycle_1.0.4           blme_1.0-6               
+[241] spatstat.explore_3.3-3    lifecycle_1.0.4           blme_1.0-6               
 [244] nloptr_2.1.1              sass_0.4.9                vctrs_0.6.5              
 [247] robustbase_0.99-4-1       spatstat.geom_3.3-3       sn_2.1.1                 
 [250] ggfun_0.1.6               future.apply_1.11.2       bslib_0.8.0              
-[253] pillar_1.9.0              gplots_3.1.3.1            pcaMethods_1.96.0        
+[253] pillar_1.9.0              gplots_3.2.0              pcaMethods_1.96.0        
 [256] locfit_1.5-9.10           jsonlite_1.8.9            GetoptLong_1.0.5         </code></pre>
 <br>
 <p>
@@ -3205,7 +4898,7 @@ Session information
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.4.0 (2024-04-24)
 Platform: x86_64-apple-darwin20
-Running under: macOS Ventura 13.6.9
+Running under: macOS Ventura 13.7.1
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRblas.0.dylib 
@@ -3231,7 +4924,7 @@ other attached packages:
 [22] forcats_1.0.0               stringr_1.5.1               purrr_1.0.2                
 [25] readr_2.1.5                 tidyr_1.3.1                 tibble_3.2.1               
 [28] tidyverse_2.0.0             dplyr_1.1.4                 SingleCellExperiment_1.26.0
-[31] SummarizedExperiment_1.34.0 Biobase_2.64.0              GenomicRanges_1.56.1       
+[31] SummarizedExperiment_1.34.0 Biobase_2.64.0              GenomicRanges_1.56.2       
 [34] GenomeInfoDb_1.40.1         IRanges_2.38.1              S4Vectors_0.42.1           
 [37] BiocGenerics_0.50.0         MatrixGenerics_1.16.0       matrixStats_1.4.1          
 [40] pheatmap_1.0.12             ggpubr_0.6.0                ggplot2_3.5.1              
@@ -3239,7 +4932,7 @@ other attached packages:
 [46] runSeurat3_0.1.0            ExploreSCdataSeurat3_0.1.0 
 
 loaded via a namespace (and not attached):
-  [1] igraph_2.0.3              ica_1.0-3                 plotly_4.10.4            
+  [1] igraph_2.1.1              ica_1.0-3                 plotly_4.10.4            
   [4] Formula_1.2-5             zlibbioc_1.50.0           tidyselect_1.2.1         
   [7] bit_4.5.0                 doParallel_1.0.17         clue_0.3-65              
  [10] lattice_0.22-6            rjson_0.2.23              blob_1.2.4               
@@ -3248,13 +4941,13 @@ loaded via a namespace (and not attached):
  [19] cli_3.6.3                 goftest_1.2-3             VIM_6.2.2                
  [22] variancePartition_1.34.0  BiocNeighbors_1.22.0      shadowtext_0.1.4         
  [25] uwot_0.2.2                curl_5.2.3                tidytree_0.4.6           
- [28] mime_0.12                 evaluate_1.0.0            leiden_0.4.3.1           
+ [28] mime_0.12                 evaluate_1.0.1            leiden_0.4.3.1           
  [31] ComplexHeatmap_2.20.0     stringi_1.8.4             backports_1.5.0          
  [34] lmerTest_3.1-3            qqconf_1.3.2              httpuv_1.6.15            
  [37] magrittr_2.0.3            rappdirs_0.3.3            splines_4.4.0            
  [40] ggraph_2.2.1              sctransform_0.4.1         ggbeeswarm_0.7.2         
  [43] DBI_1.2.3                 jquerylib_0.1.4           smoother_1.3             
- [46] withr_3.0.1               git2r_0.33.0              corpcor_1.6.10           
+ [46] withr_3.0.1               git2r_0.35.0              corpcor_1.6.10           
  [49] reformulas_0.3.0          class_7.3-22              rprojroot_2.0.4          
  [52] lmtest_0.9-40             tidygraph_1.3.1           formatR_1.14             
  [55] colourpicker_1.3.0        htmlwidgets_1.6.4         fs_1.6.4                 
@@ -3265,7 +4958,7 @@ loaded via a namespace (and not attached):
  [70] ggplot.multistats_1.0.1   UCSC.utils_1.0.0          RhpcBLASctl_0.23-42      
  [73] timechange_0.3.0          foreach_1.5.2             fansi_1.0.6              
  [76] patchwork_1.3.0           caTools_1.18.3            ggtree_3.12.0            
- [79] data.table_1.16.0         R.oo_1.26.0               RSpectra_0.16-2          
+ [79] data.table_1.16.2         R.oo_1.26.0               RSpectra_0.16-2          
  [82] irlba_2.3.5.1             ggrastr_1.0.2             gridGraphics_0.5-1       
  [85] fastDummies_1.7.4         lazyeval_0.2.2            yaml_2.3.10              
  [88] survival_3.7-0            scattermore_1.2           crayon_1.5.3             
@@ -3273,7 +4966,7 @@ loaded via a namespace (and not attached):
  [94] tweenr_2.0.3              later_1.3.2               ggridges_0.5.6           
  [97] codetools_0.2-20          GlobalOptions_0.1.2       aod_1.3.3                
 [100] KEGGREST_1.44.1           Rtsne_0.17                shape_1.4.6.1            
-[103] limma_3.60.5              pkgconfig_2.0.3           TMB_1.9.15               
+[103] limma_3.60.6              pkgconfig_2.0.3           TMB_1.9.15               
 [106] spatstat.univar_3.0-1     mathjaxr_1.6-0            EnvStats_3.0.0           
 [109] aplot_0.2.3               scatterplot3d_0.3-44      ape_5.8                  
 [112] spatstat.sparse_3.1-0     xtable_1.8-4              car_3.1-3                
@@ -3281,7 +4974,7 @@ loaded via a namespace (and not attached):
 [118] rbibutils_2.3             tools_4.4.0               globals_0.16.3           
 [121] beeswarm_0.4.0            broom_1.0.7               nlme_3.1-166             
 [124] lambda.r_1.2.4            lme4_1.1-35.5             digest_0.6.37            
-[127] numDeriv_2016.8-1.1       Matrix_1.7-0              farver_2.1.2             
+[127] numDeriv_2016.8-1.1       Matrix_1.7-1              farver_2.1.2             
 [130] tzdb_0.4.0                remaCor_0.0.18            reshape2_1.4.4           
 [133] yulab.utils_0.1.7         glue_1.8.0                cachem_1.1.0             
 [136] polyclip_1.10-7           generics_0.1.3            Biostrings_2.72.1        
@@ -3295,11 +4988,11 @@ loaded via a namespace (and not attached):
 [160] R.utils_2.12.3            memoise_2.0.1             rmarkdown_2.28           
 [163] scales_1.3.0              R.methodsS3_1.8.2         future_1.34.0            
 [166] RANN_2.6.2                Cairo_1.6-2               spatstat.data_3.1-2      
-[169] rstudioapi_0.16.0         cluster_2.1.6             whisker_0.4.1            
+[169] rstudioapi_0.17.1         cluster_2.1.6             whisker_0.4.1            
 [172] mutoss_0.1-13             spatstat.utils_3.1-0      hms_1.1.3                
 [175] fitdistrplus_1.2-1        munsell_0.5.1             cowplot_1.1.3            
 [178] colorspace_2.1-1          rlang_1.1.4               DelayedMatrixStats_1.26.0
-[181] sparseMatrixStats_1.16.0  xts_0.14.0                dotCall64_1.1-1          
+[181] sparseMatrixStats_1.16.0  xts_0.14.1                dotCall64_1.2            
 [184] shinydashboard_0.7.2      ggforce_0.4.2             laeken_0.5.3             
 [187] mgcv_1.9-1                xfun_0.48                 e1071_1.7-16             
 [190] TH.data_1.1-2             iterators_1.0.14          abind_1.4-8              
@@ -3309,7 +5002,7 @@ loaded via a namespace (and not attached):
 [202] sandwich_3.1-1            fgsea_1.30.0              DelayedArray_0.30.1      
 [205] proxy_0.4-27              GO.db_3.19.1              compiler_4.4.0           
 [208] prettyunits_1.2.0         boot_1.3-31               beachmat_2.20.0          
-[211] listenv_0.9.1             Rcpp_1.0.13               edgeR_4.2.1              
+[211] listenv_0.9.1             Rcpp_1.0.13               edgeR_4.2.2              
 [214] workflowr_1.7.1           BiocSingular_1.20.0       tensor_1.5               
 [217] MASS_7.3-61               progress_1.2.3            BiocParallel_1.38.0      
 [220] babelgene_22.9            spatstat.random_3.3-2     R6_2.5.1                 
@@ -3319,11 +5012,11 @@ loaded via a namespace (and not attached):
 [232] vcd_1.4-13                nnet_7.3-19               gtable_0.3.5             
 [235] KernSmooth_2.23-24        miniUI_0.1.1.1            deldir_2.0-4             
 [238] htmltools_0.5.8.1         ggthemes_5.1.0            bit64_4.5.2              
-[241] spatstat.explore_3.3-2    lifecycle_1.0.4           blme_1.0-6               
+[241] spatstat.explore_3.3-3    lifecycle_1.0.4           blme_1.0-6               
 [244] nloptr_2.1.1              sass_0.4.9                vctrs_0.6.5              
 [247] robustbase_0.99-4-1       spatstat.geom_3.3-3       sn_2.1.1                 
 [250] ggfun_0.1.6               future.apply_1.11.2       bslib_0.8.0              
-[253] pillar_1.9.0              gplots_3.1.3.1            pcaMethods_1.96.0        
+[253] pillar_1.9.0              gplots_3.2.0              pcaMethods_1.96.0        
 [256] locfit_1.5-9.10           jsonlite_1.8.9            GetoptLong_1.0.5         </code></pre>
 </div>
 </div>

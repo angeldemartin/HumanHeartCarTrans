@@ -189,7 +189,8 @@ orddatasets <- c("o28576_1_08-8_20220525_Hu_nucseq_Graz_8_HH_GEM","o28576_1_10-1
 ordpatient_diseasecond <- c("HH1_healthy","HH10_healthy","HH2_healthy","HH3_healthy","HH4_healthy","HH5_healthy","HH6_healthy","HH7_healthy","HH8_healthy","HH9_healthy","CarTransPat1_explant","CarTransPat2_explant","CarTransPat3_explant","CarTransPat4_explant","CarTransPat5_explant","CarTransPat6_explant","CarTransPat7_explant","CarTransPat8_explant","CarTransPat10_explant","CarTransPat11_explant","CarTransPat12_explant","CarTransPat13_explant","CarTransPat14_explant","CarTransPat15_explant", "CarTransPat16_explant",
 "CarTransPat1_visit1","CarTransPat1_visit2","CarTransPat1_visit3","CarTransPat2_visit1","CarTransPat2_visit2","CarTransPat2_visit3","CarTransPat3_visit1","CarTransPat3_visit2","CarTransPat3_visit3","CarTransPat4_visit1","CarTransPat4_visit2","CarTransPat4_visit3","CarTransPat5_visit1","CarTransPat5_visit2","CarTransPat5_visit3","CarTransPat6_visit1","CarTransPat6_visit2","CarTransPat6_visit3","CarTransPat7_visit1","CarTransPat7_visit2","CarTransPat7_visit3","CarTransPat8_visit1","CarTransPat8_visit2","CarTransPat8_visit3","CarTransPat10_visit1","CarTransPat10_visit2","CarTransPat10_visit3","CarTransPat11_visit1","CarTransPat11_visit2","CarTransPat11_visit3","CarTransPat12_visit1","CarTransPat12_visit2","CarTransPat12_visit3","CarTransPat13_visit1","CarTransPat13_visit2","CarTransPat13_visit3","CarTransPat14_visit1","CarTransPat14_visit2", "CarTransPat14_visit3","CarTransPat15_visit1","CarTransPat15_visit2", "CarTransPat15_visit3","CarTransPat16_visit1","CarTransPat16_visit2", "CarTransPat16_visit3")
 
-orddiseaseCond <- c("healthy", "explant", "visit1", "visit2" ,"visit3")
+orddiseaseCond <- c("healthy", "visit1", "visit2" ,"visit3",  "explant")
+orddiseaseCond2 <- c("healthy", "explant")
 ```
 
 ## abundance plots
@@ -239,7 +240,24 @@ dat_all <- do.call("rbind", datList)
 ## plot abundance
 ggbarplot(dat_all, x= "diseaseCond", y= "percent", fill = "Var1", palette = colAllFb, legend = "right", legend.titel = "cluster", ylab = "frequency")  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + scale_x_discrete(limits=orddiseaseCond)
 ```
+```{r abundance diseaseCond heal and expl, fig.height=8, fig.width=10}
+###subset healthy and eyplant
+seuratAllFbhealexpl <- subset(seuratAllFb, diseaseCond %in% c("healthy", "explant"))
+table(seuratAllFbhealexpl$diseaseCond)
+###diseaseCond
+datList <- NULL
+for(con in unique(seuratAllFbhealexpl$diseaseCond)){
+  seuratSub <- subset(seuratAllFbhealexpl, diseaseCond==con)
+  print(dim(seuratSub))
+  dat_con <- as.data.frame(table(seuratSub$clusterNameAllFb)) %>%
+  mutate(percent=Freq/ncol(seuratSub)) %>% mutate(diseaseCond=con)
+  datList[[con]] <- dat_con
+}
+dat_all <- do.call("rbind", datList)
 
+## plot abundance
+ggbarplot(dat_all, x= "diseaseCond", y= "percent", fill = "Var1", palette = colAllFb, legend = "right", legend.titel = "cluster", ylab = "frequency")  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + scale_x_discrete(limits=orddiseaseCond2)
+```
 
 ## fractions according to patients&disease cond
 ```{r fractions, fig.height=8, fig.width=10}
@@ -313,7 +331,6 @@ createClusterPlot <- function(cluster) {
     stat_compare_means(method = "kruskal.test", label.y = 0.0)
 }
 lapply(clusterVec, createClusterPlot)
-
 
 ## plot boxplot with abundances for individual subsets
 clusterVec <- levels(seuratAllFb)
@@ -487,6 +504,88 @@ colVec <- colAllFb
 
 avgHeatmap(seurat, selGenes = genesPlot, colVecIdent = colVec)
 ```
+
+
+```{r heatmap chemkines cytokine, fig.height=10, fig.width=8}
+Idents(seuratAllFb) <- seuratAllFb$clusterNameAllFb
+levels(seuratAllFb)
+
+seurat <- seuratAllFb
+
+avgHeatmap <- function(seurat, selGenes, colVecIdent, colVecCond=NULL,
+                       ordVec=NULL, gapVecR=NULL, gapVecC=NULL,cc=FALSE,
+                       cr=FALSE, condCol=FALSE){
+  selGenes <- selGenes$gene
+  ## assay data
+  clusterAssigned <- as.data.frame(Idents(seurat)) %>%
+  dplyr::mutate(cell=rownames(.))
+  colnames(clusterAssigned)[1] <- "ident"
+  seuratDat <- GetAssayData(seurat)
+  
+  ## genes of interest
+  genes <- data.frame(gene=rownames(seurat)) %>% 
+    mutate(geneID=gsub("^.*\\.", "", gene)) %>% filter(geneID %in% selGenes)
+
+  ## matrix with averaged cnts per ident
+  logNormExpres <- as.data.frame(t(as.matrix(
+    seuratDat[which(rownames(seuratDat) %in% genes$gene),])))
+  logNormExpres <- logNormExpres %>% dplyr::mutate(cell=rownames(.)) %>%
+    dplyr::left_join(.,clusterAssigned, by=c("cell")) %>%
+    dplyr::select(-cell) %>% dplyr::group_by(ident) %>%
+    dplyr::summarise_all(mean)
+  logNormExpresMa <- logNormExpres %>% dplyr::select(-ident) %>% as.matrix()
+  rownames(logNormExpresMa) <- logNormExpres$ident
+  logNormExpresMa <- t(logNormExpresMa)
+  rownames(logNormExpresMa) <- gsub("^.*?\\.","",rownames(logNormExpresMa))
+  
+  ## remove genes if they are all the same in all groups
+  ind <- apply(logNormExpresMa, 1, sd) == 0
+  logNormExpresMa <- logNormExpresMa[!ind,]
+  genes <- genes[!ind,]
+
+  ## color columns according to cluster
+  annotation_col <- as.data.frame(gsub("(^.*?_)","",
+                                       colnames(logNormExpresMa)))%>%
+    dplyr::mutate(celltype=gsub("(_.*$)","",colnames(logNormExpresMa)))
+  colnames(annotation_col)[1] <- "col1"
+  annotation_col <- annotation_col %>%
+    dplyr::mutate(cond = gsub("(^[0-9]_?)","",col1)) %>%
+    dplyr::select(cond, celltype)
+  rownames(annotation_col) <- colnames(logNormExpresMa) 
+
+  ann_colors = list(
+      celltype=colVec)
+  if(is.null(ann_colors$cond)){
+    annotation_col$cond <- NULL
+  }
+  
+  ## adjust order
+  logNormExpresMa <- logNormExpresMa[selGenes,]
+  if(is.null(ordVec)){
+  ordVec <- levels(seurat)
+  ordVec <-c("Fb1", "Fb2", "Fb3", "Fb4", "PerivFb1", "PerivFb2", "PerivFb3", "VSMC")
+  }
+  logNormExpresMa <- logNormExpresMa[,ordVec]
+
+  ## scaled row-wise
+  pheatmap(logNormExpresMa, scale="row" ,treeheight_row = 0,cluster_rows = cr, 
+         cluster_cols = cc, color = colorRampPalette(c("#2166AC", "#F7F7F7", "#B2182B"))(50),
+         annotation_col = annotation_col, cellwidth=15, cellheight=10,
+         annotation_colors = ann_colors, gaps_row = gapVecR, gaps_col = gapVecC)
+}
+
+genesPlot <- data.frame(gene=c("CCL2","CCL11" ,"CCL19", "CCL21", "CXCL14", "CXCL10", "CXCL1", "CXCL9", "CXCL12", "CXCL2", "IL6R", "IL32", "IL15RA","IL4R","IL10RA", "IL15", "IL1R1", "IL11RA","IL16","IL33", "IL27RA", "IL17D", "IL6", "IL1RL1"))
+
+levels(seurat)
+colVec <- colAllFb
+
+# colVec <- c(colPal, colPal, colPal)
+# colVec <- c("blue", "red")
+
+avgHeatmap(seurat, selGenes = genesPlot, colVecIdent = colVec)
+```
+
+
 ## calculate DE genes in Fb 1-4
 ```{r DE genes Fb 1-4}
 ## subset Fb1-4
@@ -526,6 +625,31 @@ dotplot(egoFb1, showCategory=30, title = "Fb1", font.size = 10)
 sce <- as.SingleCellExperiment(seuratAllFb)
 genes <- data.frame(geneID=rownames(sce)) %>% mutate(gene=gsub(".*\\.", "", geneID))
 pal = colorRampPalette(c("#053061", "#2166ac", "#f7f7f7", "#f4a582", "#b2183c", "#85122d"))
+
+## subset healthy and convert seurat object to sce object
+seuratAllFbheal <- subset(seuratAllFb, diseaseCond == "healthy")
+table(seuratAllFbheal$diseaseCond)
+sceheal <- as.SingleCellExperiment(seuratAllFbheal)
+
+## subset visit1 and convert seurat object to sce object
+seuratAllFbvisit1 <- subset(seuratAllFb, diseaseCond == "visit1")
+table(seuratAllFbvisit1$diseaseCond)
+scevisit1 <- as.SingleCellExperiment(seuratAllFbvisit1)
+
+## subset visit2 and convert seurat object to sce object
+seuratAllFbvisit2 <- subset(seuratAllFb, diseaseCond == "visit2")
+table(seuratAllFbvisit2$diseaseCond)
+scevisit2 <- as.SingleCellExperiment(seuratAllFbvisit2)
+
+## subset visit3 and convert seurat object to sce object
+seuratAllFbvisit3 <- subset(seuratAllFb, diseaseCond == "visit3")
+table(seuratAllFbvisit3$diseaseCond)
+scevisit3 <- as.SingleCellExperiment(seuratAllFbvisit3)
+
+## subset explant and convert seurat object to sce object
+seuratAllFbexplant <- subset(seuratAllFb, diseaseCond == "explant")
+table(seuratAllFbexplant$diseaseCond)
+sceexplant <- as.SingleCellExperiment(seuratAllFbexplant)
 ```
 
 ```{r umap ECM organization}
@@ -551,6 +675,76 @@ sceSub$sign2[which(sceSub$sign > 2)] <- 2
 plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc +
   theme(legend.position = "none")
 plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc
+
+##healthy only
+scehealSub <- sceheal[which(rownames(sceheal) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scehealSub@assays@data$logcounts)))/nrow(signGenes)
+scehealSub$sign <- cntMat
+scehealSub$sign2 <- scehealSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 2))
+scehealSub$sign2[which(scehealSub$sign > 2)] <- 2
+plotUMAP(scehealSub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scehealSub, colour_by = "sign2", point_size = 0.5) + sc
+
+##visit1 only
+scevisit1Sub <- scevisit1[which(rownames(scevisit1) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scevisit1Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit1Sub$sign <- cntMat
+scevisit1Sub$sign2 <- scevisit1Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 2))
+scevisit1Sub$sign2[which(scevisit1Sub$sign > 2)] <- 2
+plotUMAP(scevisit1Sub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scevisit1Sub, colour_by = "sign2", point_size = 0.5) + sc
+
+##visit2 only
+scevisit2Sub <- scevisit2[which(rownames(scevisit2) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scevisit2Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit2Sub$sign <- cntMat
+scevisit2Sub$sign2 <- scevisit2Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 2))
+scevisit2Sub$sign2[which(scevisit2Sub$sign > 2)] <- 2
+plotUMAP(scevisit2Sub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scevisit2Sub, colour_by = "sign2", point_size = 0.5) + sc
+
+##visit3 only
+scevisit3Sub <- scevisit3[which(rownames(scevisit3) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scevisit3Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit3Sub$sign <- cntMat
+scevisit3Sub$sign2 <- scevisit3Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 2))
+scevisit3Sub$sign2[which(scevisit3Sub$sign > 2)] <- 2
+plotUMAP(scevisit3Sub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scevisit3Sub, colour_by = "sign2", point_size = 0.5) + sc
+
+##explant only
+sceexplantSub <- sceexplant[which(rownames(sceexplant) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    sceexplantSub@assays@data$logcounts)))/nrow(signGenes)
+sceexplantSub$sign <- cntMat
+sceexplantSub$sign2 <- sceexplantSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 2))
+sceexplantSub$sign2[which(sceexplantSub$sign > 2)] <- 2
+plotUMAP(sceexplantSub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(sceexplantSub, colour_by = "sign2", point_size = 0.5) + sc
 ```
 
 ```{r GSEA Fb2, fig.height=10, fig.width=12}
@@ -590,6 +784,76 @@ sceSub$sign2[which(sceSub$sign > 0.5)] <- 0.5
 plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc +
   theme(legend.position = "none")
 plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc
+
+##healthy only
+scehealSub <- sceheal[which(rownames(sceheal) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scehealSub@assays@data$logcounts)))/nrow(signGenes)
+scehealSub$sign <- cntMat
+scehealSub$sign2 <- scehealSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.5))
+scehealSub$sign2[which(scehealSub$sign > 0.5)] <- 0.5
+plotUMAP(scehealSub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scehealSub, colour_by = "sign2", point_size = 0.5) + sc
+
+##visit1 only
+scevisit1Sub <- scevisit1[which(rownames(scevisit1) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scevisit1Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit1Sub$sign <- cntMat
+scevisit1Sub$sign2 <- scevisit1Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.5))
+scevisit1Sub$sign2[which(scevisit1Sub$sign > 0.5)] <- 0.5
+plotUMAP(scevisit1Sub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scevisit1Sub, colour_by = "sign2", point_size = 0.5) + sc
+
+##visit2 only
+scevisit2Sub <- scevisit2[which(rownames(scevisit2) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scevisit2Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit2Sub$sign <- cntMat
+scevisit2Sub$sign2 <- scevisit2Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.5))
+scevisit2Sub$sign2[which(scevisit2Sub$sign > 0.5)] <- 0.5
+plotUMAP(scevisit2Sub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scevisit2Sub, colour_by = "sign2", point_size = 0.5) + sc
+
+##visit3 only
+scevisit3Sub <- scevisit3[which(rownames(scevisit3) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scevisit3Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit3Sub$sign <- cntMat
+scevisit3Sub$sign2 <- scevisit3Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.5))
+scevisit3Sub$sign2[which(scevisit3Sub$sign > 0.5)] <- 0.5
+plotUMAP(scevisit3Sub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scevisit3Sub, colour_by = "sign2", point_size = 0.5) + sc
+
+##explant only
+sceexplantSub <- sceexplant[which(rownames(sceexplant) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    sceexplantSub@assays@data$logcounts)))/nrow(signGenes)
+sceexplantSub$sign <- cntMat
+sceexplantSub$sign2 <- sceexplantSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.5))
+sceexplantSub$sign2[which(sceexplantSub$sign > 0.5)] <- 0.5
+plotUMAP(sceexplantSub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(sceexplantSub, colour_by = "sign2", point_size = 0.5) + sc
 ```
 
 ```{r umap response to type II interferon}
@@ -615,6 +879,76 @@ sceSub$sign2[which(sceSub$sign > 1)] <- 1
 plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc +
   theme(legend.position = "none")
 plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc
+
+##healthy only
+scehealSub <- sceheal[which(rownames(sceheal) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scehealSub@assays@data$logcounts)))/nrow(signGenes)
+scehealSub$sign <- cntMat
+scehealSub$sign2 <- scehealSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 1))
+scehealSub$sign2[which(scehealSub$sign > 1)] <- 1
+plotUMAP(scehealSub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scehealSub, colour_by = "sign2", point_size = 0.5) + sc
+
+##visit1 only
+scevisit1Sub <- scevisit1[which(rownames(scevisit1) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scevisit1Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit1Sub$sign <- cntMat
+scevisit1Sub$sign2 <- scevisit1Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 1))
+scevisit1Sub$sign2[which(scevisit1Sub$sign > 1)] <- 1
+plotUMAP(scevisit1Sub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scevisit1Sub, colour_by = "sign2", point_size = 0.5) + sc
+
+##visit2 only
+scevisit2Sub <- scevisit2[which(rownames(scevisit2) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scevisit2Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit2Sub$sign <- cntMat
+scevisit2Sub$sign2 <- scevisit2Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 1))
+scevisit2Sub$sign2[which(scevisit2Sub$sign > 1)] <- 1
+plotUMAP(scevisit2Sub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scevisit2Sub, colour_by = "sign2", point_size = 0.5) + sc
+
+##visit3 only
+scevisit3Sub <- scevisit3[which(rownames(scevisit3) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scevisit3Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit3Sub$sign <- cntMat
+scevisit3Sub$sign2 <- scevisit3Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 1))
+scevisit3Sub$sign2[which(scevisit3Sub$sign > 1)] <- 1
+plotUMAP(scevisit3Sub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scevisit3Sub, colour_by = "sign2", point_size = 0.5) + sc
+
+##explant only
+sceexplantSub <- sceexplant[which(rownames(sceexplant) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    sceexplantSub@assays@data$logcounts)))/nrow(signGenes)
+sceexplantSub$sign <- cntMat
+sceexplantSub$sign2 <- sceexplantSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 1))
+sceexplantSub$sign2[which(sceexplantSub$sign > 1)] <- 1
+plotUMAP(sceexplantSub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(sceexplantSub, colour_by = "sign2", point_size = 0.5) + sc
 ```
 
 ```{r GSEA Fb3, fig.height=10, fig.width=12}
@@ -653,6 +987,76 @@ sceSub$sign2[which(sceSub$sign > 0.5)] <- 0.5
 plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc +
   theme(legend.position = "none")
 plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc
+
+##healthy only
+scehealSub <- sceheal[which(rownames(sceheal) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scehealSub@assays@data$logcounts)))/nrow(signGenes)
+scehealSub$sign <- cntMat
+scehealSub$sign2 <- scehealSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.5))
+scehealSub$sign2[which(scehealSub$sign > 0.5)] <- 0.5
+plotUMAP(scehealSub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scehealSub, colour_by = "sign2", point_size = 0.5) + sc
+
+##visit1 only
+scevisit1Sub <- scevisit1[which(rownames(scevisit1) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scevisit1Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit1Sub$sign <- cntMat
+scevisit1Sub$sign2 <- scevisit1Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.5))
+scevisit1Sub$sign2[which(scevisit1Sub$sign > 0.5)] <- 0.5
+plotUMAP(scevisit1Sub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scevisit1Sub, colour_by = "sign2", point_size = 0.5) + sc
+
+##visit2 only
+scevisit2Sub <- scevisit2[which(rownames(scevisit2) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scevisit2Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit2Sub$sign <- cntMat
+scevisit2Sub$sign2 <- scevisit2Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.5))
+scevisit2Sub$sign2[which(scevisit2Sub$sign > 0.5)] <- 0.5
+plotUMAP(scevisit2Sub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scevisit2Sub, colour_by = "sign2", point_size = 0.5) + sc
+
+##visit3 only
+scevisit3Sub <- scevisit3[which(rownames(scevisit3) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scevisit3Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit3Sub$sign <- cntMat
+scevisit3Sub$sign2 <- scevisit3Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.5))
+scevisit3Sub$sign2[which(scevisit3Sub$sign > 0.5)] <- 0.5
+plotUMAP(scevisit3Sub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scevisit3Sub, colour_by = "sign2", point_size = 0.5) + sc
+
+##explant only
+sceexplantSub <- sceexplant[which(rownames(sceexplant) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    sceexplantSub@assays@data$logcounts)))/nrow(signGenes)
+sceexplantSub$sign <- cntMat
+sceexplantSub$sign2 <- sceexplantSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.5))
+sceexplantSub$sign2[which(sceexplantSub$sign > 0.5)] <- 0.5
+plotUMAP(sceexplantSub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(sceexplantSub, colour_by = "sign2", point_size = 0.5) + sc
 ```
 
 ```{r umap transforming growth factor beta receptor signaling pathway}
@@ -678,6 +1082,76 @@ sceSub$sign2[which(sceSub$sign > 0.8)] <- 0.8
 plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc +
   theme(legend.position = "none")
 plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc
+
+##healthy only
+scehealSub <- sceheal[which(rownames(sceheal) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scehealSub@assays@data$logcounts)))/nrow(signGenes)
+scehealSub$sign <- cntMat
+scehealSub$sign2 <- scehealSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.8))
+scehealSub$sign2[which(scehealSub$sign > 0.8)] <- 0.8
+plotUMAP(scehealSub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scehealSub, colour_by = "sign2", point_size = 0.5) + sc
+
+##visit1 only
+scevisit1Sub <- scevisit1[which(rownames(scevisit1) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scevisit1Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit1Sub$sign <- cntMat
+scevisit1Sub$sign2 <- scevisit1Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.8))
+scevisit1Sub$sign2[which(scevisit1Sub$sign > 0.8)] <- 0.8
+plotUMAP(scevisit1Sub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scevisit1Sub, colour_by = "sign2", point_size = 0.5) + sc
+
+##visit2 only
+scevisit2Sub <- scevisit2[which(rownames(scevisit2) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scevisit2Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit2Sub$sign <- cntMat
+scevisit2Sub$sign2 <- scevisit2Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.8))
+scevisit2Sub$sign2[which(scevisit2Sub$sign > 0.8)] <- 0.8
+plotUMAP(scevisit2Sub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scevisit2Sub, colour_by = "sign2", point_size = 0.5) + sc
+
+##visit3 only
+scevisit3Sub <- scevisit3[which(rownames(scevisit3) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scevisit3Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit3Sub$sign <- cntMat
+scevisit3Sub$sign2 <- scevisit3Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.8))
+scevisit3Sub$sign2[which(scevisit3Sub$sign > 0.8)] <- 0.8
+plotUMAP(scevisit3Sub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scevisit3Sub, colour_by = "sign2", point_size = 0.5) + sc
+
+##explant only
+sceexplantSub <- sceexplant[which(rownames(sceexplant) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    sceexplantSub@assays@data$logcounts)))/nrow(signGenes)
+sceexplantSub$sign <- cntMat
+sceexplantSub$sign2 <- sceexplantSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.8))
+sceexplantSub$sign2[which(sceexplantSub$sign > 0.8)] <- 0.8
+plotUMAP(sceexplantSub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(sceexplantSub, colour_by = "sign2", point_size = 0.5) + sc
 ```
 
 ```{r umap BMP signaling pathway}
@@ -703,6 +1177,76 @@ sceSub$sign2[which(sceSub$sign > 0.8)] <- 0.8
 plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc +
   theme(legend.position = "none")
 plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc
+
+##healthy only
+scehealSub <- sceheal[which(rownames(sceheal) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scehealSub@assays@data$logcounts)))/nrow(signGenes)
+scehealSub$sign <- cntMat
+scehealSub$sign2 <- scehealSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.8))
+scehealSub$sign2[which(scehealSub$sign > 0.8)] <- 0.8
+plotUMAP(scehealSub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scehealSub, colour_by = "sign2", point_size = 0.5) + sc
+
+##visit1 only
+scevisit1Sub <- scevisit1[which(rownames(scevisit1) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scevisit1Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit1Sub$sign <- cntMat
+scevisit1Sub$sign2 <- scevisit1Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.8))
+scevisit1Sub$sign2[which(scevisit1Sub$sign > 0.8)] <- 0.8
+plotUMAP(scevisit1Sub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scevisit1Sub, colour_by = "sign2", point_size = 0.5) + sc
+
+##visit2 only
+scevisit2Sub <- scevisit2[which(rownames(scevisit2) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scevisit2Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit2Sub$sign <- cntMat
+scevisit2Sub$sign2 <- scevisit2Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.8))
+scevisit2Sub$sign2[which(scevisit2Sub$sign > 0.8)] <- 0.8
+plotUMAP(scevisit2Sub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scevisit2Sub, colour_by = "sign2", point_size = 0.5) + sc
+
+##visit3 only
+scevisit3Sub <- scevisit3[which(rownames(scevisit3) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scevisit3Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit3Sub$sign <- cntMat
+scevisit3Sub$sign2 <- scevisit3Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.8))
+scevisit3Sub$sign2[which(scevisit3Sub$sign > 0.8)] <- 0.8
+plotUMAP(scevisit3Sub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scevisit3Sub, colour_by = "sign2", point_size = 0.5) + sc
+
+##explant only
+sceexplantSub <- sceexplant[which(rownames(sceexplant) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    sceexplantSub@assays@data$logcounts)))/nrow(signGenes)
+sceexplantSub$sign <- cntMat
+sceexplantSub$sign2 <- sceexplantSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 0.8))
+sceexplantSub$sign2[which(sceexplantSub$sign > 0.8)] <- 0.8
+plotUMAP(sceexplantSub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(sceexplantSub, colour_by = "sign2", point_size = 0.5) + sc
 ```
 
 ```{r GSEA Fb4, fig.height=10, fig.width=12}
@@ -743,6 +1287,76 @@ sceSub$sign2[which(sceSub$sign > 1)] <- 1
 plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc +
   theme(legend.position = "none")
 plotUMAP(sceSub, colour_by = "sign2", point_size = 0.5) + sc
+
+##healthy only
+scehealSub <- sceheal[which(rownames(sceheal) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scehealSub@assays@data$logcounts)))/nrow(signGenes)
+scehealSub$sign <- cntMat
+scehealSub$sign2 <- scehealSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 1))
+scehealSub$sign2[which(scehealSub$sign > 1)] <- 1
+plotUMAP(scehealSub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scehealSub, colour_by = "sign2", point_size = 0.5) + sc
+
+##visit1 only
+scevisit1Sub <- scevisit1[which(rownames(scevisit1) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scevisit1Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit1Sub$sign <- cntMat
+scevisit1Sub$sign2 <- scevisit1Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 1))
+scevisit1Sub$sign2[which(scevisit1Sub$sign > 1)] <- 1
+plotUMAP(scevisit1Sub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scevisit1Sub, colour_by = "sign2", point_size = 0.5) + sc
+
+##visit2 only
+scevisit2Sub <- scevisit2[which(rownames(scevisit2) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scevisit2Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit2Sub$sign <- cntMat
+scevisit2Sub$sign2 <- scevisit2Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 1))
+scevisit2Sub$sign2[which(scevisit2Sub$sign > 1)] <- 1
+plotUMAP(scevisit2Sub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scevisit2Sub, colour_by = "sign2", point_size = 0.5) + sc
+
+##visit3 only
+scevisit3Sub <- scevisit3[which(rownames(scevisit3) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    scevisit3Sub@assays@data$logcounts)))/nrow(signGenes)
+scevisit3Sub$sign <- cntMat
+scevisit3Sub$sign2 <- scevisit3Sub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 1))
+scevisit3Sub$sign2[which(scevisit3Sub$sign > 1)] <- 1
+plotUMAP(scevisit3Sub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(scevisit3Sub, colour_by = "sign2", point_size = 0.5) + sc
+
+##explant only
+sceexplantSub <- sceexplant[which(rownames(sceexplant) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    sceexplantSub@assays@data$logcounts)))/nrow(signGenes)
+sceexplantSub$sign <- cntMat
+sceexplantSub$sign2 <- sceexplantSub$sign
+##check max and min values
+##max(sceSub$sign)
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 1))
+sceexplantSub$sign2[which(sceexplantSub$sign > 1)] <- 1
+plotUMAP(sceexplantSub, colour_by = "sign2", point_size = 0.5) + sc +
+  theme(legend.position = "none")
+plotUMAP(sceexplantSub, colour_by = "sign2", point_size = 0.5) + sc
 ```
 
 ## subset Fb4

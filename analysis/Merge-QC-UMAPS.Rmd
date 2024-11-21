@@ -408,35 +408,69 @@ DimPlot(seuratM, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, order
 DimPlot(seuratM, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, order = order1, raster = FALSE) + theme(legend.position = "null")
 ```
 
-```{r subset umaps}
+```{r subset umaps healthy}
 seuratHealthy <- subset(seuratM, diseaseCond == "healthy")
 DimPlot(seuratHealthy, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE)
 DimPlot(seuratHealthy, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE) + theme(legend.position = "null")
 
+Idents(seuratHealthy) <- seuratHealthy$clusterName
+DimPlot(seuratHealthy, reduction = "umap", pt.size = 0.1, cols = colclusterName, raster=FALSE)
+DimPlot(seuratHealthy, reduction = "umap", pt.size = 0.1, cols = colclusterName, raster=FALSE) + theme(legend.position = "null")
+```
+
+```{r subset umaps explant}
 seuratExplant <- subset(seuratM, diseaseCond == "explant")
 DimPlot(seuratExplant, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE)
 DimPlot(seuratExplant, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE) + theme(legend.position = "null")
 
+Idents(seuratExplant) <- seuratExplant$clusterName
+DimPlot(seuratExplant, reduction = "umap", pt.size = 0.1, cols = colclusterName, raster=FALSE)
+DimPlot(seuratExplant, reduction = "umap", pt.size = 0.1, cols = colclusterName, raster=FALSE) + theme(legend.position = "null")
+```
+
+```{r subset umaps visit1}
 seuratVisit1 <- subset(seuratM, diseaseCond == "visit1")
 DimPlot(seuratVisit1, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE)
 DimPlot(seuratVisit1, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE) + theme(legend.position = "null")
 
+Idents(seuratVisit1) <- seuratVisit1$clusterName
+DimPlot(seuratVisit1, reduction = "umap", pt.size = 0.1, cols = colclusterName, raster=FALSE)
+DimPlot(seuratVisit1, reduction = "umap", pt.size = 0.1, cols = colclusterName, raster=FALSE) + theme(legend.position = "null")
+```
+
+```{r subset umaps visit2}
 seuratVisit2 <- subset(seuratM, diseaseCond == "visit2")
 DimPlot(seuratVisit2, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE)
 DimPlot(seuratVisit2, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE) + theme(legend.position = "null")
 
+Idents(seuratVisit2) <- seuratVisit2$clusterName
+DimPlot(seuratVisit2, reduction = "umap", pt.size = 0.1, cols = colclusterName, raster=FALSE)
+DimPlot(seuratVisit2, reduction = "umap", pt.size = 0.1, cols = colclusterName, raster=FALSE) + theme(legend.position = "null")
+```
+
+```{r subset umaps visit3}
 seuratVisit3 <- subset(seuratM, diseaseCond == "visit3")
 DimPlot(seuratVisit3, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE)
 DimPlot(seuratVisit3, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE) + theme(legend.position = "null")
 
+Idents(seuratVisit3) <- seuratVisit3$clusterName
+DimPlot(seuratVisit3, reduction = "umap", pt.size = 0.1, cols = colclusterName, raster=FALSE)
+DimPlot(seuratVisit3, reduction = "umap", pt.size = 0.1, cols = colclusterName, raster=FALSE) + theme(legend.position = "null")
+```
+
+
+```{r subset umaps visit 1to3}
 seuratVisits <- subset(seuratM, diseaseCond %in% c("visit1", "visit2", "visit3"))
 DimPlot(seuratVisits, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE)
 DimPlot(seuratVisits, reduction = "umap", pt.size = 0.1, cols = coldiseaseCond, raster=FALSE) + theme(legend.position = "null")
+
+Idents(seuratVisits) <- seuratVisits$clusterName
+DimPlot(seuratVisits, reduction = "umap", pt.size = 0.1, cols = colclusterName, raster=FALSE)
+DimPlot(seuratVisits, reduction = "umap", pt.size = 0.1, cols = colclusterName, raster=FALSE) + theme(legend.position = "null")
 ```
+
 ## session info
 ```{r date and session info}
 date()
 sessionInfo()
 ```
-
-

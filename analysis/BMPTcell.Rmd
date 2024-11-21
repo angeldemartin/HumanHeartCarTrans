@@ -77,6 +77,52 @@ FeaturePlot(seuratM, features = "ENSG00000138756.BMP2K", pt.size = 0.1, cols = c
 
 FeaturePlot(seuratM, features = "ENSG00000107779.BMPR1A", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
 FeaturePlot(seuratM, features = "ENSG00000204217.BMPR2", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+
+FeaturePlot(seuratM, features = "ENSG00000166923.GREM1", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000180875.GREM2", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+
+FeaturePlot(seuratM, features = "ENSG00000019991.HGF", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000105976.MET", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+```
+
+## VlnPlot MET all cell types
+```{r violin MET all cell types}
+###violin plot MET all cell types
+seuratM$diseaseCond <- factor(seuratM$diseaseCond, levels=c("healthy", "explant", "visit1", "visit2", "visit3"))
+Idents(seuratM) <- seuratM$diseaseCond
+levels(seuratM)
+VlnPlot(object=seuratM, features = "ENSG00000105976.MET", cols = coldiseaseCond, pt.size = 0.5, raster = FALSE) + theme(legend.position = "none")
+```
+
+## VlnPlot MET in CM
+```{r violin MET CM}
+###violin plot MET on CM
+seuratCM <- subset(seuratM, clusterName %in% c("CM"))
+table(seuratCM$clusterName)
+seuratCM$diseaseCond <- factor(seuratCM$diseaseCond, levels=c("healthy", "explant", "visit1", "visit2", "visit3"))
+Idents(seuratCM) <- seuratCM$diseaseCond
+levels(seuratCM)
+VlnPlot(object=seuratCM, features = "ENSG00000105976.MET", cols = coldiseaseCond, pt.size = 0.5, raster = FALSE) + theme(legend.position = "none")
+```
+
+## VlnPlot HGF all cell types
+```{r violin HGF all cell types}
+###violin plot HGF all cell types
+seuratM$diseaseCond <- factor(seuratM$diseaseCond, levels=c("healthy", "explant", "visit1", "visit2", "visit3"))
+Idents(seuratM) <- seuratM$diseaseCond
+levels(seuratM)
+VlnPlot(object=seuratM, features = "ENSG00000019991.HGF", cols = coldiseaseCond, pt.size = 0.5, raster = FALSE) + theme(legend.position = "none")
+```
+
+## VlnPlot HGF in Fb
+```{r violin HGF Fb}
+###violin plot HGF on Fb
+seuratFb <- subset(seuratM, clusterName %in% c("Fb"))
+table(seuratFb$clusterName)
+seuratFb$diseaseCond <- factor(seuratFb$diseaseCond, levels=c("healthy", "explant", "visit1", "visit2", "visit3"))
+Idents(seuratFb) <- seuratFb$diseaseCond
+levels(seuratFb)
+VlnPlot(object=seuratFb, features = "ENSG00000019991.HGF", cols = coldiseaseCond, pt.size = 0.5, raster = FALSE) + theme(legend.position = "none")
 ```
 
 ## VlnPlot BMP4 in Fb
@@ -87,8 +133,31 @@ table(seuratFb$clusterName)
 seuratFb$diseaseCond <- factor(seuratFb$diseaseCond, levels=c("healthy", "explant", "visit1", "visit2", "visit3"))
 Idents(seuratFb) <- seuratFb$diseaseCond
 levels(seuratFb)
-VlnPlot(object=seuratFb, features = "ENSG00000125378.BMP4", cols = coldiseaseCond) + theme(legend.position = "none")
+VlnPlot(object=seuratFb, features = "ENSG00000125378.BMP4", cols = coldiseaseCond, pt.size = 0.5, raster = FALSE) + theme(legend.position = "none")
 ```
+
+## VlnPlot HGF in PerivFb
+```{r violin HGF PerivFb}
+###violin plot HGF on PerivFb
+seuratPerivFb <- subset(seuratM, clusterName %in% c("PerivFb"))
+table(seuratPerivFb$clusterName)
+seuratPerivFb$diseaseCond <- factor(seuratPerivFb$diseaseCond, levels=c("healthy", "explant", "visit1", "visit2", "visit3"))
+Idents(seuratPerivFb) <- seuratPerivFb$diseaseCond
+levels(seuratPerivFb)
+VlnPlot(object=seuratPerivFb, features = "ENSG00000019991.HGF", cols = coldiseaseCond, pt.size = 0.5, raster = FALSE) + theme(legend.position = "none")
+```
+
+## VlnPlot HGF in Mph
+```{r violin HGF Mph}
+###violin plot HGF on Mph
+seuratMph <- subset(seuratM, clusterName %in% c("Mph", "Mph2"))
+table(seuratMph$clusterName)
+seuratMph$diseaseCond <- factor(seuratMph$diseaseCond, levels=c("healthy", "explant", "visit1", "visit2", "visit3"))
+Idents(seuratMph) <- seuratMph$diseaseCond
+levels(seuratMph)
+VlnPlot(object=seuratMph, features = "ENSG00000019991.HGF", cols = coldiseaseCond, pt.size = 0.5, raster = FALSE) + theme(legend.position = "none")
+```
+
 
 ## VlnPlot BMP5 in PerivFb
 ```{r violin BMP5 PerivFb}
@@ -98,7 +167,7 @@ table(seuratPerivFb$clusterName)
 seuratPerivFb$diseaseCond <- factor(seuratPerivFb$diseaseCond, levels=c("healthy", "explant", "visit1", "visit2", "visit3"))
 Idents(seuratPerivFb) <- seuratPerivFb$diseaseCond
 levels(seuratPerivFb)
-VlnPlot(object=seuratPerivFb, features = "ENSG00000112175.BMP5", cols = coldiseaseCond) + theme(legend.position = "none")
+VlnPlot(object=seuratPerivFb, features = "ENSG00000112175.BMP5", cols = coldiseaseCond, pt.size = 0.5, raster = FALSE) + theme(legend.position = "none")
 ```
 
 ## BMP vs Tcells

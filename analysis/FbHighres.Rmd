@@ -147,6 +147,93 @@ DimPlot(seuratAllFb, reduction = "umap", pt.size = 0.5, cols = coldiseaseCond)
 DimPlot(seuratAllFb, reduction = "umap", pt.size = 0.5, cols = coldiseaseCond) + theme(legend.position = "null")
 ```
 
+
+
+## subset umap healthy
+```{r subset umap healthy}
+seuratFbHealthy <- subset(seuratAllFb, diseaseCond == "healthy")
+
+Idents(seuratFbHealthy) <- seuratFbHealthy$clusterNameAllFb
+DimPlot(seuratFbHealthy, reduction = "umap", pt.size = 0.5, cols = colAllFb, label = TRUE)
+DimPlot(seuratFbHealthy, reduction = "umap", pt.size = 0.5, cols = colAllFb)
+DimPlot(seuratFbHealthy, reduction = "umap", pt.size = 0.5, cols = colAllFb)  + theme(legend.position = "null")
+
+Idents(seuratFbHealthy) <- seuratFbHealthy$diseaseCond
+DimPlot(seuratFbHealthy, reduction = "umap", pt.size = 0.5, cols = coldiseaseCond)
+DimPlot(seuratFbHealthy, reduction = "umap", pt.size = 0.5, cols = coldiseaseCond) + theme(legend.position = "null")
+```
+
+## subset umap explant
+```{r subset umap explant}
+seuratFbExplant <- subset(seuratAllFb, diseaseCond == "explant")
+
+Idents(seuratFbExplant) <- seuratFbExplant$clusterNameAllFb
+DimPlot(seuratFbExplant, reduction = "umap", pt.size = 0.5, cols = colAllFb, label = TRUE)
+DimPlot(seuratFbExplant, reduction = "umap", pt.size = 0.5, cols = colAllFb)
+DimPlot(seuratFbExplant, reduction = "umap", pt.size = 0.5, cols = colAllFb)  + theme(legend.position = "null")
+
+Idents(seuratFbExplant) <- seuratFbExplant$diseaseCond
+DimPlot(seuratFbExplant, reduction = "umap", pt.size = 0.5, cols = coldiseaseCond)
+DimPlot(seuratFbExplant, reduction = "umap", pt.size = 0.5, cols = coldiseaseCond) + theme(legend.position = "null")
+```
+
+## subset umap Visit1
+```{r subset umap Visit1}
+seuratFbVisit1 <- subset(seuratAllFb, diseaseCond == "visit1")
+
+Idents(seuratFbVisit1) <- seuratFbVisit1$clusterNameAllFb
+DimPlot(seuratFbVisit1, reduction = "umap", pt.size = 0.5, cols = colAllFb, label = TRUE)
+DimPlot(seuratFbVisit1, reduction = "umap", pt.size = 0.5, cols = colAllFb)
+DimPlot(seuratFbVisit1, reduction = "umap", pt.size = 0.5, cols = colAllFb)  + theme(legend.position = "null")
+
+Idents(seuratFbVisit1) <- seuratFbVisit1$diseaseCond
+DimPlot(seuratFbVisit1, reduction = "umap", pt.size = 0.5, cols = coldiseaseCond)
+DimPlot(seuratFbVisit1, reduction = "umap", pt.size = 0.5, cols = coldiseaseCond) + theme(legend.position = "null")
+```
+
+## subset umap Visit2
+```{r subset umap Visit2}
+seuratFbVisit2 <- subset(seuratAllFb, diseaseCond == "visit2")
+
+Idents(seuratFbVisit2) <- seuratFbVisit2$clusterNameAllFb
+DimPlot(seuratFbVisit2, reduction = "umap", pt.size = 0.5, cols = colAllFb, label = TRUE)
+DimPlot(seuratFbVisit2, reduction = "umap", pt.size = 0.5, cols = colAllFb)
+DimPlot(seuratFbVisit2, reduction = "umap", pt.size = 0.5, cols = colAllFb)  + theme(legend.position = "null")
+
+Idents(seuratFbVisit2) <- seuratFbVisit2$diseaseCond
+DimPlot(seuratFbVisit2, reduction = "umap", pt.size = 0.5, cols = coldiseaseCond)
+DimPlot(seuratFbVisit2, reduction = "umap", pt.size = 0.5, cols = coldiseaseCond) + theme(legend.position = "null")
+```
+
+## subset umap Visit3
+```{r subset umap Visit3}
+seuratFbVisit3 <- subset(seuratAllFb, diseaseCond == "visit3")
+
+Idents(seuratFbVisit3) <- seuratFbVisit3$clusterNameAllFb
+DimPlot(seuratFbVisit3, reduction = "umap", pt.size = 0.5, cols = colAllFb, label = TRUE)
+DimPlot(seuratFbVisit3, reduction = "umap", pt.size = 0.5, cols = colAllFb)
+DimPlot(seuratFbVisit3, reduction = "umap", pt.size = 0.5, cols = colAllFb)  + theme(legend.position = "null")
+
+Idents(seuratFbVisit3) <- seuratFbVisit3$diseaseCond
+DimPlot(seuratFbVisit3, reduction = "umap", pt.size = 0.5, cols = coldiseaseCond)
+DimPlot(seuratFbVisit3, reduction = "umap", pt.size = 0.5, cols = coldiseaseCond) + theme(legend.position = "null")
+```
+
+## subset umap Visit1to3
+```{r subset umap Visit1to3}
+seuratFbVisit1to3 <- subset(seuratAllFb, diseaseCond %in% c("visit1","visit2","visit3"))
+
+Idents(seuratFbVisit1to3) <- seuratFbVisit1to3$clusterNameAllFb
+DimPlot(seuratFbVisit1to3, reduction = "umap", pt.size = 0.5, cols = colAllFb, label = TRUE)
+DimPlot(seuratFbVisit1to3, reduction = "umap", pt.size = 0.5, cols = colAllFb)
+DimPlot(seuratFbVisit1to3, reduction = "umap", pt.size = 0.5, cols = colAllFb)  + theme(legend.position = "null")
+
+Idents(seuratFbVisit1to3) <- seuratFbVisit1to3$diseaseCond
+DimPlot(seuratFbVisit1to3, reduction = "umap", pt.size = 0.5, cols = coldiseaseCond)
+DimPlot(seuratFbVisit1to3, reduction = "umap", pt.size = 0.5, cols = coldiseaseCond) + theme(legend.position = "null")
+```
+
+
 ## calculate cluster marker genes
 ```{r cluster marker genes}
 ##cluster marker

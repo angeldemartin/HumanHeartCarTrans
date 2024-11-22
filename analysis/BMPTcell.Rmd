@@ -170,7 +170,7 @@ levels(seuratPerivFb)
 VlnPlot(object=seuratPerivFb, features = "ENSG00000112175.BMP5", cols = coldiseaseCond, pt.size = 0.5, raster = FALSE) + theme(legend.position = "none")
 ```
 
-## BMP vs Tcells
+## BMP vs Tcells and Mph
 ```{r BMP4vsTcells}
 ###rel abundance CD8 Tcells
 datList <- NULL
@@ -182,8 +182,13 @@ for(con in unique(seuratM$patient_diseaseCond)){
   datList[[con]] <- dat_con
 }
 dat_allclust <- do.call("rbind", datList)
+## CD8 Tcells
 datTcell <- dat_allclust %>% filter(Var1 == "Tcell") 
 rownames(datTcell) <- datTcell$patient_diseaseCond
+
+## Mph
+datMph <- dat_allclust %>% filter(Var1 == "Mph") 
+rownames(datMph) <- datMph$patient_diseaseCond
 
 ###BMP4 expr fb
 Idents(seuratFb) <- seuratFb$patient_diseaseCond
@@ -200,8 +205,12 @@ avg.BMP4t$patient_diseaseCond <- rownames(avg.BMP4t)
 avg.BMP4t <- avg.BMP4t %>% mutate(patient_diseaseCond=gsub("\\.", "_", patient_diseaseCond))
 
 dat_all <- merge(datTcell, avg.BMP4t, by = "patient_diseaseCond")
+dat_allMph <- merge(datMph, avg.BMP4t, by = "patient_diseaseCond")
+
 dat_all <- dat_all %>% mutate(diseasecond=gsub(".*_","",patient_diseaseCond)) %>% mutate(patient=gsub("_.*","",patient_diseaseCond))
+dat_allMph <- dat_allMph %>% mutate(diseasecond=gsub(".*_","",patient_diseaseCond)) %>% mutate(patient=gsub("_.*","",patient_diseaseCond))
 ```
+
 ## scatter BMP vs Tcells all
 ```{r scatter BMP4vsTcells all}
 p <- ggscatter(dat_all, x="percent", y="ENSG00000125378.BMP4",
@@ -219,6 +228,25 @@ p <- ggscatter(dat_all, x="percent", y="ENSG00000125378.BMP4",
   stat_cor(aes(label = paste(..r.label.., ..rr.label.., ..p.label.., sep = "~`,`~")), label.x = 0, label.y = -0.2)  # Add correlation stats
 p
 ```
+
+## scatter BMP vs Mph all
+```{r scatter BMP4vsMph all}
+p <- ggscatter(dat_allMph, x="percent", y="ENSG00000125378.BMP4",
+                     label= "patient_diseaseCond",
+                     color = "diseasecond",
+                     palette = c("#dfc27d","#BE3144","#202547","#355C7D","#779d8d"),
+                     repel = T,
+                     label.rectangle = F,
+                     xlab = "MphFreq",
+                     ylab = "BMP4",
+                     font.label = c("0", "plain","black"),
+                     size=2,) +
+  geom_point(aes(color = diseasecond), alpha = 0.5, size = 3) +  # Customize point size and transparency
+  geom_smooth(method = "lm", se = TRUE, color = "black") + # Add regression line with confidence interval
+  stat_cor(aes(label = paste(..r.label.., ..rr.label.., ..p.label.., sep = "~`,`~")), label.x = 0.1, label.y = 0)  # Add correlation stats
+p
+```
+
 ## scatter BMP vs Tcells individual
 ```{r scatter BMP4vsTcells individual diseaecond}
 dat_HH <- dat_all %>% filter(diseasecond == "healthy") 
@@ -320,6 +348,110 @@ p <- ggscatter(dat_v3, x="percent", y="ENSG00000125378.BMP4",
   geom_point(aes(color = diseasecond), alpha = 0.5, size = 3) +  # Customize point size and transparency
   geom_smooth(method = "lm", se = TRUE, color = "black") + # Add regression line with confidence interval
   stat_cor(aes(label = paste(..r.label.., ..rr.label.., ..p.label.., sep = "~`,`~")), label.x = 0.1, label.y = 0.7)  # Add correlation stats
+p
+```
+
+## scatter BMP vs Mph individual
+```{r scatter BMP4vsMph individual diseaecond}
+dat_HH <- dat_allMph %>% filter(diseasecond == "healthy") 
+
+p <- ggscatter(dat_HH, x="percent", y="ENSG00000125378.BMP4",
+                     label= "patient",
+                     color = "diseasecond",
+                     palette = c("#dfc27d"),
+                     repel = T,
+                     label.rectangle = F,
+                     xlab = "MphFreq",
+                     ylab = "BMP4",
+                     font.label = c("10", "plain","black"),
+                     size=2,) +
+  geom_point(aes(color = diseasecond), alpha = 0.5, size = 3) +  # Customize point size and transparency
+  geom_smooth(method = "lm", se = TRUE, color = "black") + # Add regression line with confidence interval
+  stat_cor(aes(label = paste(..r.label.., ..rr.label.., ..p.label.., sep = "~`,`~")), label.x = 0.1, label.y = 0.1)  # Add correlation stats
+p
+
+
+dat_expl <- dat_allMph %>% filter(diseasecond == "explant") 
+p <- ggscatter(dat_expl, x="percent", y="ENSG00000125378.BMP4",
+                     label= "patient",
+                     color = "diseasecond",
+                     palette = c("#BE3144"),
+                     repel = T,
+                     label.rectangle = F,
+                     xlab = "MphFreq",
+                     ylab = "BMP4",
+                     font.label = c("10", "plain","black"),
+                     size=2,) +
+  geom_point(aes(color = diseasecond), alpha = 0.5, size = 3) +  # Customize point size and transparency
+  geom_smooth(method = "lm", se = TRUE, color = "black") + # Add regression line with confidence interval
+  stat_cor(aes(label = paste(..r.label.., ..rr.label.., ..p.label.., sep = "~`,`~")), label.x = 0.1, label.y = 1.5)  # Add correlation stats
+p
+
+dat_v1to3 <- dat_allMph %>% filter(diseasecond %in% c("visit1", "visit2", "visit3"))
+p <- ggscatter(dat_v1to3, x="percent", y="ENSG00000125378.BMP4",
+                     label= "patient",
+                     color = "diseasecond",
+                     palette = c("#202547","#355C7D","#779d8d"),
+                     repel = T,
+                     label.rectangle = F,
+                     xlab = "MphFreq",
+                     ylab = "BMP4",
+                     font.label = c("0", "plain","black"),
+                     size=2,) +
+  geom_point(aes(color = diseasecond), alpha = 0.5, size = 3) +  # Customize point size and transparency
+  geom_smooth(method = "lm", se = TRUE, color = "black") + # Add regression line with confidence interval
+  stat_cor(aes(label = paste(..r.label.., ..rr.label.., ..p.label.., sep = "~`,`~")), label.x = 0.2, label.y = 0.75)  # Add correlation stats
+p
+
+
+dat_v1 <- dat_allMph %>% filter(diseasecond %in% c("visit1"))
+p <- ggscatter(dat_v1, x="percent", y="ENSG00000125378.BMP4",
+                     label= "patient",
+                     color = "diseasecond",
+                     palette = c("#202547"),
+                     repel = T,
+                     label.rectangle = F,
+                     xlab = "MphFreq",
+                     ylab = "BMP4",
+                     font.label = c("10", "plain","black"),
+                     size=2,) +
+  geom_point(aes(color = diseasecond), alpha = 0.5, size = 3) +  # Customize point size and transparency
+  geom_smooth(method = "lm", se = TRUE, color = "black") + # Add regression line with confidence interval
+  stat_cor(aes(label = paste(..r.label.., ..rr.label.., ..p.label.., sep = "~`,`~")), label.x = 0.15, label.y = 0.8)  # Add correlation stats
+p
+
+
+dat_v2 <- dat_allMph %>% filter(diseasecond %in% c("visit2"))
+p <- ggscatter(dat_v2, x="percent", y="ENSG00000125378.BMP4",
+                     label= "patient",
+                     color = "diseasecond",
+                     palette = c("#355C7D"),
+                     repel = T,
+                     label.rectangle = F,
+                     xlab = "MphFreq",
+                     ylab = "BMP4",
+                     font.label = c("10", "plain","black"),
+                     size=2,) +
+  geom_point(aes(color = diseasecond), alpha = 0.5, size = 3) +  # Customize point size and transparency
+  geom_smooth(method = "lm", se = TRUE, color = "black") + # Add regression line with confidence interval
+  stat_cor(aes(label = paste(..r.label.., ..rr.label.., ..p.label.., sep = "~`,`~")), label.x = 0.1, label.y = 0.1)  # Add correlation stats
+p
+
+
+dat_v3 <- dat_allMph %>% filter(diseasecond %in% c("visit3"))
+p <- ggscatter(dat_v3, x="percent", y="ENSG00000125378.BMP4",
+                     label= "patient",
+                     color = "diseasecond",
+                     palette = c("#779d8d"),
+                     repel = T,
+                     label.rectangle = F,
+                     xlab = "MphFreq",
+                     ylab = "BMP4",
+                     font.label = c("10", "plain","black"),
+                     size=2,) +
+  geom_point(aes(color = diseasecond), alpha = 0.5, size = 3) +  # Customize point size and transparency
+  geom_smooth(method = "lm", se = TRUE, color = "black") + # Add regression line with confidence interval
+  stat_cor(aes(label = paste(..r.label.., ..rr.label.., ..p.label.., sep = "~`,`~")), label.x = 0.2, label.y = 0.7)  # Add correlation stats
 p
 ```
 

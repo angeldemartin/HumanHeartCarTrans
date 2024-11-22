@@ -382,7 +382,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-11-17
+<strong>Last updated:</strong> 2024-11-22
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -550,15 +550,15 @@ data/Human_heart_AllFb.rds
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstreef7bd86bcfe8b24c088b7827e1091a1822af78b91targetblankf7bd86ba">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree6c2995c4d6f035a9b6bde6119ff21527660f238dtargetblank6c2995ca">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/f7bd86bcfe8b24c088b7827e1091a1822af78b91" target="_blank">f7bd86b</a>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/6c2995c4d6f035a9b6bde6119ff21527660f238d" target="_blank">6c2995c</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstreef7bd86bcfe8b24c088b7827e1091a1822af78b91targetblankf7bd86ba"
+id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinHumanHeartCarTranstree6c2995c4d6f035a9b6bde6119ff21527660f238dtargetblank6c2995ca"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -568,7 +568,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/f7bd86bcfe8b24c088b7827e1091a1822af78b91" target="_blank">f7bd86b</a>.
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/tree/6c2995c4d6f035a9b6bde6119ff21527660f238d" target="_blank">6c2995c</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -592,7 +592,6 @@ Ignored files:
 
 Unstaged changes:
     Modified:   analysis/FbHighres.Rmd
-    Modified:   analysis/RelativeAbundances.Rmd
 
 </code></pre>
 <p>
@@ -637,6 +636,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/analysis/FbHighres.Rmd" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+<td>
+Nov24
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/angeldemartin/HumanHeartCarTrans/6d9885325e369e66c97425f27f7da659dcba4f22/docs/FbHighres.html" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+<td>
+Nov24
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1123,6 +1156,108 @@ angeldemartin
 </div>
 </div>
 </div>
+<div id="subset-umap-healthy" class="section level2">
+<h2>subset umap healthy</h2>
+<pre class="r"><code>seuratFbHealthy &lt;- subset(seuratAllFb, diseaseCond == &quot;healthy&quot;)
+
+Idents(seuratFbHealthy) &lt;- seuratFbHealthy$clusterNameAllFb
+DimPlot(seuratFbHealthy, reduction = &quot;umap&quot;, pt.size = 0.5, cols = colAllFb, label = TRUE)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20healthy-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seuratFbHealthy, reduction = &quot;umap&quot;, pt.size = 0.5, cols = colAllFb)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20healthy-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seuratFbHealthy, reduction = &quot;umap&quot;, pt.size = 0.5, cols = colAllFb)  + theme(legend.position = &quot;null&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20healthy-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>Idents(seuratFbHealthy) &lt;- seuratFbHealthy$diseaseCond
+DimPlot(seuratFbHealthy, reduction = &quot;umap&quot;, pt.size = 0.5, cols = coldiseaseCond)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20healthy-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seuratFbHealthy, reduction = &quot;umap&quot;, pt.size = 0.5, cols = coldiseaseCond) + theme(legend.position = &quot;null&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20healthy-5.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="subset-umap-explant" class="section level2">
+<h2>subset umap explant</h2>
+<pre class="r"><code>seuratFbExplant &lt;- subset(seuratAllFb, diseaseCond == &quot;explant&quot;)
+
+Idents(seuratFbExplant) &lt;- seuratFbExplant$clusterNameAllFb
+DimPlot(seuratFbExplant, reduction = &quot;umap&quot;, pt.size = 0.5, cols = colAllFb, label = TRUE)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20explant-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seuratFbExplant, reduction = &quot;umap&quot;, pt.size = 0.5, cols = colAllFb)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20explant-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seuratFbExplant, reduction = &quot;umap&quot;, pt.size = 0.5, cols = colAllFb)  + theme(legend.position = &quot;null&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20explant-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>Idents(seuratFbExplant) &lt;- seuratFbExplant$diseaseCond
+DimPlot(seuratFbExplant, reduction = &quot;umap&quot;, pt.size = 0.5, cols = coldiseaseCond)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20explant-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seuratFbExplant, reduction = &quot;umap&quot;, pt.size = 0.5, cols = coldiseaseCond) + theme(legend.position = &quot;null&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20explant-5.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="subset-umap-visit1" class="section level2">
+<h2>subset umap Visit1</h2>
+<pre class="r"><code>seuratFbVisit1 &lt;- subset(seuratAllFb, diseaseCond == &quot;visit1&quot;)
+
+Idents(seuratFbVisit1) &lt;- seuratFbVisit1$clusterNameAllFb
+DimPlot(seuratFbVisit1, reduction = &quot;umap&quot;, pt.size = 0.5, cols = colAllFb, label = TRUE)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20Visit1-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seuratFbVisit1, reduction = &quot;umap&quot;, pt.size = 0.5, cols = colAllFb)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20Visit1-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seuratFbVisit1, reduction = &quot;umap&quot;, pt.size = 0.5, cols = colAllFb)  + theme(legend.position = &quot;null&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20Visit1-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>Idents(seuratFbVisit1) &lt;- seuratFbVisit1$diseaseCond
+DimPlot(seuratFbVisit1, reduction = &quot;umap&quot;, pt.size = 0.5, cols = coldiseaseCond)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20Visit1-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seuratFbVisit1, reduction = &quot;umap&quot;, pt.size = 0.5, cols = coldiseaseCond) + theme(legend.position = &quot;null&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20Visit1-5.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="subset-umap-visit2" class="section level2">
+<h2>subset umap Visit2</h2>
+<pre class="r"><code>seuratFbVisit2 &lt;- subset(seuratAllFb, diseaseCond == &quot;visit2&quot;)
+
+Idents(seuratFbVisit2) &lt;- seuratFbVisit2$clusterNameAllFb
+DimPlot(seuratFbVisit2, reduction = &quot;umap&quot;, pt.size = 0.5, cols = colAllFb, label = TRUE)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20Visit2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seuratFbVisit2, reduction = &quot;umap&quot;, pt.size = 0.5, cols = colAllFb)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20Visit2-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seuratFbVisit2, reduction = &quot;umap&quot;, pt.size = 0.5, cols = colAllFb)  + theme(legend.position = &quot;null&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20Visit2-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>Idents(seuratFbVisit2) &lt;- seuratFbVisit2$diseaseCond
+DimPlot(seuratFbVisit2, reduction = &quot;umap&quot;, pt.size = 0.5, cols = coldiseaseCond)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20Visit2-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seuratFbVisit2, reduction = &quot;umap&quot;, pt.size = 0.5, cols = coldiseaseCond) + theme(legend.position = &quot;null&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20Visit2-5.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="subset-umap-visit3" class="section level2">
+<h2>subset umap Visit3</h2>
+<pre class="r"><code>seuratFbVisit3 &lt;- subset(seuratAllFb, diseaseCond == &quot;visit3&quot;)
+
+Idents(seuratFbVisit3) &lt;- seuratFbVisit3$clusterNameAllFb
+DimPlot(seuratFbVisit3, reduction = &quot;umap&quot;, pt.size = 0.5, cols = colAllFb, label = TRUE)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20Visit3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seuratFbVisit3, reduction = &quot;umap&quot;, pt.size = 0.5, cols = colAllFb)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20Visit3-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seuratFbVisit3, reduction = &quot;umap&quot;, pt.size = 0.5, cols = colAllFb)  + theme(legend.position = &quot;null&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20Visit3-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>Idents(seuratFbVisit3) &lt;- seuratFbVisit3$diseaseCond
+DimPlot(seuratFbVisit3, reduction = &quot;umap&quot;, pt.size = 0.5, cols = coldiseaseCond)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20Visit3-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seuratFbVisit3, reduction = &quot;umap&quot;, pt.size = 0.5, cols = coldiseaseCond) + theme(legend.position = &quot;null&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20Visit3-5.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="subset-umap-visit1to3" class="section level2">
+<h2>subset umap Visit1to3</h2>
+<pre class="r"><code>seuratFbVisit1to3 &lt;- subset(seuratAllFb, diseaseCond %in% c(&quot;visit1&quot;,&quot;visit2&quot;,&quot;visit3&quot;))
+
+Idents(seuratFbVisit1to3) &lt;- seuratFbVisit1to3$clusterNameAllFb
+DimPlot(seuratFbVisit1to3, reduction = &quot;umap&quot;, pt.size = 0.5, cols = colAllFb, label = TRUE)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20Visit1to3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seuratFbVisit1to3, reduction = &quot;umap&quot;, pt.size = 0.5, cols = colAllFb)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20Visit1to3-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seuratFbVisit1to3, reduction = &quot;umap&quot;, pt.size = 0.5, cols = colAllFb)  + theme(legend.position = &quot;null&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20Visit1to3-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>Idents(seuratFbVisit1to3) &lt;- seuratFbVisit1to3$diseaseCond
+DimPlot(seuratFbVisit1to3, reduction = &quot;umap&quot;, pt.size = 0.5, cols = coldiseaseCond)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20Visit1to3-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seuratFbVisit1to3, reduction = &quot;umap&quot;, pt.size = 0.5, cols = coldiseaseCond) + theme(legend.position = &quot;null&quot;)</code></pre>
+<p><img src="figure/FbHighres.Rmd/subset%20umap%20Visit1to3-5.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
 <div id="calculate-cluster-marker-genes" class="section level2">
 <h2>calculate cluster marker genes</h2>
 <pre class="r"><code>##cluster marker
@@ -1436,6 +1571,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/abundance diseaseCond-1.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6397a5e809c4ced4f594bd73907a741b7a20035e/docs/figure/FbHighres.Rmd/abundance diseaseCond-1.png" target="_blank">6397a5e</a>
 </td>
 <td>
@@ -1471,6 +1617,44 @@ for(con in unique(seuratAllFbhealexpl$diseaseCond)){
 ## plot abundance
 ggbarplot(dat_all, x= &quot;diseaseCond&quot;, y= &quot;percent&quot;, fill = &quot;Var1&quot;, palette = colAllFb, legend = &quot;right&quot;, legend.titel = &quot;cluster&quot;, ylab = &quot;frequency&quot;)  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + scale_x_discrete(limits=orddiseaseCond2)</code></pre>
 <p><img src="figure/FbHighres.Rmd/abundance%20diseaseCond%20heal%20and%20expl-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-abundance-diseaseCond-heal-and-expl-1">
+Past versions of "abundance diseaseCond heal and expl-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-abundance-diseaseCond-heal-and-expl-1"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/abundance diseaseCond heal and expl-1.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="fractions-according-to-patientsdisease-cond"
 class="section level2">
@@ -2861,6 +3045,43 @@ levels(seurat)</code></pre>
 
 avgHeatmap(seurat, selGenes = genesPlot, colVecIdent = colVec)</code></pre>
 <p><img src="figure/FbHighres.Rmd/heatmap%20chemkines%20cytokine-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-heatmap-chemkines-cytokine-1">
+Past versions of "heatmap chemkines cytokine-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-heatmap-chemkines-cytokine-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/heatmap chemkines cytokine-1.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="calculate-de-genes-in-fb-1-4" class="section level2">
 <h2>calculate DE genes in Fb 1-4</h2>
@@ -3095,8 +3316,82 @@ scehealSub$sign2[which(scehealSub$sign &gt; 2)] &lt;- 2
 plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20ECM%20organization-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-ECM-organization-3">
+Past versions of "umap ECM organization-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-ECM-organization-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap ECM organization-3.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20ECM%20organization-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-ECM-organization-4">
+Past versions of "umap ECM organization-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-ECM-organization-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap ECM organization-4.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##visit1 only
 scevisit1Sub &lt;- scevisit1[which(rownames(scevisit1) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -3110,8 +3405,82 @@ scevisit1Sub$sign2[which(scevisit1Sub$sign &gt; 2)] &lt;- 2
 plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20ECM%20organization-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-ECM-organization-5">
+Past versions of "umap ECM organization-5.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-ECM-organization-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap ECM organization-5.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20ECM%20organization-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-ECM-organization-6">
+Past versions of "umap ECM organization-6.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-ECM-organization-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap ECM organization-6.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##visit2 only
 scevisit2Sub &lt;- scevisit2[which(rownames(scevisit2) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -3125,8 +3494,82 @@ scevisit2Sub$sign2[which(scevisit2Sub$sign &gt; 2)] &lt;- 2
 plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20ECM%20organization-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-ECM-organization-7">
+Past versions of "umap ECM organization-7.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-ECM-organization-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap ECM organization-7.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20ECM%20organization-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-ECM-organization-8">
+Past versions of "umap ECM organization-8.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-ECM-organization-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap ECM organization-8.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##visit3 only
 scevisit3Sub &lt;- scevisit3[which(rownames(scevisit3) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -3140,8 +3583,82 @@ scevisit3Sub$sign2[which(scevisit3Sub$sign &gt; 2)] &lt;- 2
 plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20ECM%20organization-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-ECM-organization-9">
+Past versions of "umap ECM organization-9.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-ECM-organization-9" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap ECM organization-9.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20ECM%20organization-10.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-ECM-organization-10">
+Past versions of "umap ECM organization-10.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-ECM-organization-10" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap ECM organization-10.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##explant only
 sceexplantSub &lt;- sceexplant[which(rownames(sceexplant) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -3155,8 +3672,82 @@ sceexplantSub$sign2[which(sceexplantSub$sign &gt; 2)] &lt;- 2
 plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20ECM%20organization-11.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-ECM-organization-11">
+Past versions of "umap ECM organization-11.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-ECM-organization-11" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap ECM organization-11.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20ECM%20organization-12.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-ECM-organization-12">
+Past versions of "umap ECM organization-12.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-ECM-organization-12" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap ECM organization-12.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##GSEA Fb2
 DEGenesFb2 &lt;- DEGenesFb1to4adj %&gt;% filter(cluster == &quot;Fb2&quot;)
 egoFb2 &lt;- enrichGO(gene = unique(DEGenesFb2$EnsID),
@@ -3319,8 +3910,84 @@ scehealSub$sign2[which(scehealSub$sign &gt; 0.5)] &lt;- 0.5
 plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20muscle%20cell%20differentiation-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-muscle-cell-differentiation-3">
+Past versions of "umap muscle cell differentiation-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-muscle-cell-differentiation-3"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap muscle cell differentiation-3.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20muscle%20cell%20differentiation-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-muscle-cell-differentiation-4">
+Past versions of "umap muscle cell differentiation-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-muscle-cell-differentiation-4"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap muscle cell differentiation-4.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##visit1 only
 scevisit1Sub &lt;- scevisit1[which(rownames(scevisit1) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -3334,8 +4001,84 @@ scevisit1Sub$sign2[which(scevisit1Sub$sign &gt; 0.5)] &lt;- 0.5
 plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20muscle%20cell%20differentiation-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-muscle-cell-differentiation-5">
+Past versions of "umap muscle cell differentiation-5.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-muscle-cell-differentiation-5"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap muscle cell differentiation-5.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20muscle%20cell%20differentiation-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-muscle-cell-differentiation-6">
+Past versions of "umap muscle cell differentiation-6.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-muscle-cell-differentiation-6"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap muscle cell differentiation-6.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##visit2 only
 scevisit2Sub &lt;- scevisit2[which(rownames(scevisit2) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -3349,8 +4092,84 @@ scevisit2Sub$sign2[which(scevisit2Sub$sign &gt; 0.5)] &lt;- 0.5
 plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20muscle%20cell%20differentiation-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-muscle-cell-differentiation-7">
+Past versions of "umap muscle cell differentiation-7.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-muscle-cell-differentiation-7"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap muscle cell differentiation-7.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20muscle%20cell%20differentiation-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-muscle-cell-differentiation-8">
+Past versions of "umap muscle cell differentiation-8.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-muscle-cell-differentiation-8"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap muscle cell differentiation-8.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##visit3 only
 scevisit3Sub &lt;- scevisit3[which(rownames(scevisit3) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -3364,8 +4183,84 @@ scevisit3Sub$sign2[which(scevisit3Sub$sign &gt; 0.5)] &lt;- 0.5
 plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20muscle%20cell%20differentiation-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-muscle-cell-differentiation-9">
+Past versions of "umap muscle cell differentiation-9.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-muscle-cell-differentiation-9"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap muscle cell differentiation-9.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20muscle%20cell%20differentiation-10.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-muscle-cell-differentiation-10">
+Past versions of "umap muscle cell differentiation-10.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-muscle-cell-differentiation-10"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap muscle cell differentiation-10.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##explant only
 sceexplantSub &lt;- sceexplant[which(rownames(sceexplant) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -3379,8 +4274,84 @@ sceexplantSub$sign2[which(sceexplantSub$sign &gt; 0.5)] &lt;- 0.5
 plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20muscle%20cell%20differentiation-11.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-muscle-cell-differentiation-11">
+Past versions of "umap muscle cell differentiation-11.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-muscle-cell-differentiation-11"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap muscle cell differentiation-11.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20muscle%20cell%20differentiation-12.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-muscle-cell-differentiation-12">
+Past versions of "umap muscle cell differentiation-12.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-muscle-cell-differentiation-12"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap muscle cell differentiation-12.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ego1 &lt;- dplyr::filter(egoFb2@result,egoFb2@result$Description==&quot;response to type II interferon&quot;)
 g1 &lt;- ego1$geneID
 Str &lt;-(g1)
@@ -3494,8 +4465,84 @@ scehealSub$sign2[which(scehealSub$sign &gt; 1)] &lt;- 1
 plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20response%20to%20type%20II%20interferon-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-response-to-type-II-interferon-3">
+Past versions of "umap response to type II interferon-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-response-to-type-II-interferon-3"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap response to type II interferon-3.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20response%20to%20type%20II%20interferon-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-response-to-type-II-interferon-4">
+Past versions of "umap response to type II interferon-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-response-to-type-II-interferon-4"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap response to type II interferon-4.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##visit1 only
 scevisit1Sub &lt;- scevisit1[which(rownames(scevisit1) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -3509,8 +4556,84 @@ scevisit1Sub$sign2[which(scevisit1Sub$sign &gt; 1)] &lt;- 1
 plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20response%20to%20type%20II%20interferon-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-response-to-type-II-interferon-5">
+Past versions of "umap response to type II interferon-5.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-response-to-type-II-interferon-5"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap response to type II interferon-5.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20response%20to%20type%20II%20interferon-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-response-to-type-II-interferon-6">
+Past versions of "umap response to type II interferon-6.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-response-to-type-II-interferon-6"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap response to type II interferon-6.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##visit2 only
 scevisit2Sub &lt;- scevisit2[which(rownames(scevisit2) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -3524,8 +4647,84 @@ scevisit2Sub$sign2[which(scevisit2Sub$sign &gt; 1)] &lt;- 1
 plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20response%20to%20type%20II%20interferon-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-response-to-type-II-interferon-7">
+Past versions of "umap response to type II interferon-7.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-response-to-type-II-interferon-7"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap response to type II interferon-7.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20response%20to%20type%20II%20interferon-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-response-to-type-II-interferon-8">
+Past versions of "umap response to type II interferon-8.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-response-to-type-II-interferon-8"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap response to type II interferon-8.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##visit3 only
 scevisit3Sub &lt;- scevisit3[which(rownames(scevisit3) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -3539,8 +4738,84 @@ scevisit3Sub$sign2[which(scevisit3Sub$sign &gt; 1)] &lt;- 1
 plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20response%20to%20type%20II%20interferon-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-response-to-type-II-interferon-9">
+Past versions of "umap response to type II interferon-9.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-response-to-type-II-interferon-9"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap response to type II interferon-9.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20response%20to%20type%20II%20interferon-10.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-response-to-type-II-interferon-10">
+Past versions of "umap response to type II interferon-10.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-response-to-type-II-interferon-10"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap response to type II interferon-10.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##explant only
 sceexplantSub &lt;- sceexplant[which(rownames(sceexplant) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -3554,8 +4829,84 @@ sceexplantSub$sign2[which(sceexplantSub$sign &gt; 1)] &lt;- 1
 plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20response%20to%20type%20II%20interferon-11.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-response-to-type-II-interferon-11">
+Past versions of "umap response to type II interferon-11.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-response-to-type-II-interferon-11"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap response to type II interferon-11.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20response%20to%20type%20II%20interferon-12.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-response-to-type-II-interferon-12">
+Past versions of "umap response to type II interferon-12.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-response-to-type-II-interferon-12"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap response to type II interferon-12.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##GSEA Fb3
 DEGenesFb3 &lt;- DEGenesFb1to4adj %&gt;% filter(cluster == &quot;Fb3&quot;)
 egoFb3 &lt;- enrichGO(gene = unique(DEGenesFb3$EnsID),
@@ -3716,8 +5067,82 @@ scehealSub$sign2[which(scehealSub$sign &gt; 0.5)] &lt;- 0.5
 plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20Wnt%20signaling%20pathway-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-Wnt-signaling-pathway-3">
+Past versions of "umap Wnt signaling pathway-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-Wnt-signaling-pathway-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap Wnt signaling pathway-3.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20Wnt%20signaling%20pathway-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-Wnt-signaling-pathway-4">
+Past versions of "umap Wnt signaling pathway-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-Wnt-signaling-pathway-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap Wnt signaling pathway-4.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##visit1 only
 scevisit1Sub &lt;- scevisit1[which(rownames(scevisit1) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -3731,8 +5156,82 @@ scevisit1Sub$sign2[which(scevisit1Sub$sign &gt; 0.5)] &lt;- 0.5
 plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20Wnt%20signaling%20pathway-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-Wnt-signaling-pathway-5">
+Past versions of "umap Wnt signaling pathway-5.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-Wnt-signaling-pathway-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap Wnt signaling pathway-5.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20Wnt%20signaling%20pathway-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-Wnt-signaling-pathway-6">
+Past versions of "umap Wnt signaling pathway-6.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-Wnt-signaling-pathway-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap Wnt signaling pathway-6.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##visit2 only
 scevisit2Sub &lt;- scevisit2[which(rownames(scevisit2) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -3746,8 +5245,82 @@ scevisit2Sub$sign2[which(scevisit2Sub$sign &gt; 0.5)] &lt;- 0.5
 plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20Wnt%20signaling%20pathway-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-Wnt-signaling-pathway-7">
+Past versions of "umap Wnt signaling pathway-7.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-Wnt-signaling-pathway-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap Wnt signaling pathway-7.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20Wnt%20signaling%20pathway-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-Wnt-signaling-pathway-8">
+Past versions of "umap Wnt signaling pathway-8.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-Wnt-signaling-pathway-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap Wnt signaling pathway-8.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##visit3 only
 scevisit3Sub &lt;- scevisit3[which(rownames(scevisit3) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -3761,8 +5334,82 @@ scevisit3Sub$sign2[which(scevisit3Sub$sign &gt; 0.5)] &lt;- 0.5
 plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20Wnt%20signaling%20pathway-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-Wnt-signaling-pathway-9">
+Past versions of "umap Wnt signaling pathway-9.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-Wnt-signaling-pathway-9" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap Wnt signaling pathway-9.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20Wnt%20signaling%20pathway-10.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-Wnt-signaling-pathway-10">
+Past versions of "umap Wnt signaling pathway-10.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-Wnt-signaling-pathway-10" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap Wnt signaling pathway-10.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##explant only
 sceexplantSub &lt;- sceexplant[which(rownames(sceexplant) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -3776,8 +5423,82 @@ sceexplantSub$sign2[which(sceexplantSub$sign &gt; 0.5)] &lt;- 0.5
 plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20Wnt%20signaling%20pathway-11.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-Wnt-signaling-pathway-11">
+Past versions of "umap Wnt signaling pathway-11.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-Wnt-signaling-pathway-11" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap Wnt signaling pathway-11.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20Wnt%20signaling%20pathway-12.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-Wnt-signaling-pathway-12">
+Past versions of "umap Wnt signaling pathway-12.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-Wnt-signaling-pathway-12" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap Wnt signaling pathway-12.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ego1 &lt;- dplyr::filter(egoFb3@result,egoFb3@result$Description==&quot;transforming growth factor beta receptor signaling pathway&quot;)
 g1 &lt;- ego1$geneID
 Str &lt;-(g1)
@@ -3895,8 +5616,88 @@ scehealSub$sign2[which(scehealSub$sign &gt; 0.8)] &lt;- 0.8
 plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20transforming%20growth%20factor%20beta%20receptor%20signaling%20pathway-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-transforming-growth-factor-beta-receptor-signaling-pathway-3">
+Past versions of "umap transforming growth factor beta receptor
+signaling pathway-3.png"
+</button>
+</p>
+<div
+id="fig-no-spaces-umap-transforming-growth-factor-beta-receptor-signaling-pathway-3"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap transforming growth factor beta receptor signaling pathway-3.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20transforming%20growth%20factor%20beta%20receptor%20signaling%20pathway-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-transforming-growth-factor-beta-receptor-signaling-pathway-4">
+Past versions of "umap transforming growth factor beta receptor
+signaling pathway-4.png"
+</button>
+</p>
+<div
+id="fig-no-spaces-umap-transforming-growth-factor-beta-receptor-signaling-pathway-4"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap transforming growth factor beta receptor signaling pathway-4.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##visit1 only
 scevisit1Sub &lt;- scevisit1[which(rownames(scevisit1) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -3910,8 +5711,88 @@ scevisit1Sub$sign2[which(scevisit1Sub$sign &gt; 0.8)] &lt;- 0.8
 plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20transforming%20growth%20factor%20beta%20receptor%20signaling%20pathway-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-transforming-growth-factor-beta-receptor-signaling-pathway-5">
+Past versions of "umap transforming growth factor beta receptor
+signaling pathway-5.png"
+</button>
+</p>
+<div
+id="fig-no-spaces-umap-transforming-growth-factor-beta-receptor-signaling-pathway-5"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap transforming growth factor beta receptor signaling pathway-5.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20transforming%20growth%20factor%20beta%20receptor%20signaling%20pathway-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-transforming-growth-factor-beta-receptor-signaling-pathway-6">
+Past versions of "umap transforming growth factor beta receptor
+signaling pathway-6.png"
+</button>
+</p>
+<div
+id="fig-no-spaces-umap-transforming-growth-factor-beta-receptor-signaling-pathway-6"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap transforming growth factor beta receptor signaling pathway-6.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##visit2 only
 scevisit2Sub &lt;- scevisit2[which(rownames(scevisit2) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -3925,8 +5806,88 @@ scevisit2Sub$sign2[which(scevisit2Sub$sign &gt; 0.8)] &lt;- 0.8
 plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20transforming%20growth%20factor%20beta%20receptor%20signaling%20pathway-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-transforming-growth-factor-beta-receptor-signaling-pathway-7">
+Past versions of "umap transforming growth factor beta receptor
+signaling pathway-7.png"
+</button>
+</p>
+<div
+id="fig-no-spaces-umap-transforming-growth-factor-beta-receptor-signaling-pathway-7"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap transforming growth factor beta receptor signaling pathway-7.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20transforming%20growth%20factor%20beta%20receptor%20signaling%20pathway-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-transforming-growth-factor-beta-receptor-signaling-pathway-8">
+Past versions of "umap transforming growth factor beta receptor
+signaling pathway-8.png"
+</button>
+</p>
+<div
+id="fig-no-spaces-umap-transforming-growth-factor-beta-receptor-signaling-pathway-8"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap transforming growth factor beta receptor signaling pathway-8.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##visit3 only
 scevisit3Sub &lt;- scevisit3[which(rownames(scevisit3) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -3940,8 +5901,88 @@ scevisit3Sub$sign2[which(scevisit3Sub$sign &gt; 0.8)] &lt;- 0.8
 plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20transforming%20growth%20factor%20beta%20receptor%20signaling%20pathway-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-transforming-growth-factor-beta-receptor-signaling-pathway-9">
+Past versions of "umap transforming growth factor beta receptor
+signaling pathway-9.png"
+</button>
+</p>
+<div
+id="fig-no-spaces-umap-transforming-growth-factor-beta-receptor-signaling-pathway-9"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap transforming growth factor beta receptor signaling pathway-9.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20transforming%20growth%20factor%20beta%20receptor%20signaling%20pathway-10.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-transforming-growth-factor-beta-receptor-signaling-pathway-10">
+Past versions of "umap transforming growth factor beta receptor
+signaling pathway-10.png"
+</button>
+</p>
+<div
+id="fig-no-spaces-umap-transforming-growth-factor-beta-receptor-signaling-pathway-10"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap transforming growth factor beta receptor signaling pathway-10.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##explant only
 sceexplantSub &lt;- sceexplant[which(rownames(sceexplant) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -3955,8 +5996,88 @@ sceexplantSub$sign2[which(sceexplantSub$sign &gt; 0.8)] &lt;- 0.8
 plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20transforming%20growth%20factor%20beta%20receptor%20signaling%20pathway-11.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-transforming-growth-factor-beta-receptor-signaling-pathway-11">
+Past versions of "umap transforming growth factor beta receptor
+signaling pathway-11.png"
+</button>
+</p>
+<div
+id="fig-no-spaces-umap-transforming-growth-factor-beta-receptor-signaling-pathway-11"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap transforming growth factor beta receptor signaling pathway-11.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20transforming%20growth%20factor%20beta%20receptor%20signaling%20pathway-12.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-transforming-growth-factor-beta-receptor-signaling-pathway-12">
+Past versions of "umap transforming growth factor beta receptor
+signaling pathway-12.png"
+</button>
+</p>
+<div
+id="fig-no-spaces-umap-transforming-growth-factor-beta-receptor-signaling-pathway-12"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap transforming growth factor beta receptor signaling pathway-12.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ego1 &lt;- dplyr::filter(egoFb3@result,egoFb3@result$Description==&quot;BMP signaling pathway&quot;)
 g1 &lt;- ego1$geneID
 Str &lt;-(g1)
@@ -4068,8 +6189,82 @@ scehealSub$sign2[which(scehealSub$sign &gt; 0.8)] &lt;- 0.8
 plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20BMP%20signaling%20pathway-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-BMP-signaling-pathway-3">
+Past versions of "umap BMP signaling pathway-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-BMP-signaling-pathway-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap BMP signaling pathway-3.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20BMP%20signaling%20pathway-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-BMP-signaling-pathway-4">
+Past versions of "umap BMP signaling pathway-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-BMP-signaling-pathway-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap BMP signaling pathway-4.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##visit1 only
 scevisit1Sub &lt;- scevisit1[which(rownames(scevisit1) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -4083,8 +6278,82 @@ scevisit1Sub$sign2[which(scevisit1Sub$sign &gt; 0.8)] &lt;- 0.8
 plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20BMP%20signaling%20pathway-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-BMP-signaling-pathway-5">
+Past versions of "umap BMP signaling pathway-5.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-BMP-signaling-pathway-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap BMP signaling pathway-5.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20BMP%20signaling%20pathway-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-BMP-signaling-pathway-6">
+Past versions of "umap BMP signaling pathway-6.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-BMP-signaling-pathway-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap BMP signaling pathway-6.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##visit2 only
 scevisit2Sub &lt;- scevisit2[which(rownames(scevisit2) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -4098,8 +6367,82 @@ scevisit2Sub$sign2[which(scevisit2Sub$sign &gt; 0.8)] &lt;- 0.8
 plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20BMP%20signaling%20pathway-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-BMP-signaling-pathway-7">
+Past versions of "umap BMP signaling pathway-7.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-BMP-signaling-pathway-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap BMP signaling pathway-7.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20BMP%20signaling%20pathway-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-BMP-signaling-pathway-8">
+Past versions of "umap BMP signaling pathway-8.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-BMP-signaling-pathway-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap BMP signaling pathway-8.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##visit3 only
 scevisit3Sub &lt;- scevisit3[which(rownames(scevisit3) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -4113,8 +6456,82 @@ scevisit3Sub$sign2[which(scevisit3Sub$sign &gt; 0.8)] &lt;- 0.8
 plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20BMP%20signaling%20pathway-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-BMP-signaling-pathway-9">
+Past versions of "umap BMP signaling pathway-9.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-BMP-signaling-pathway-9" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap BMP signaling pathway-9.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20BMP%20signaling%20pathway-10.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-BMP-signaling-pathway-10">
+Past versions of "umap BMP signaling pathway-10.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-BMP-signaling-pathway-10" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap BMP signaling pathway-10.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##explant only
 sceexplantSub &lt;- sceexplant[which(rownames(sceexplant) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -4128,8 +6545,82 @@ sceexplantSub$sign2[which(sceexplantSub$sign &gt; 0.8)] &lt;- 0.8
 plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20BMP%20signaling%20pathway-11.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-BMP-signaling-pathway-11">
+Past versions of "umap BMP signaling pathway-11.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-BMP-signaling-pathway-11" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap BMP signaling pathway-11.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20BMP%20signaling%20pathway-12.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-BMP-signaling-pathway-12">
+Past versions of "umap BMP signaling pathway-12.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-BMP-signaling-pathway-12" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap BMP signaling pathway-12.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##GSEA Fb4
 DEGenesFb4 &lt;- DEGenesFb1to4adj %&gt;% filter(cluster == &quot;Fb4&quot;)
 egoFb4 &lt;- enrichGO(gene = unique(DEGenesFb4$EnsID),
@@ -4292,8 +6783,84 @@ scehealSub$sign2[which(scehealSub$sign &gt; 1)] &lt;- 1
 plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20response%20to%20steroid%20hormone-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-response-to-steroid-hormone-3">
+Past versions of "umap response to steroid hormone-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-response-to-steroid-hormone-3"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap response to steroid hormone-3.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scehealSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20response%20to%20steroid%20hormone-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-response-to-steroid-hormone-4">
+Past versions of "umap response to steroid hormone-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-response-to-steroid-hormone-4"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap response to steroid hormone-4.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##visit1 only
 scevisit1Sub &lt;- scevisit1[which(rownames(scevisit1) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -4307,8 +6874,84 @@ scevisit1Sub$sign2[which(scevisit1Sub$sign &gt; 1)] &lt;- 1
 plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20response%20to%20steroid%20hormone-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-response-to-steroid-hormone-5">
+Past versions of "umap response to steroid hormone-5.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-response-to-steroid-hormone-5"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap response to steroid hormone-5.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scevisit1Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20response%20to%20steroid%20hormone-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-response-to-steroid-hormone-6">
+Past versions of "umap response to steroid hormone-6.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-response-to-steroid-hormone-6"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap response to steroid hormone-6.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##visit2 only
 scevisit2Sub &lt;- scevisit2[which(rownames(scevisit2) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -4322,8 +6965,84 @@ scevisit2Sub$sign2[which(scevisit2Sub$sign &gt; 1)] &lt;- 1
 plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20response%20to%20steroid%20hormone-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-response-to-steroid-hormone-7">
+Past versions of "umap response to steroid hormone-7.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-response-to-steroid-hormone-7"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap response to steroid hormone-7.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scevisit2Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20response%20to%20steroid%20hormone-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-response-to-steroid-hormone-8">
+Past versions of "umap response to steroid hormone-8.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-response-to-steroid-hormone-8"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap response to steroid hormone-8.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##visit3 only
 scevisit3Sub &lt;- scevisit3[which(rownames(scevisit3) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -4337,8 +7056,84 @@ scevisit3Sub$sign2[which(scevisit3Sub$sign &gt; 1)] &lt;- 1
 plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20response%20to%20steroid%20hormone-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-response-to-steroid-hormone-9">
+Past versions of "umap response to steroid hormone-9.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-response-to-steroid-hormone-9"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap response to steroid hormone-9.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(scevisit3Sub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20response%20to%20steroid%20hormone-10.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-response-to-steroid-hormone-10">
+Past versions of "umap response to steroid hormone-10.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-response-to-steroid-hormone-10"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap response to steroid hormone-10.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>##explant only
 sceexplantSub &lt;- sceexplant[which(rownames(sceexplant) %in% signGenes$geneID),]
 cntMat &lt;- rowSums(t(as.matrix(
@@ -4352,8 +7147,84 @@ sceexplantSub$sign2[which(sceexplantSub$sign &gt; 1)] &lt;- 1
 plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc +
   theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20response%20to%20steroid%20hormone-11.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-response-to-steroid-hormone-11">
+Past versions of "umap response to steroid hormone-11.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-response-to-steroid-hormone-11"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap response to steroid hormone-11.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plotUMAP(sceexplantSub, colour_by = &quot;sign2&quot;, point_size = 0.5) + sc</code></pre>
 <p><img src="figure/FbHighres.Rmd/umap%20response%20to%20steroid%20hormone-12.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umap-response-to-steroid-hormone-12">
+Past versions of "umap response to steroid hormone-12.png"
+</button>
+</p>
+<div id="fig-no-spaces-umap-response-to-steroid-hormone-12"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/HumanHeartCarTrans/blob/6d9885325e369e66c97425f27f7da659dcba4f22/docs/figure/FbHighres.Rmd/umap response to steroid hormone-12.png" target="_blank">6d98853</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="subset-fb4" class="section level2">
 <h2>subset Fb4</h2>
@@ -4763,7 +7634,7 @@ angeldemartin
 <div id="session-info" class="section level2">
 <h2>session info</h2>
 <pre class="r"><code>date()</code></pre>
-<pre><code>[1] &quot;Sun Nov 17 22:44:35 2024&quot;</code></pre>
+<pre><code>[1] &quot;Fri Nov 22 16:20:50 2024&quot;</code></pre>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.4.0 (2024-04-24)
 Platform: x86_64-apple-darwin20

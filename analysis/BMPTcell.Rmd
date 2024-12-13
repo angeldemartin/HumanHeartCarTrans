@@ -204,7 +204,7 @@ DotPlot(seuratM, features = selGenes, group.by= "clusterName_diseaseCond") + Rot
 genes <- data.frame(gene=rownames(seuratM)) %>% 
   mutate(geneID=gsub("^.*\\.", "", gene))
 
-selGenes <- data.frame(geneID=c("ITGA5", "NOTCH1", "HGF","MET")) %>% left_join(., genes, by="geneID")
+selGenes <- data.frame(geneID=c("SDC2", "NRP1", "HGF","CD44", "ITGA6", "ITGB4" ,"ICAM1","GAB1","GRB2","MET")) %>% left_join(., genes, by="geneID")
 
 DotPlot(seuratM, features = selGenes, group.by= "clusterName_diseaseCond") + RotatedAxis() + scale_color_viridis(option="D") + coord_flip()
 ```

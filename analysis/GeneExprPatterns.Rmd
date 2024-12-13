@@ -173,7 +173,7 @@ VlnPlot(object=seuratMph, features = "ENSG00000172638.EFEMP2", pt.size = 1, cols
 genes <- data.frame(gene=rownames(seuratM)) %>% 
   mutate(geneID=gsub("^.*\\.", "", gene))
 
-selGenes <- data.frame(geneID=c("NRP1","SDC2", "MFAP5")) %>% left_join(., genes, by="geneID")
+selGenes <- data.frame(geneID=c("ITGA5","NOTCH1", "MFAP5")) %>% left_join(., genes, by="geneID")
 
 DotPlot(seuratM, features = selGenes, group.by= "clusterName_diseaseCond") + RotatedAxis() + scale_color_viridis(option="D") + coord_flip()
 ```

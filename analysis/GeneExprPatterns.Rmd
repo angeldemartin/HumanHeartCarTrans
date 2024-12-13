@@ -69,6 +69,9 @@ FeaturePlot(seuratM, features = "ENSG00000065320.NTN1", pt.size = 0.5, cols = c(
 FeaturePlot(seuratM, features = "ENSG00000164136.IL15", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
 FeaturePlot(seuratM, features = "ENSG00000172638.EFEMP2", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
 
+FeaturePlot(seuratM, features = "ENSG00000148400.NOTCH1", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000161638.ITGA5", pt.size = 0.5, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+
 Idents(seuratM) <- seuratM$clusterName
 VlnPlot(object=seuratM, features = "ENSG00000197614.MFAP5", pt.size = 1, cols = colclusterName)
 VlnPlot(object=seuratM, features = "ENSG00000159674.SPON2", pt.size = 1, cols = colclusterName)
@@ -164,12 +167,13 @@ VlnPlot(object=seuratMph, features = "ENSG00000065320.NTN1", pt.size = 1, cols =
 VlnPlot(object=seuratMph, features = "ENSG00000164136.IL15", pt.size = 1, cols = coldiseaseCond)
 VlnPlot(object=seuratMph, features = "ENSG00000172638.EFEMP2", pt.size = 1, cols = coldiseaseCond)
 ```
-### dotplot 
+
+## dotplot 
 ```{r dotplot, fig.height=5, fig.width=20}
 genes <- data.frame(gene=rownames(seuratM)) %>% 
   mutate(geneID=gsub("^.*\\.", "", gene))
 
-selGenes <- data.frame(geneID=c("NTN1","IL15","EFEMP2", "MFAP5")) %>% left_join(., genes, by="geneID")
+selGenes <- data.frame(geneID=c("NRP1","SDC2", "MFAP5")) %>% left_join(., genes, by="geneID")
 
 DotPlot(seuratM, features = selGenes, group.by= "clusterName_diseaseCond") + RotatedAxis() + scale_color_viridis(option="D") + coord_flip()
 ```

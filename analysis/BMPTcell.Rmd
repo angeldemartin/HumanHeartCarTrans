@@ -80,9 +80,14 @@ FeaturePlot(seuratM, features = "ENSG00000204217.BMPR2", pt.size = 0.1, cols = c
 
 FeaturePlot(seuratM, features = "ENSG00000166923.GREM1", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
 FeaturePlot(seuratM, features = "ENSG00000180875.GREM2", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
-
+```
+## HGF MET features
+```{r HGF MET features}
 FeaturePlot(seuratM, features = "ENSG00000019991.HGF", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
 FeaturePlot(seuratM, features = "ENSG00000105976.MET", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+
+FeaturePlot(seuratM, features = "ENSG00000169439.SDC2", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000099250.NRP1", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
 ```
 
 ## VlnPlot MET all cell types
@@ -168,6 +173,40 @@ seuratPerivFb$diseaseCond <- factor(seuratPerivFb$diseaseCond, levels=c("healthy
 Idents(seuratPerivFb) <- seuratPerivFb$diseaseCond
 levels(seuratPerivFb)
 VlnPlot(object=seuratPerivFb, features = "ENSG00000112175.BMP5", cols = coldiseaseCond, pt.size = 0.5, raster = FALSE) + theme(legend.position = "none")
+```
+
+FeaturePlot(seuratM, features = "ENSG00000125378.BMP4", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000112175.BMP5", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000125845.BMP2", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000153162.BMP6", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000168487.BMP1", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000183682.BMP8A", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000138756.BMP2K", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+
+FeaturePlot(seuratM, features = "ENSG00000107779.BMPR1A", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000204217.BMPR2", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+
+FeaturePlot(seuratM, features = "ENSG00000166923.GREM1", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+FeaturePlot(seuratM, features = "ENSG00000180875.GREM2", pt.size = 0.1, cols = c("lightgrey", "#BE3144"), raster = FALSE)
+
+## dotplot BMP GREM
+```{r dotplot BMP GREM, fig.height=5, fig.width=20}
+genes <- data.frame(gene=rownames(seuratM)) %>% 
+  mutate(geneID=gsub("^.*\\.", "", gene))
+
+selGenes <- data.frame(geneID=c("GREM1", "GREM2", "BMPR1A", "BMPR2", "BMP2K", "BMP8A", "BMP1", "BMP6", "BMP2", "BMP5", "BMP4")) %>% left_join(., genes, by="geneID")
+
+DotPlot(seuratM, features = selGenes, group.by= "clusterName_diseaseCond") + RotatedAxis() + scale_color_viridis(option="D") + coord_flip()
+```
+
+## dotplot HGF MET
+```{r dotplot HGF MET, fig.height=5, fig.width=20}
+genes <- data.frame(gene=rownames(seuratM)) %>% 
+  mutate(geneID=gsub("^.*\\.", "", gene))
+
+selGenes <- data.frame(geneID=c("ITGA5", "NOTCH1", "HGF","MET")) %>% left_join(., genes, by="geneID")
+
+DotPlot(seuratM, features = selGenes, group.by= "clusterName_diseaseCond") + RotatedAxis() + scale_color_viridis(option="D") + coord_flip()
 ```
 
 ## BMP vs Tcells and Mph

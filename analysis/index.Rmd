@@ -24,16 +24,16 @@ Calculate and plot marker and DE genes
 Fb high resolution analysis
 [link](FbHighres.html)
 
-### BMPTcell. 
-BMP and T cells
+### BMPTcell_HGF_MET. 
+BMP and T cells and HGF MET expression pattern
 [link](BMPTcell.html)
 
 ### BMPFbHighres. 
 BMP on Fb high resolution
 [link](BMPTcellsFbHighres.html)
 
-### GeneExprPatterns. 
-Expr pattern of selected genes
+### GeneExprPatterns MFAP5. 
+Expr pattern of selected genes incl MFAP5
 [link](GeneExprPatterns.html)
 
 ### IntCellChat. 
